@@ -1,0 +1,22 @@
+server:
+  port: 8081
+
+spring:
+  thymeleaf:
+    mode: HTML
+    cache: false
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    urL:
+    username:
+    password:
+    type: com.alibaba.druid.pool.DruidDataSource
+
+mybatis-plus:
+  mapper-locations: classpath*:mappers/*.xml
+  global-config:
+    db-config:
+      logic-delete-value: true
+      logic-not-delete-value: false
+      table-prefix: t_
+      id-type: uuid

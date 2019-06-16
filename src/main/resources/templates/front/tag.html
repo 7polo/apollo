@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:layout="http://www.w3.org/1999/xhtml"
+      layout:decorate="~{front/components/layout}">
+<head>
+    <title th:text="${tag}"></title>
+    <bloglist th:replace="~{components/bloglist :: css}"></bloglist>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="card" style="padding: 10px">
+        <div><span>标签> </span><span style="color: #33cabb;" th:text="${tag}"></span></div>
+    </div>
+    <div class="card" style="margin: 10px 0 10px 0;padding: 15px 10px 10px">
+        <form class="form-inline" id="searchForm" onsubmit="return false">
+            <input type="text" class="form-control mb-2 mr-sm-2" name="name" placeholder="标题">
+            <input type="text" class="form-control mb-2 mr-sm-2" name="content" placeholder="内容">
+            <button id="searchBtn" class="btn btn-primary mb-2">查询</button>
+        </form>
+    </div>
+    <bloglist th:replace="~{components/bloglist :: content}"></bloglist>
+</div>
+
+<th:block data-layout-fragment="script">
+    <script>
+        function loadBlog(page, params) {
+            var params = params || {};
+            params.tagName = '[[${tag}]]';
+            params.start = page;
+            params.limit = 10;
+            // 此处采用工具ajax
+            utils.ajax({
+                url: '/blog/queryPage',
+                data: params,
+                success: function (resp) {
+                    buildBlogList(resp.data);
+                    buildPagin(resp.data, params);
+                }
+            });
+        }
+
+        $(function () {
+            $("#searchBtn").click(function () {
+                loadBlog(1, utils.formData($("#searchForm")))
+            }).trigger("click")
+        });
+    </script>
+</th:block>
+</body>
+</html>
+

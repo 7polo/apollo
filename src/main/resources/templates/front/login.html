@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+    <title>登录页面</title>
+    <link rel="icon" href="favicon.ico" type="image/ico">
+    <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <link th:href="@{/static/css/common.css}" rel="stylesheet">
+    <style>
+        .login-wrapper {
+            width: 450px;
+            background: white;
+            margin: 15% auto;
+            padding: 25px;
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .form-wrapper {
+            width: 80%;
+            margin: 0 auto;
+        }
+
+        .form-wrapper .form-group{
+            margin-bottom: 25px;
+        }
+        .form-wrapper .form-group input {
+            font-size: .8rem;
+            height: 40px;
+        }
+    </style>
+</head>
+<body>
+<div class="row">
+    <div class="login-wrapper">
+        <div class="login-header">
+            <a href="index.html"> Apollo 个人网站</a>
+        </div>
+        <div class="form-wrapper">
+            <form id="loginForm">
+                <div class="form-group">
+                    <input type="text" placeholder="请输入您的用户名" class="form-control" name="username" id="username"/>
+                </div>
+                <div class="form-group">
+                    <input type="password" placeholder="请输入密码" class="form-control" id="password" name="password"/>
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-block btn-primary loginBtn" type="button">立即登录
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script type="text/javascript" th:src="@{/static/js/utils.js}"></script>
+<script>
+    $(function () {
+        $(".loginBtn").click(function () {
+            $.ajax({
+                url: '/login',
+                method: 'post',
+                data: utils.formData($("#loginForm")),
+                success:function (resp) {
+                    location.href='/admin'
+                }
+            })
+        })
+    })
+</script>
+</body>
+</html>

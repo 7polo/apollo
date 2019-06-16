@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.polo.apollo.dao.note.CatalogDao">
+
+    <select id="queryList" resultType="com.polo.apollo.entity.dto.CatalogDto">
+        select
+        c.dir_id,
+        c.uid as id,
+        c.name as text,
+        'catalog' as type
+        from t_catalog c
+        where c.deleted = 0
+        <if test='dirId != null and dirId !=""'>
+            and c.dir_id = #{dirId}
+        </if>
+    </select>
+
+</mapper>

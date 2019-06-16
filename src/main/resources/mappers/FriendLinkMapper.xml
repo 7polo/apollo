@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.polo.apollo.dao.system.FriendLinkDao">
+
+    <select id="queryListBySize" resultType="com.polo.apollo.entity.modal.system.FriendLink">
+        select * from t_friend_link f where f.deleted = 0 limit #{top}
+    </select>
+</mapper>

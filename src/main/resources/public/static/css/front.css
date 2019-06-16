@@ -1,0 +1,99 @@
+/*主页面需要的*/
+.max-width {
+    max-width: 1200px;
+}
+
+.main {
+    padding-top: 20px;
+    position: relative;
+    margin: 0 auto;
+}
+
+.content-wrap {
+    width: 100%;
+    float: left;
+}
+
+.content {
+    position: relative;
+    margin-right: 340px;
+    margin-bottom: 15px;
+}
+
+.sidebar {
+    height: 200px;
+    float: left;
+    margin-left: -320px;
+    width: 320px;
+    position: relative;
+}
+
+@media (max-width: 1024px) {
+    .content {
+        margin-right: 0;
+    }
+
+    .sidebar {
+        position: relative;
+        min-height: 500px;
+        margin-right: 380px;
+        margin-bottom: 15px;
+        width: 100%;
+        margin-left: 0;
+    }
+}
+
+/*热门标签*/
+.web-notice,.hot-tags, .friend-links, .hot-blog {
+    margin-bottom: 15px;
+}
+
+.friend-links a {
+    color: #2ba3f6;
+}
+
+.tag-panel .item {
+    color: #999;
+    background-color: #f6f6f6;
+    display: inline-block;
+    width: 31.3333%;
+    margin: 0 1% 1% 0;
+    padding: 0 8px;
+    font-size: 12px;
+    height: 29px;
+    line-height: 29px;
+    overflow: hidden;
+}
+
+.tag-panel .item:hover {
+    background-color: #2CDB87;
+    color: white;
+}
+
+/*热门博客*/
+.hot-blog .card-body {
+    padding: 0;
+}
+
+.hot-blog .hot-blog-item {
+    border-bottom: solid 1px #eaeaea;
+    padding: .5rem .5rem .5rem .7rem;
+    font-size: .8rem;
+}
+
+.hot-blog.hot-blog-item:last-child {
+    border-bottom: none;
+}
+
+.hot-blog .title {
+    color: #888;
+}
+
+.hot-blog .title:hover {
+    color: #2CDB87;
+}
+
+.hot-blog .meta {
+    font-size: 12px;
+    color: #bbb;
+}

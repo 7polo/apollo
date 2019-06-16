@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<body>
+<aside th:fragment="aside" class="lyear-layout-sidebar">
+    <!-- logo -->
+    <div id="logo" class="sidebar-header">
+        <a href="/" th:text="${sys != null ?sys.title:''}">Apollo</a>
+    </div>
+    <div class="lyear-layout-sidebar-scroll">
+
+        <nav class="sidebar-main">
+            <ul class="nav nav-drawer">
+                <li class="nav-item active"><a class="multitabs" th:href="@{/admin/index}"><i
+                        class="fa fa-home fa-fw"></i> 后台首页</a></li>
+
+                <li class="nav-item nav-item-has-subnav">
+                    <a href="javascript:void(0)"><i class="mdi mdi-menu"></i> 多级菜单</a>
+                    <ul class="nav nav-subnav">
+                        <li><a href="#!">一级菜单</a></li>
+                        <li class="nav-item nav-item-has-subnav">
+                            <a href="#!">一级菜单</a>
+                            <ul class="nav nav-subnav">
+                                <li><a href="#!">二级菜单</a></li>
+                                <li class="nav-item nav-item-has-subnav">
+                                    <a href="#!">二级菜单</a>
+                                    <ul class="nav nav-subnav">
+                                        <li><a href="#!">三级菜单</a></li>
+                                        <li><a href="#!">三级菜单</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                        <li><a href="#!">一级菜单</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item nav-item-has-subnav">
+                    <a href="javascript:void(0)"><i class="fa fa-book"></i> 笔记管理</a>
+                    <ul class="nav nav-subnav">
+                        <li><a class="multitabs" th:href="@{./admin/note/index}">笔记</a></li>
+                        <li><a class="multitabs" th:href="@{./admin/note/tag}">标签管理</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item nav-item-has-subnav">
+                    <a href="javascript:void(0)"><i class="fa fa-paper-plane"></i> 博客管理</a>
+                    <ul class="nav nav-subnav">
+                        <li><a class="multitabs" th:href="@{./admin/blog/index}">博客列表</a></li>
+                        <li><a class="multitabs" th:href="@{/admin/blog/index}">归档列表</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item nav-item-has-subnav">
+                    <a href="javascript:void(0)"><i class="fa fa-cog"></i> 系统管理</a>
+                    <ul class="nav nav-subnav">
+                        <li><a class="multitabs" th:href="@{./admin/system/index}">系统配置</a></li>
+                        <li><a class="multitabs" th:href="@{./admin/system/datadic}">数据字典</a></li>
+                        <li><a class="multitabs" th:href="@{./admin/blog/editor}">链接资源</a></li>
+                        <li><a class="multitabs" th:href="@{./admin/blog/index}">友情链接</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</aside>
+</body>
+</html>

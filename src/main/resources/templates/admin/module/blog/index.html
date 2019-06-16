@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:layout="http://www.w3.org/1999/xhtml"
+      layout:decorate="~{admin/components/layout}">
+<head>
+    <title>文档列表</title>
+    <style>
+        .action-bar {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+<th:block layout:fragment="content">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="action-bar btn-group" role="group">
+                        <a class="btn btn-icon btn-success refreshBtn" href="#!" title="刷新" data-toggle="tooltip"><i
+                                class="fa fa-refresh"></i></a>
+                    </div>
+                    <div id="table"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal" id="seoModal" tabindex="-1" role="dialog" data-backdrop="false" aria-labelledby="seoModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="seoModalLabel">SEO 设置</h5>
+                </div>
+                <div class="modal-body">
+                    <form id="seo-form">
+                        <div class="form-group">
+                            <label for="form-keyword" class="col-form-label">关键词(keyword):</label>
+                            <input type="text" class="form-control" id="form-keyword" name="keyword">
+                            <input type="hidden" name="relateId">
+                            <input type="hidden" name="type">
+                            <input type="hidden" name="uid">
+                        </div>
+                        <div class="form-group">
+                            <label for="form-description" class="col-form-label">描述(description):</label>
+                            <textarea class="form-control" id="form-description" name="description"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary seoSaveBtn">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</th:block>
+<th:block data-layout-fragment="script">
+    <script type="text/javascript" th:src="@{/static/js/table.js}"></script>
+    <script type="text/javascript">
+        $(function () {
+            var $table = $("#table").datagrid({
+                url: './blog/queryPage',
+                column: [{
+                    type: 'check'
+                }, {
+                    title: '标题',
+                    width: "200px",
+                    dataIndex: 'name'
+                }, {
+                    title: '创建时间',
+                    width: "100px",
+                    dataIndex: 'createDt'
+                }, {
+                    title: '发布时间',
+                    width: "100px",
+                    dataIndex: 'publishDt',
+                    renderer: function (title, dataIndex, record) {
+                        if (record.publishDt) {
+                            return '<font color="green">' + record.publishDt + '</font>';
+                        }
+                        return '<font color="red">未发布</font>';
+                    }
+                }, {
+                    title: '标签',
+                    dataIndex: 'tagNames',
+                    align: "center",
+                    width: "120px",
+                    renderer: function (title, dataIndex, record) {
+                        var tags = (record.tagNames || "").split(",");
+                        var html = "";
+                        tags.forEach(function (tag, index) {
+                            if (tag) {
+                                html = html.concat('<a class="blog-tag bg-success">' + tag + '</a>')
+                            }
+                        });
+                        return html;
+                    }
+                }, {
+                    type: 'action',
+                    title: '操作',
+                    width: "80",
+                    actions: [{
+                        title: '修改',
+                        icon: 'fa fa-edit',
+                        handle: function (record) {
+                            parent.$(parent.document).data('multitabs').create({
+                                iframe: false,
+                                title: '编辑博客',
+                                url: './admin/note/index?noteId=' + record.noteId
+                            }, true);
+                        }
+                    }, {
+                        title: '删除',
+                        icon: 'fa fa-trash',
+                        handle: function (record, index) {
+                            utils.post({
+                                url: 'blog/delete/' + record.uid,
+                                success: function () {
+                                    utils.notifySuccess("删除成功")
+                                    $table.refresh()
+                                }
+                            })
+                        }
+                    }, {
+                        title: '查看',
+                        icon: 'fa fa-eye',
+                        handle: function (record, index) {
+                            window.open('/blog/' + record.uid + '.html')
+                        }
+                    }, {
+                        title: 'SEO',
+                        icon: 'fa fa-cog',
+                        handle: function (record, index) {
+                            utils.fillForm($("#seo-form"), {type: 'blog', relateId: record.uid});
+                            $('#seoModal').unbind('show.bs.modal').on('show.bs.modal', function (e) {
+                                utils.ajax({
+                                    url: 'seo/blog/' + record.uid,
+                                    success: function (resp) {
+                                        if (resp.data) {
+                                            utils.fillForm($("#seo-form"), resp.data)
+                                        }
+                                    }
+                                })
+                            }).modal('toggle');
+                        }
+                    }]
+                }]
+            });
+            $table.renderer();
+
+            $(".refreshBtn").click(function () {
+                $table.refresh()
+            });
+
+            $(".seoSaveBtn").click(function () {
+                utils.post({
+                    url: 'seo/save',
+                    data: utils.formData($("#seo-form")),
+                    success: function () {
+                        $('#seoModal').modal("hide");
+                        utils.notifySuccess("保存成功")
+                    }
+                })
+            })
+        });
+    </script>
+</th:block>
+</body>
+</html>
+
+
+
+
+
+

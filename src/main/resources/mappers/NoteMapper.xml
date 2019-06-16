@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.polo.apollo.dao.note.NoteDao">
+
+    <select id="queryBlogPage" resultType="com.polo.apollo.entity.modal.note.Note">
+        select * from t_note
+    </select>
+
+    <select id="queryDtoList" resultType="com.polo.apollo.entity.dto.CatalogDto">
+        select
+        n.dir_id,
+        n.uid as id,
+        n.name as text,
+        'note' as type
+        from t_note n
+        where n.deleted = 0
+        <if test='dirId != null and dirId !=""'>
+            and n.dir_id = #{dirId}
+        </if>
+    </select>
+
+    <select id="queryDto" resultType="com.polo.apollo.entity.dto.CatalogDto">
+        select
+        n.dir_id,
+        n.uid as id,
+        n.name as text,
+        'note' as type
+        from t_note n
+        where n.deleted = 0 and n.uid = #{uid}
+    </select>
+</mapper>

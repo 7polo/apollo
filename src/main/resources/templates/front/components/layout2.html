@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:layout="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+    <link rel="icon" th:href="@{/favicon.ico}" type="image/ico">
+    <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <link th:href="@{/static/css/common.css}" rel="stylesheet">
+    <link th:href="@{/static/css/front.css}" rel="stylesheet">
+    <th:block th:if="${sys != null}">
+        <meta name="keywords" th:content="${sys.keyword}"/>
+        <meta name=”description” th:content="${sys.description}"/>
+    </th:block>
+</head>
+<body>
+<navbar th:replace="~{front/components/navbar :: navbar}"></navbar>
+<div class="container-fluid main max-width">
+    <div layout:fragment="content"></div>
+</div>
+<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<div layout:fragment="script"></div>
+</body>
+</html>

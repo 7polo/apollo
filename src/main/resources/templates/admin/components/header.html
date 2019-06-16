@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<body>
+<header th:fragment="admin-header" class="lyear-layout-header">
+    <nav class="navbar navbar-light bg-light justify-content-between">
+        <span class="apollo-aside-toggler"><i class="fa fa-navicon"></i></span>
+        <form class="form-inline">
+            <div class="header-menu dropdown">
+                <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false">
+                    <img class="img-avatar img-avatar-32" th:src="@{/static/images/users/avatar.png}"/>
+                </a>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                    <a class="dropdown-item multitabs" data-url="lyear_pages_profile.html" href="javascript:void(0)"><i
+                            class="mdi mdi-account"></i> 个人信息</a>
+                    <a class="dropdown-item multitabs" data-url="lyear_pages_edit_pwd.html" href="javascript:void(0)"><i
+                            class="mdi mdi-account"></i> 修改密码</a>
+                    <a class="dropdown-item multitabs" data-url="lyear_pages_profile.html" href="javascript:void(0)"><i
+                            class="mdi mdi-account"></i> 个人信息</a>
+                    <a class="dropdown-item" th:href="@{/logout}"><i
+                            class="mdi mdi-account"></i> 退出登录</a>
+                </div>
+            </div>
+        </form>
+    </nav>
+</header>
+</body>
+</html>

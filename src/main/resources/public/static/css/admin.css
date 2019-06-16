@@ -1,0 +1,172 @@
+/** ----------------------------------
+ * 左侧导航
+ -------------------------------------- */
+.lyear-layout-sidebar {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    z-index: 5;
+    display: block;
+    width: 220px;
+    font-weight: 500;
+    -webkit-box-shadow: 0 0 5px rgba(0, 0, 0, 0.08);
+    -moz-box-shadow: 0 0 5px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.08);
+    transform: translateX(0);
+    transition: .5s;
+}
+
+.lyear-layout-sidebar-scroll {
+    height: -moz-calc(100% - 68px);
+    height: -webkit-calc(100% - 68px);
+    height: calc(100% - 68px);
+    position: relative;
+    background-color: #465161;
+    color: rgba(255, 255, 255, .85);
+}
+
+/* logo */
+.sidebar-header {
+    position: relative;
+    overflow: hidden;
+    z-index: 999;
+    background-color: #465161;
+    width: 100%;
+    min-height: 68px;
+    -webkit-box-shadow: 0 1px 1px -1px rgba(77, 82, 89, 0.15);
+    box-shadow: 0 1px 1px -1px rgba(77, 82, 89, 0.15);
+    text-align: center;
+}
+
+.sidebar-header > a {
+    display: block;
+    line-height: 68px;
+    font-size: 20px;
+    color: #2CDB87;
+    height: 68px;
+}
+
+
+/** ----------------------------------
+ * 头部信息
+ -------------------------------------- */
+.lyear-layout-header {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 4;
+    padding-left: 220px;
+    background-color: #fff;
+    -webkit-transition: padding 0.5s;
+    transition: padding 0.5s;
+    -webkit-box-shadow: 4px 0 5px rgba(0, 0, 0, 0.035);
+    -moz-box-shadow: 4px 0 5px rgba(0, 0, 0, 0.035);
+    box-shadow: 4px 0 5px rgba(0, 0, 0, 0.035);
+}
+
+/** ----------------------------------
+ * 主要内容
+ -------------------------------------- */
+.lyear-layout-content {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    padding-top: 52px;
+    padding-left: 220px;
+    -webkit-transition: padding 0.3s;
+    transition: padding 0.3s;
+}
+
+.lyear-layout-content #iframe-content {
+    height: 100%;
+}
+
+.header-menu .dropdown-menu.show {
+    right: 0;
+    left: unset;
+}
+
+.header-menu .dropdown-item {
+    font-size: 14px;
+}
+
+/*tab*/
+.nav-tabs > li > a {
+    border: none;
+    border-bottom: 1px solid transparent;
+    border-radius: 0;
+    color: #4d5259 !important;
+    -webkit-transition: 0.5s;
+    transition: 0.5s;
+    position: relative;
+    display: block;
+    padding: 10px 10px;
+    font-size: 13px;
+}
+
+.nav-tabs > li.active > a,
+.nav-tabs > li.active > a:focus,
+.nav-tabs > li.active > a:hover {
+    border-bottom: 1px solid #33cabb;
+}
+
+
+/*右侧菜单*/
+.nav-drawer li.nav-item {
+    width: 100%;
+    position: relative;
+    display: block;
+}
+
+.nav-subnav {
+    display: none;
+    margin-top: -3px;
+}
+
+li.nav-item a {
+    padding: 13px 24px 14px 25px;
+    color: inherit;
+    font-weight: 500;
+    width: 100%;
+    display: block;
+}
+
+.nav-subnav li a {
+    padding: 5px 24px 5px 45px;
+    font-weight: 400;
+    font-size: 13px;
+    user-select: none;
+}
+
+.nav-subnav .nav-subnav li a {
+    padding-left: 70px;
+}
+
+.expand .lyear-layout-sidebar {
+    transform: translate(-220px, 0px);
+    transition: 0.5s;
+}
+
+.mt-nav-bar .nav-tabs > li {
+    position: relative;
+    user-select: none;
+}
+
+.expand .lyear-layout-header {
+    -webkit-transition: padding 0.5s;
+    transition: padding 0.5s;
+    padding-left: 0;
+}
+
+.expand .lyear-layout-content {
+    padding-left: 0;
+}
+
+li .mt-close-tab {
+    display: none;
+}
+
+li:hover .mt-close-tab {
+    display: inline;
+}

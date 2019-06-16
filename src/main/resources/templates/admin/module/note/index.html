@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:layout="http://www.w3.org/1999/xhtml"
+      layout:decorate="~{admin/components/layout}">
+<head>
+    <title>文档列表</title>
+    <link th:href="@{/static/css/editor/tomorrow-night-eighties.css}" rel="stylesheet">
+    <link href="https://cdn.bootcss.com/jstree/3.3.8/themes/default/style.min.css" rel="stylesheet">
+    <style>
+        .jstree > ul > li > i.jstree-ocl {
+            display: none;
+        }
+
+        .jstree-default .jstree-node {
+            margin-left: 10px;
+        }
+
+        .vakata-context li > a {
+            padding: 0 1.3rem;
+            font-size: 13px;
+        }
+
+        .vakata-context li > a .vakata-contextmenu-sep {
+            display: none;
+        }
+
+        .type-icon {
+            display: inline-block !important;
+            background: url(../../static/images/icon.png) no-repeat !important;
+            vertical-align: middle !important;
+            line-height: 24px;
+        }
+
+        .dir-icon {
+            background-position: 0 1px !important;
+        }
+
+        .file-icon {
+            background-position: 0 -20px !important;
+        }
+
+        .treeWrapper {
+            width: 230px;
+            height: 100%;
+            padding: 5px 5px;
+            float: left;
+        }
+
+        #dirTree {
+            width: 100%;
+            height: calc(100% - 20px);
+            overflow-x: auto;
+        }
+
+        .searchWrapper {
+            text-align: center;
+            padding: 10px;
+        }
+        #search {
+            width: 100%;
+            padding: 5px;
+        }
+
+        .view-wrapper {
+            width: 100% !important;
+            height: 100%;
+            padding-left: 240px;
+        }
+
+        .view-wrapper > .card {
+            height: 100%;
+            padding: 10px;
+        }
+
+        .view-wrapper .content-area {
+            height: calc(100% - 80px);
+            padding-left: 15px;
+            padding-right: 15px;
+        }
+
+        #noteForm, #md, .md-wrapper, .md-html {
+            height: 100%;
+        }
+
+        #noteForm {
+            display: none;
+        }
+
+        .tag-input {
+            width: 100px;
+        }
+
+        #tag {
+            padding-top: 10px;
+            padding-bottom: 10px;
+        }
+
+        .md-html {
+            border: solid 1px #ebebeb;
+            overflow-y: auto;
+            padding: 10px;
+        }
+
+        .md-wrapper {
+            padding: 0;
+        }
+
+        .readAndWrite > .md-wrapper {
+            padding-right: 5px;
+        }
+
+        .fullWrite > .md-wrapper,
+        .fullRead > .md-html {
+            flex: 0 0 100% !important;
+            max-width: 100% !important;
+        }
+
+        .fullWrite > .md-html {
+            display: none;
+        }
+
+        .fullRead > .md-wrapper {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+<th:block layout:fragment="content">
+    <div class="card treeWrapper">
+        <div class="searchWrapper"><input id="search"></div>
+        <div id="dirTree"></div>
+    </div>
+    <div class="view-wrapper">
+        <div class="card">
+            <form onsubmit="return false" id="noteForm">
+                <div class="title-area row">
+                    <div class="col-sm-6 col-lg-6 col-md-6">
+                        <input type="hidden" name="uid">
+                        <input class="form-control" type="text" id="noteName" name="name" placeholder="请输入标题">
+                    </div>
+                    <div class="col-sm-6 col-lg-6 col-md-6">
+                        <div class="btn-group" role="group">
+                            <a class="btn btn-success saveBtn">保存</a>
+                            <a class="btn btn-primary shareBlogBtn">分享</a>
+                            <a class="btn  modeBtn" data-mode=""></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div id="tag"></div>
+                    </div>
+                </div>
+                <div class="content-area row">
+                    <div class="col-sm-6 col-lg-6 col-md-6 md-wrapper">
+                        <textarea id="md" name="content" class="form-control" style="resize: none"
+                                  placeholder="请输入Markdown代码"></textarea>
+                    </div>
+                    <div class="col-lg-6 col-sm-6 col-md-6 md-html">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</th:block>
+<th:block data-layout-fragment="script">
+    <script src="https://cdn.bootcss.com/jstree/3.3.7/jstree.min.js"></script>
+    <script src="https://cdn.bootcss.com/highlight.js/9.14.2/highlight.min.js"></script>
+    <script th:src="@{/static/js/marked.min.js}"></script>
+    <script th:src="@{/static/js/editor.js}"></script>
+    <script type="text/javascript" th:src="@{/static/js/polotag.min.js}"></script>
+    <script>
+        $(function () {
+            setTimeout(function () {
+                treeFunc.initLoad("[[${load_by_note}]]")
+            }, 300)
+        })
+    </script>
+</th:block>
+</body>
+</html>

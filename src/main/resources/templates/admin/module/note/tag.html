@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:layout="http://www.w3.org/1999/xhtml"
+      layout:decorate="~{admin/components/layout}">
+<head>
+    <title>文档列表</title>
+    <!--self-header-->
+    <style>
+        .tagList {
+            width: 250px;
+            height: 100%;
+            overflow-x: auto;
+            float: left;
+        }
+
+        .tagList .list-group-item {
+            border-left: none;
+            border-right: none;
+            border-radius: unset !important;
+            height: 47px;
+        }
+
+        .tag-input {
+            position: relative;
+            top: -3px;
+        }
+
+        .tagList .actions {
+            padding: 10px;
+            text-align: right;
+        }
+
+        .tag-content-wrapper {
+            width: 100% !important;
+            height: 100%;
+            padding-left: 260px;
+        }
+
+    </style>
+</head>
+<body>
+<th:block layout:fragment="content">
+    <div class="tagList card">
+        <div class="actions">
+            <button type="button" class="addTag btn btn-sm btn-success">新增</button>
+            <button type="button" class="refreshTag btn btn-sm btn-success">刷新</button>
+        </div>
+        <div class="list-group"></div>
+    </div>
+    <div class="tag-content-wrapper">
+        <div id="table" class="card-body"></div>
+    </div>
+</th:block>
+<th:block data-layout-fragment="script">
+    <!--self-script-->
+    <script type="text/javascript" th:src="@{/static/js/table.js}"></script>
+    <script>
+
+        function addTag(tags, func) {
+            if (!Array.isArray(tags)) {
+                tags = [tags]
+            }
+            var tagItem = "";
+            tags.forEach(function (tag) {
+                tagItem += '<a class="tag list-group-item list-group-item-action d-flex justify-content-between align-items-centern">';
+                var name = tag.name;
+                if (tag.isNew) {
+                    name = '<input class="tag-input" value="' + tag.name + '">'
+                }
+                tagItem += '<span tag-id="{uid}">{name}</span>'.format({uid: tag.uid, name: name});
+                tagItem += '<span class="badge badge-primary badge-pill">{count}</span>'.format({count: tag.count||0});
+                tagItem += '</a>';
+            });
+            $('.tagList .list-group').append(tagItem);
+
+            $(".tag").dblclick(function () {
+                var tagSpan = $(this).children('span[tag-id]');
+                var input = tagSpan.children('input');
+                if (input.length == 0) {
+                    tagSpan.html('<input class="tag-input" value="' + tagSpan.text() + '">');
+                    tagInput()
+                }
+            });
+            tagInput()
+        }
+
+        // input 失去焦点事件处理
+        function tagInput() {
+            $('.tag-input').focus().unbind('blur').on('keypress blur', function (event) {
+                    if (event.type == "keypress") {
+                        if (event.keyCode == "13") {
+                            console.log(event.keyCode)
+                            $(this).trigger("blur")
+                        } else {
+                            return;
+                        }
+                    }
+
+                    var $this = $(this);
+                    var $parent = $(this).parent();
+                    var tag = {
+                        uid: $parent.attr("tag-id"),
+                        name: $.trim($this.val())
+                    };
+                    if (!tag.name) {
+                        if (tag.uid) {
+                            utils.ajax({
+                                url: '/tag/delete/' + tag.uid,
+                                success: function () {
+                                    $parent.parent().remove();
+                                }
+                            });
+                        } else {
+                            $parent.parent().remove();
+                        }
+                        return
+                    }
+                    utils.post({
+                        url: '/tag/save',
+                        data: tag,
+                        success: function (resp) {
+                            $parent.html(tag.name);
+                            $parent.attr("tag-id", resp.data.uid)
+                        },
+                        error: function () {
+                            $this.focus();
+                            utils.notifyError(tag.name + "已存在")
+                        }
+                    });
+                }
+            )
+        }
+
+        function loadTags() {
+            utils.ajax({
+                url: '/tag/getTags',
+                success: function (resp) {
+                    if (resp.data.length > 0) {
+                        addTag(resp.data)
+                    }
+                }
+            })
+        }
+
+        $(function () {
+            $(".addTag").on('click', function () {
+                addTag({name: 'New Tag', isNew: true})
+            });
+
+            $(".refreshTag").on('click', function () {
+                $('.tagList .list-group').empty();
+                loadTags();
+            }).trigger("click");
+        })
+
+
+        $(function () {
+            var $table = $("#table").datagrid({
+                url: '/note/queryPage',
+                column: [{
+                    type: 'check'
+                }, {
+                    title: '标题',
+                    width: "200px",
+                    dataIndex: 'name'
+                }, {
+                    title: '创建时间',
+                    width: "120px",
+                    dataIndex: 'createDt'
+                }, {
+                    title: '发布时间',
+                    width: "120px",
+                    dataIndex: 'publishDt',
+                    renderer: function (title, dataIndex, record) {
+                        if (record.publishDt) {
+                            return '<font color="green">' + record.publishDt + '</font>';
+                        }
+                        return '<font color="red">未发布</font>';
+                    }
+                }, {
+                    title: '标签',
+                    dataIndex: 'tags',
+                    align: "center",
+                    width: "120px",
+                    renderer: function (title, dataIndex, record) {
+                        var tags = "java, php".split(",");
+                        var html = "";
+                        tags.forEach(function (tag, index) {
+                            var colorClz = (index % 2) ? "label-warning" : "label-success";
+                            if (tag && tag.length > 0) {
+                                html = html.concat('<span class="tag label ' + colorClz + '">' + tag + '</span>')
+                            }
+                        });
+                        return html;
+                    }
+                }, {
+                    type: 'action',
+                    title: '操作',
+                    width: "80",
+                    actions: [{
+                        title: '修改',
+                        icon: 'fa fa-edit',
+                        handle: function (record) {
+                            parent.$(parent.document).data('multitabs').create({
+                                iframe: false,
+                                title: '编辑博客',
+                                url: './admin/note/index?noteId=' + record.uid
+                            }, true);
+                        }
+                    }, {
+                        title: '删除',
+                        icon: 'fa fa-trash',
+                        handle: function (record, index) {
+
+                        }
+                    }]
+                }]
+            });
+            $table.renderer();
+        });
+
+    </script>
+</th:block>
+</body>
+</html>

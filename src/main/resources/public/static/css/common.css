@@ -1,0 +1,349 @@
+body {
+    font-family: 'Microsoft Yahei', -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    color: #4d5259;
+    line-height: 1.5;
+    font-size: 14px;
+    overflow-x: hidden;
+    background-color: #f5f6fa;
+}
+
+html,
+body {
+    height: 100%;
+}
+
+/*公共的样式*/
+p {
+    margin-bottom: .5rem
+}
+
+a {
+    text-decoration: none;
+    outline: none
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+.card {
+    border: 1px solid #eaeaea;
+}
+
+.card-body {
+    padding: 1rem;
+    background: #fbfbfb;
+}
+
+.card-header {
+    padding-top: .55rem;
+    background: #fbfbfb;
+}
+
+a:hover, a:focus, a:active {
+    text-decoration: none;
+}
+
+/*边框和字体*/
+.form-control, .btn, .table-bordered td, .table-bordered th {
+    font-size: .9rem;
+    border: 1px solid #eaeaea;
+}
+
+/*按钮*/
+.btn-primary {
+    background-color: #33cabb;
+    border-color: #33cabb;
+    color: #fff !important;
+}
+
+.btn-primary:hover {
+    background-color: #52d3c7;
+    border-color: #52d3c7;
+}
+
+.btn-success {
+    background-color: #15c377;
+    border-color: #15c377;
+    color: #fff !important;
+}
+
+.btn-success:hover {
+    background-color: #16d17f;
+    border-color: #16d17f;
+}
+
+.btn-icon {
+    padding: 0.1rem .35rem;
+}
+
+/* 表格 */
+.table {
+    margin-bottom: 5px;
+}
+
+.table-bordered {
+    border-color: #eceeef;
+}
+
+.table .action-icon {
+    border: none;
+    padding: 0 .35rem;
+    font-size: .9rem;
+}
+
+.table .action-icon:hover {
+    cursor: pointer;
+}
+
+.table > tbody > tr > td,
+.table > tbody > tr > th,
+.table > tfoot > tr > td,
+.table > tfoot > tr > th,
+.table > thead > tr > td,
+.table > thead > tr > th {
+    padding: .75em;
+    line-height: 1.5;
+    border-color: #eceeef;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: #fcfdfe;
+}
+
+.table-hover > tbody > tr:hover {
+    background-color: #f9fafb;
+}
+
+.table-vcenter > thead > tr > th,
+.table-vcenter > thead > tr > td,
+.table-vcenter > tbody > tr > th,
+.table-vcenter > tbody > tr > td,
+.table-vcenter > tfoot > tr > th,
+.table-vcenter > tfoot > tr > td {
+    vertical-align: middle;
+}
+
+.table-hover tbody tr {
+    -webkit-transition: background-color 0.2s linear;
+    transition: background-color 0.2s linear;
+}
+
+.table-condensed > tbody > tr > td,
+.table-condensed > tbody > tr > th,
+.table-condensed > tfoot > tr > td,
+.table-condensed > tfoot > tr > th,
+.table-condensed > thead > tr > td,
+.table-condensed > thead > tr > th {
+    padding: .5em;
+}
+
+.table > tbody > tr > td {
+    color: #4d5259;
+    font-size: .8rem;
+}
+
+.table-checkbox {
+    width: 100%;
+    margin-bottom: 0;
+    text-align: center;
+}
+
+/*背景色*/
+.bg-primary {
+    background-color: #33cabb !important;
+    color: #fff !important;
+}
+
+.bg-secondary {
+    background-color: #e4e7ea !important;
+    color: #fff !important;
+}
+
+.bg-success {
+    background-color: #15c377 !important;
+    color: #fff !important;
+}
+
+.c-success {
+    color: #15c377;
+}
+
+a.bg-success:hover {
+    background-color: #15c377 !important;
+}
+
+.bg-info {
+    background-color: #48b0f7 !important;
+    color: #fff !important;
+}
+
+.bg-warning {
+    background-color: #faa64b !important;
+    color: #fff !important;
+}
+
+.c-warning {
+    color: #f96868;
+}
+
+.bg-danger {
+    background-color: #f96868 !important;
+    color: #fff !important;
+}
+
+.c-danger {
+    color: #f96868;
+}
+
+/*右边内容区域*/
+.right-main-wrapper {
+    height: calc(100% - 15px);
+    padding-top: 10px;
+}
+
+
+/**------------
+ * 滚动条样式
+ -------------------------------------- */
+.ps {
+    overflow: hidden !important;
+    overflow-anchor: none;
+    -ms-overflow-style: none;
+    touch-action: auto;
+    -ms-touch-action: auto;
+}
+
+.ps__rail-x {
+    display: none;
+    opacity: 0;
+    transition: background-color .2s linear, opacity .2s linear;
+    -webkit-transition: background-color .2s linear, opacity .2s linear;
+    height: 6px;
+    bottom: 2px;
+    position: absolute;
+}
+
+.ps__rail-y {
+    display: none;
+    opacity: 0;
+    transition: background-color .2s linear, opacity .2s linear;
+    -webkit-transition: background-color .2s linear, opacity .2s linear;
+    width: 6px;
+    right: 2px;
+    position: absolute;
+}
+
+.ps--active-x > .ps__rail-x,
+.ps--active-y > .ps__rail-y {
+    display: block;
+    background-color: transparent;
+}
+
+.ps:hover > .ps__rail-x,
+.ps:hover > .ps__rail-y,
+.ps--focus > .ps__rail-x,
+.ps--focus > .ps__rail-y,
+.ps--scrolling-x > .ps__rail-x,
+.ps--scrolling-y > .ps__rail-y {
+    opacity: 0.6;
+}
+
+.ps .ps__rail-x:hover,
+.ps .ps__rail-y:hover,
+.ps .ps__rail-x:focus,
+.ps .ps__rail-y:focus,
+.ps .ps__rail-x.ps--clicking,
+.ps .ps__rail-y.ps--clicking {
+    background-color: #eee;
+    opacity: 0.9;
+}
+
+.ps__thumb-x {
+    background-color: #aaa;
+    border-radius: 6px;
+    transition: background-color .2s linear, height .2s ease-in-out;
+    -webkit-transition: background-color .2s linear, height .2s ease-in-out;
+    height: 3px;
+    bottom: 0px;
+    position: absolute;
+}
+
+.ps__thumb-y {
+    background-color: #aaa;
+    border-radius: 6px;
+    transition: background-color .2s linear, width .2s ease-in-out;
+    -webkit-transition: background-color .2s linear, width .2s ease-in-out;
+    width: 3px;
+    right: 0px;
+    position: absolute;
+}
+
+.ps__rail-x:hover > .ps__thumb-x,
+.ps__rail-x:focus > .ps__thumb-x,
+.ps__rail-x.ps--clicking .ps__thumb-x {
+    background-color: #999;
+    height: 6px;
+}
+
+.ps__rail-y:hover > .ps__thumb-y,
+.ps__rail-y:focus > .ps__thumb-y,
+.ps__rail-y.ps--clicking .ps__thumb-y {
+    background-color: #999;
+    width: 6px;
+}
+
+@supports (-ms-overflow-style: none) {
+    .ps {
+        overflow: auto !important;
+    }
+}
+
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+    .ps {
+        overflow: auto !important;
+    }
+}
+
+.img-avatar-32 {
+    width: 32px;
+    height: 32px;
+}
+
+.img-avatar-64 {
+    width: 64px;
+    height: 64px;
+}
+
+.blog-tag {
+    display: inline-block;
+    height: 22px;
+    line-height: 22px;
+    margin: 2px 4px 2px 0;
+    padding: 0 8px;
+    border: 1px solid #e8eaec;
+    border-radius: 3px;
+    font-size: 12px;
+    vertical-align: middle;
+    opacity: 1;
+    overflow: hidden;
+    cursor: pointer;
+    color: white;
+}
+
+.blog-tag:hover {
+    opacity: .85;
+    color: white;
+}
+.pagination {
+    margin-bottom: 0;
+    margin-top: 10px;
+}
+
+.checkbox.form-control:focus {
+    border: none;
+    box-shadow: none;
+}
+
+
+

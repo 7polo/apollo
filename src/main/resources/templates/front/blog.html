@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:layout="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{front/components/layout}">
+<head>
+    <title th:text="${blog!=null?blog.name:'文章不存在'}"></title>
+    <link th:href="@{/static/css/editor/tomorrow-night-eighties.css}" rel="stylesheet">
+    <th:block th:if="${seo != null}">
+        <meta name="keywords" th:content="${seo.keyword}"/>
+        <meta name=”description” th:content="${seo.description}"/>
+    </th:block>
+    <style>
+        .blog-wrapper .h3, .blog-wrapper h3 {
+            font-size: 1.25rem;
+        }
+
+        .blog-wrapper .title {
+            text-align: center;
+            font-size: 1.4rem;
+            padding-top: 10px;
+            padding-bottom: 10px;
+        }
+
+        .blog-wrapper .meta {
+            text-align: right;
+        }
+
+        .blog-wrapper .meta > span:first-child {
+            margin-right: 5px;
+        }
+    </style>
+</head>
+<body>
+<th:block data-layout-fragment="content">
+    <didv class="blog-wrapper card" style="display: none;padding: 15px 20px">
+        <th:block th:if="${blog == null}">
+            <div>文章不存在</div>
+        </th:block>
+        <th:block th:if="${blog} != null">
+            <h3 class="title" th:text="${blog.name}"></h3>
+            <p th:if="${blog.tags != null and blog.tags.size() > 0}">
+                <th:block th:each="tag, tagStat : ${blog.tags}">
+                    <a class="blog-tag bg-success" th:href="@{'/tag/'+${tag.name}}">
+                        <i class="fa fa-tag"></i>
+                        <span th:text="${tag.name}"></span>
+                    </a>
+                </th:block>
+            </p>
+            <div id="md-content" th:text="${blog.content}"></div>
+            <p class="meta">
+                <span th:text="${#dates.format(blog.createDt, 'yyyy-MM-dd')}"></span>
+                <span th:text="'阅读('+${blog.readCount}+')'"></span>
+                <span th:text="'赞('+${blog.good}+')'"></span>
+                <span th:text="'评论(0)'"></span>
+            </p>
+        </th:block>
+    </didv>
+</th:block>
+<th:block data-layout-fragment="script">
+    <script src="https://cdn.bootcss.com/highlight.js/9.14.2/highlight.min.js"></script>
+    <script th:src="@{/static/js/marked.min.js}"></script>
+    <script>
+        /*<![CDATA[*/
+        $(function () {
+            marked.setOptions({
+                renderer: new marked.Renderer(),
+                gfm: true,
+                tables: true,
+                breaks: false,
+                pedantic: false,
+                sanitize: false,
+                smartLists: true,
+                smartypants: false,
+                preClass: 'hljs',
+                highlight: function (code, lang, callback) {
+                    console.log(code)
+                    lang = "java"
+                    if (lang && hljs.getLanguage(lang)) {
+                        return hljs.highlight(lang, code, true).value;
+                    } else {
+                        return hljs.highlightAuto(code).value;
+                    }
+                }
+            });
+            var $md = $("#md-content");
+            if ($md.length > 0) {
+                $md.html(marked(utils.escape2Html($md.html())));
+            }
+            $(".blog-wrapper").show();
+        })
+        /*]]>*/
+    </script>
+</th:block>
+
+</body>
+</html>
+

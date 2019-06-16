@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:layout="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+    <link rel="icon" th:href="@{/static/favicon.ico}" type="image/ico">
+    <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link th:href="@{/static/css/common.css}" rel="stylesheet">
+    <link th:href="@{/static/css/front.css}" rel="stylesheet">
+    <th:block th:if="${sys != null}">
+        <meta name="keywords" th:content="${sys.keyword}"/>
+        <meta name=”description” th:content="${sys.description}"/>
+    </th:block>
+</head>
+<body>
+<navbar th:replace="~{front/components/navbar :: navbar}"></navbar>
+<div class="container-fluid main max-width">
+    <div class="content-wrap">
+        <div class="content">
+            <div layout:fragment="content"></div>
+        </div>
+    </div>
+    <div class="sidebar">
+        <div class="card web-notice">
+            <div class="card-body">
+                <div style="text-align: center;margin-bottom: 5px">
+                    <img class="img-avatar img-avatar-64" th:src="@{/static/images/users/avatar.png}"/>
+                </div>
+                <div class="card-text">
+                    <p style="text-align: center">没有什么能够阻挡</p>
+                    <p th:if="${skills != null and skills.size() > 0}">
+                        <th:block th:each="skill, skillStat : ${skills}">
+                            <a class="blog-tag bg-success">
+                                <i class="fa fa-tag"></i>
+                                <span th:text="${skill.name}"></span>
+                            </a>
+                        </th:block>
+                    </p>
+                    <div>
+                        <i class="fa fa-envelope-o"></i>
+                        <a href="mailto:apologizebao@163.com">有问题请联系</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card hot-blog">
+            <div class="card-header">热门文章&nbsp;<i class="c-danger fa fa-fire"></i></div>
+            <div class="card-body" th:if="${hots != null}" th:each="hot, hotStat : ${hots}">
+                <a th:href="@{'/blog/'+ ${hot.uid} +'.html'}">
+                    <div class="hot-blog-item">
+                        <div class="title" th:text="${hot.name}"></div>
+                        <div class="meta"
+                             th:text="${#dates.format(hot.createDt, 'yyyy-MM-dd')} + '  阅读('+${hot.readCount}+')'"></div>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <div class="card hot-tags">
+            <div class="card-header">热门标签&nbsp;<i class="c-success fa fa-tags"></i></div>
+            <div class="card-body">
+                <div class="tag-panel" th:if="${tags != null}">
+                    <th:block th:each="tag, tagStat : ${tags}">
+                        <th:block th:unless="${tag.count}">
+                            <a class="item" th:href="@{'/tag/'+${tag.name}+'.html'}" th:text="${tag.name}"></a>
+                        </th:block>
+                        <th:block th:if="${tag.count}">
+                            <a class="item" th:href="@{'/tag/'+${tag.name}+'.html'}"
+                               th:text="${tag.name} +'('+${tag.count}+')'"></a>
+                        </th:block>
+                    </th:block>
+                </div>
+            </div>
+        </div>
+
+        <div class="card friend-links">
+            <div class="card-header">友情链接</div>
+            <div class="card-body">
+                <div class="card-text" th:each="link : ${friendLinks}">
+                    <p><a target="_blank" th:href="${link.url}" th:text="${link.name}"></a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script type="text/javascript" th:src="@{/static/js/utils.js}"></script>
+<div layout:fragment="script"></div>
+</body>
+</html>

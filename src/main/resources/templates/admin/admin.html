@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+    <title>后台管理系统</title>
+    <link th:href="@{/static/favicon.ico}" rel="icon" type="image/ico">
+    <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <link th:href="@{/static/js/bootstrap-multitabs/multitabs.min.css}" rel="stylesheet">
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link th:href="@{/static/css/admin.css}" rel="stylesheet">
+    <link th:href="@{/static/css/common.css}" rel="stylesheet">
+</head>
+
+<body>
+<div class="lyear-layout-web">
+    <div class="apollo-layout-container">
+        <!--左侧导航-->
+        <aside th:replace="~{admin/components/aside :: aside }"></aside>
+        <!--头-->
+        <header th:replace="~{admin/components/header :: header }"></header>
+        <!--页面主要内容-->
+        <main class="lyear-layout-content">
+            <div id="iframe-content"></div>
+        </main>
+    </div>
+</div>
+<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+<!-- popper.min.js 用于弹窗、提示、下拉菜单 -->
+<script src="https://cdn.staticfile.org/popper.js/1.12.5/umd/popper.min.js"></script>
+<script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script type="text/javascript" th:src="@{/static/js/perfect-scrollbar.min.js}"></script>
+<script type="text/javascript" th:src="@{/static/js/bootstrap-multitabs/multitabs.js}"></script>
+<script type="text/javascript" th:src="@{/static/js/bootstrap-notify.min.js}"></script>
+<script type="text/javascript" th:src="@{/static/js/utils.js}"></script>
+<script type="text/javascript" th:src="@{/static/js/admin.min.js}"></script>
+</body>
+</html>

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <style th:fragment="css">
+        /*博客*/
+        .blog-abi {
+            border: 1px solid #eaeaea;
+            padding: 20px 20px 20px 20px;
+            overflow: hidden;
+            background-color: #fff;
+            margin-bottom: -1px;
+        }
+
+        .blog-abi .cat {
+            color: #fff;
+            background-color: #2CDB87;
+            padding: 3px 6px;
+            font-size: 12px;
+            display: inline-block;
+            position: relative;
+            top: -2px;
+            margin-right: 6px;
+        }
+
+        .blog-abi h2 {
+            display: inline;
+            font-size: 18px;
+            line-height: 1.4;
+            margin-top: 0;
+            font-weight: bold;
+        }
+
+        .blog-abi h2 > a {
+            color: #555;
+        }
+
+        .blog-abi .meta {
+            color: #999;
+            font-size: 12px;
+            margin-bottom: 5px;
+            margin-top: 10px;
+        }
+
+        .blog-abi .blog-content {
+            font-size: 12px;
+            color: #999;
+            word-wrap: break-word;
+            line-height: 20px;
+            margin-bottom: 0;
+        }
+
+        .blog-abi time, .blog-abi .pv, .blog-abi .pc, .blog-abi .author {
+            margin-right: 20px;
+        }
+
+        .blog-abi .post-like {
+            float: right;
+        }
+
+        .pageWrapper {
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .pageWrapper > div {
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+<div th:fragment="content">
+    <div class="blog-list"></div>
+    <div class="pageWrapper">
+        <div>
+            <ul class="pagination"></ul>
+        </div>
+    </div>
+    <script>
+
+        function buildBlogList(data) {
+            var blogList = data.records;
+            var blogsDom = "";
+            blogList.forEach(function (blog) {
+                blog.author = '7polo';
+                blog.readCount = blog.readCount || '0';
+                blog.good = blog.good || '0';
+                blog.catUrl = '/catalog/' + blog.dirId;
+                blog.url = '/blog/' + blog.uid + '.html';
+                blog.content = (blog.content || "").replace(/[<]/g, '&lt;');
+
+                var itemDom = '<article class="blog-abi">';
+                itemDom += '<header>';
+                itemDom += '<a target="_blank" class="cat" href="{catUrl}">{dirName}<i></i></a>'.format(blog);
+                itemDom += '<h2><a target="_blank" href="{url}" title="{name}">{name}</a></h2>'.format(blog);
+                itemDom += '</header>';
+                itemDom += '<p class="meta">';
+                itemDom += '<time><i class="fa fa-clock-o"></i>{createDt}</time>'.format(blog);
+                itemDom += '<span class="author"><i class="fa fa-user"></i>{author}</span>'.format(blog);
+                itemDom += '<span class="pv"><i class="fa fa-eye"></i>({readCount})</span>'.format(blog);
+                // itemDom += '<a class="pc" href="#"><i class="fa fa-comments-o"></i>评论({good})</a>'.format(blog);
+                itemDom += '<a href="javascript:;" etap="like" class="post-like" data-pid="3689"><i class="fa fa-thumbs-o-up"></i>(<span>{good}</span>)</a></p>'.format(blog);
+                itemDom += '<p class="blog-content">{content}</pre>'.format(blog);
+                itemDom += '</article>';
+
+                blogsDom += itemDom;
+            });
+            $(".blog-list").html(blogsDom);
+        }
+
+        function buildPagin(pagin, params) {
+
+            if (pagin.total <= 0) {
+                $(".pagination").html('<div>无数据</div>');
+                return
+            }
+            var total = pagin.total;
+            var page = pagin.current;
+            var size = pagin.size;
+            var totalPage = Math.ceil(total / size);
+
+            var html = "";
+            html += '<li class="page-item {disabled}" data-page="{page}"><a class="page-link" href="#" tabindex="-1">上一页</a></li>'.format({
+                disabled: page == 1 ? 'disabled' : '',
+                page: page - 1
+            });
+            for (var i = page - 3; i < page + 3 && i <= totalPage; i++) {
+                if (i <= 0) {
+                    continue
+                }
+                html += '<li class="page-item {active}" data-page="{page}"><a class="page-link" href="#">{page}</a></li>'.format({
+                    active: i == page ? "active" : "",
+                    page: i
+                })
+            }
+            html += '<li class="page-item {disabled}" data-page="{page}"><a class="page-link" href="#">下一页</a></li>'.format({
+                disabled: page == totalPage ? 'disabled' : '',
+                page: page + 1
+            });
+            $(".pagination").html(html);
+
+            $(".page-item").unbind("click").click(function () {
+                var page = $(this).attr("data-page");
+                if (page && page >= 1 && !$(this).hasClass("disabled")) {
+                    loadBlog(page, params)
+                }
+            })
+        }
+    </script>
+</div>
+</body>
+</html>

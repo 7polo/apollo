@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:layout="http://www.w3.org/1999/xhtml"
+      layout:decorate="~{admin/components/layout}">
+<head>
+    <title>首页 - 光年(Light Year Admin)后台管理系统模板</title>
+    <link rel="icon" href="favicon.ico" type="image/ico">
+    <meta name="keywords" content="LightYear,光年,后台模板,后台管理系统,光年HTML模板">
+    <meta name="description" content="LightYear是一个基于Bootstrap v3.3.7的后台管理系统的HTML模板。">
+    <meta name="author" content="yinqi">
+</head>
+<body>
+<th:block layout:fragment="content">
+
+    <div class="row">
+
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h5>每周用户</h5>
+                </div>
+                <div class="card-body">
+                    <canvas class="js-chartjs-bars"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h5>交易历史记录</h5>
+                </div>
+                <div class="card-body">
+                    <canvas class="js-chartjs-lines"></canvas>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row">
+
+    </div>
+</th:block>
+<th:block data-layout-fragment="script">
+    <!--图表插件-->
+    <script type="text/javascript" th:src="@{/static/js/Chart.js}"></script>
+    <script type="text/javascript">
+        $(function (e) {
+            var $dashChartBarsCnt = jQuery('.js-chartjs-bars')[0].getContext('2d'),
+                $dashChartLinesCnt = jQuery('.js-chartjs-lines')[0].getContext('2d');
+
+            var $dashChartBarsData = {
+                labels: ['周一', '周二', '周三', '周四', '周五', '周六', '周日'],
+                datasets: [
+                    {
+                        label: '注册用户',
+                        borderWidth: 1,
+                        borderColor: 'rgba(0,0,0,0)',
+                        backgroundColor: 'rgba(51,202,185,0.5)',
+                        hoverBackgroundColor: "rgba(51,202,185,0.7)",
+                        hoverBorderColor: "rgba(0,0,0,0)",
+                        data: [2500, 1500, 1200, 3200, 4800, 3500, 1500]
+                    }
+                ]
+            };
+            var $dashChartLinesData = {
+                labels: ['2003', '2004', '2005', '2006', '2007', '2008', '2009', '2010', '2011', '2012', '2013', '2014'],
+                datasets: [
+                    {
+                        label: '交易资金',
+                        data: [20, 25, 40, 30, 45, 40, 55, 40, 48, 40, 42, 50],
+                        borderColor: '#358ed7',
+                        backgroundColor: 'rgba(53, 142, 215, 0.175)',
+                        borderWidth: 1,
+                        fill: false,
+                        lineTension: 0.5
+                    }
+                ]
+            };
+
+            new Chart($dashChartBarsCnt, {
+                type: 'bar',
+                data: $dashChartBarsData
+            });
+
+            var myLineChart = new Chart($dashChartLinesCnt, {
+                type: 'line',
+                data: $dashChartLinesData,
+            });
+        });
+    </script>
+</th:block>
+</body>
+</html>
+
