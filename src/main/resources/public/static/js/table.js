@@ -36,6 +36,7 @@ function Table(option) {
 
     this.renderer = function () {
         _renderer();
+        return this;
     };
 
     function _buildColumn() {
@@ -198,7 +199,7 @@ function Table(option) {
     $.fn.extend({
         datagrid: function (option) {
             option.ele = $(this);
-            return new Table(option);
+            return new Table(option).renderer();
         }
     })
 })();

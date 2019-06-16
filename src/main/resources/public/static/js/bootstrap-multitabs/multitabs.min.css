@@ -25,12 +25,14 @@
 }
 .mt-close-tab {
     position: absolute;
-    font-size: 10px;
     top: 2px;
     right: 0px;
     color: #94A6B0;
     cursor: pointer;
     display: none;
+    font-weight: bold;
+    font-size: 12px;
+    font-style: normal;
 }
 li:hover .mt-close-tab {
     display: inline;

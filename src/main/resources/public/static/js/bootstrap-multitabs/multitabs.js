@@ -128,7 +128,7 @@ if (typeof jQuery === "undefined") {
             '<div class="tab-content mt-tab-content " > </div>' +
             '</div>',
         navTab: '<a data-id="{navTabId}" class="mt-nav-tab" data-type="{type}" data-index="{index}" data-url="{url}">{title}</a>',
-        closeBtn: ' <i class="mt-close-tab fa fa-close" style="{style}"></i>',
+        closeBtn: ' <i class="mt-close-tab" style="{style}">x</i>',
         ajaxTabPane: '<div id="{tabPaneId}" class="tab-pane {class}">{content}</div>',
         iframeTabPane: '<iframe id="{tabPaneId}" class="tab-pane {class}"  width="100%" height="100%" frameborder="0" src="" seamless></iframe>'
     };

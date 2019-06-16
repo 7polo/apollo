@@ -163,10 +163,6 @@ li.nav-item a {
     padding-left: 0;
 }
 
-li .mt-close-tab {
-    display: none;
-}
-
 li:hover .mt-close-tab {
     display: inline;
 }
