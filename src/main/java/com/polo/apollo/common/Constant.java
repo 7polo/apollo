@@ -19,7 +19,7 @@ public class Constant {
     /**
      * 友情链
      */
-    public static final String DIC_FRIEND_LINK = "frinend_link";
+    public static final String DIC_FRIEND_LINK = "friend_link";
 
     /**
      * seo 博客

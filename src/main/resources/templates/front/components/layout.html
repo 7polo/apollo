@@ -31,15 +31,21 @@
                     <p style="text-align: center">没有什么能够阻挡</p>
                     <p th:if="${skills != null and skills.size() > 0}">
                         <th:block th:each="skill, skillStat : ${skills}">
-                            <a class="blog-tag bg-success">
+                            <a class="blog-tag btn-primary">
                                 <i class="fa fa-tag"></i>
                                 <span th:text="${skill.name}"></span>
                             </a>
                         </th:block>
                     </p>
                     <div>
-                        <i class="fa fa-envelope-o"></i>
-                        <a href="mailto:apologizebao@163.com">有问题请联系</a>
+                        <div class="related">
+                            <i class="fa fa-envelope-o"></i>
+                            <a href="mailto:apologizebao@163.com" target="_blank">apologizebao@163.com</a>
+                        </div>
+                        <div>
+                            <i class="fa fa-github"></i>
+                            <a href="https://github.com/7polo" target="_blank">Github</a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -47,8 +53,8 @@
 
         <div class="card hot-blog">
             <div class="card-header">热门文章&nbsp;<i class="c-danger fa fa-fire"></i></div>
-            <div class="card-body" th:if="${hots != null}" th:each="hot, hotStat : ${hots}">
-                <a th:href="@{'/blog/'+ ${hot.uid} +'.html'}">
+            <div class="card-body" th:if="${hots != null}">
+                <a  th:each="hot, hotStat : ${hots}" th:href="@{'/blog/'+ ${hot.uid} +'.html'}">
                     <div class="hot-blog-item">
                         <div class="title" th:text="${hot.name}"></div>
                         <div class="meta"
@@ -78,8 +84,11 @@
         <div class="card friend-links">
             <div class="card-header">友情链接</div>
             <div class="card-body">
-                <div class="card-text" th:each="link : ${friendLinks}">
-                    <p><a target="_blank" th:href="${link.url}" th:text="${link.name}"></a></p>
+                <div class="card-text">
+                    <th:block th:each="link, linkStat : ${friendLinks}">
+                        <p th:class="${linkStat.index > 5?'hide':''}"><a target="_blank" th:href="${link.value}"
+                                                                         th:text="${link.name}"></a></p>
+                    </th:block>
                 </div>
             </div>
         </div>

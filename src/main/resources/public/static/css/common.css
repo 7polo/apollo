@@ -319,9 +319,7 @@ a.bg-success:hover {
     display: inline-block;
     height: 22px;
     line-height: 22px;
-    margin: 2px 4px 2px 0;
-    padding: 0 8px;
-    border: 1px solid #e8eaec;
+    padding: 0 7px;
     border-radius: 3px;
     font-size: 12px;
     vertical-align: middle;
@@ -329,12 +327,14 @@ a.bg-success:hover {
     overflow: hidden;
     cursor: pointer;
     color: white;
+    box-sizing: content-box;
+    margin-bottom: 5px;
 }
 
-.blog-tag:hover {
-    opacity: .85;
-    color: white;
+.blog-tag span {
+    display: inline-block;
 }
+
 .pagination {
     margin-bottom: 0;
     margin-top: 10px;
@@ -378,6 +378,10 @@ a.bg-success:hover {
 
 .tag .in {
     height: 25px
+}
+
+.hide {
+    display: none;
 }
 
 

@@ -7,6 +7,7 @@ import com.polo.apollo.entity.modal.system.DataDic;
 import com.polo.apollo.service.sytem.DataDicService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
 
@@ -37,6 +38,12 @@ public class DataDicServiceImpl implements DataDicService {
     @Override
     public Page<DataDic> queryPage(DataDic dic, int start, int limit) {
         LambdaQueryWrapper<DataDic> query = new LambdaQueryWrapper<DataDic>();
+        if (dic != null) {
+            if (StringUtils.hasLength(dic.getType())) {
+                query.eq(DataDic::getType, dic.getType());
+            }
+
+        }
         return (Page<DataDic>) dataDicDao.selectPage(new Page<>(start, limit), query);
     }
 

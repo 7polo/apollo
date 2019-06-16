@@ -95,7 +95,7 @@ public class FrontPage {
         model.addAttribute(Constant.SYS, Application.sys);
         model.addAttribute("hots", blogService.queryHotBlog(5));
         model.addAttribute("tags", tagService.queryBlogCount());
-        model.addAttribute("friendLinks", friendLinkService.queryListBySize(10));
+        model.addAttribute("friendLinks", dataDicService.queryListByType(Constant.DIC_FRIEND_LINK));
         model.addAttribute("skills", getList());
     }
 

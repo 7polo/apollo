@@ -6,6 +6,7 @@ function Table(option) {
     var _paginate = option.paginate || false;
     var _pagination = {page: 1, size: 10, total: 0};
     var _param = {};
+    var _baseparam = option.baseParam||{};
     var _isInit = true;
     var _rowActionMap = {}; // 事件绑定
 
@@ -136,6 +137,11 @@ function Table(option) {
     function _loadData(page) {
         _pagination.current = page;
         var param = JSON.parse(JSON.stringify(_param));
+        for (var p in _baseparam) {
+            if (param[p] == undefined) {
+                param[p] = _baseparam[p]
+            }
+        }
         param.start = _pagination.current;
         param.limit = _pagination.size;
 

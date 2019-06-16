@@ -4,7 +4,6 @@ var Tag = function (op) {
     var $in = null;
     var _clear = op.clear!=false;
     var _value = [];
-
     this.getValue = function () {
         return _value;
     }
@@ -49,15 +48,7 @@ var Tag = function (op) {
             }
         }
     }
-
-    function addCss() {
-        var $style = $('style.tag');
-        if ($style.length == 0) {
-            $ele.append(('<style class="tag">'+css+'</style>'))
-        }
-    }
     renderer();
-    addCss();
 };
 
 (function () {
