@@ -44,7 +44,7 @@
 }
 
 /*热门标签*/
-.web-notice,.hot-tags, .friend-links, .hot-blog {
+.web-notice, .hot-tags, .friend-links, .hot-blog {
     margin-bottom: 15px;
 }
 
@@ -96,4 +96,10 @@
 .hot-blog .meta {
     font-size: 12px;
     color: #bbb;
+}
+
+.card.search {
+    padding: 15px 10px 10px;
+    border-bottom-left-radius: unset;
+    border-bottom-right-radius: unset;
 }
