@@ -9,7 +9,7 @@ var Tag = function (op) {
     }
     function renderer() {
         $ele.addClass("tag").empty();
-        $ele.append('<div style="display: inline-block" class="labels"><input class="in" placeholder='+(op.placeholder||"")+'/></div>');
+        $ele.append('<div style="display: inline-block" class="labels"><input class="in" placeholder='+(op.placeholder||"")+'></div>');
         $in = $ele.find(".in");
         if (op.name) {
             $ele.append('<input type="hidden" name="' + op.name + '">')
