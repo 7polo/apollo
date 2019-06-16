@@ -79,6 +79,16 @@ public class BlogServiceImpl implements BlogService {
         return blog;
     }
 
+    /**
+     * 查询当前博客的上下篇
+     * @param
+     * @return
+     */
+    @Override
+    public List<BlogDto> queryPreAndNextBlog(Blog blog) {
+        return blogDao.queryPreAndNextBlog(blog.getUid(), blog.getCreateDt());
+    }
+
     @Override
     public Blog queryBlogNoteId(String noteId) {
         Wrapper<Blog> queryWrapper = new LambdaQueryWrapper<Blog>()

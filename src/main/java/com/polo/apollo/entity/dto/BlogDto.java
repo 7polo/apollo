@@ -47,4 +47,9 @@ public class BlogDto extends Blog {
      * 标签 tag1,tag2
      */
     private String tagNames;
+
+    /**
+     * 是否是上一篇
+     */
+    private Boolean isPre;
 }

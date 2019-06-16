@@ -48,6 +48,8 @@ public interface BlogService {
      */
     Blog createBlogWithNote(Note note);
 
+    List<BlogDto> queryPreAndNextBlog(Blog blog);
+
     Blog queryBlogNoteId(String noteId);
 
     /**

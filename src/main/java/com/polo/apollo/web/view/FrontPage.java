@@ -2,6 +2,7 @@ package com.polo.apollo.web.view;
 
 import com.polo.apollo.Application;
 import com.polo.apollo.common.Constant;
+import com.polo.apollo.entity.modal.blog.Blog;
 import com.polo.apollo.entity.modal.system.SkillTag;
 import com.polo.apollo.service.blog.BlogService;
 import com.polo.apollo.service.note.TagService;
@@ -84,10 +85,14 @@ public class FrontPage {
     @RequestMapping("/blog/{uid}.html")
     public String blog(@PathVariable String uid, Model model) {
         layout(model);
-
         blogService.updateBlogRead(uid);
-        model.addAttribute("blog", blogService.queryById(uid));
-        model.addAttribute("seo", seoService.querySeoByRelateId(Constant.SEO_BLOG, uid));
+        Blog blog = blogService.queryById(uid);
+        if (blog != null) {
+            model.addAttribute("blog", blog);
+            model.addAttribute("seo", seoService.querySeoByRelateId(Constant.SEO_BLOG, uid));
+            //相邻的博客
+            model.addAttribute("adjacent", blogService.queryPreAndNextBlog(blog));
+        }
         return MODULE + "/blog";
     }
 

@@ -10,6 +10,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -43,4 +44,11 @@ public interface BlogDao extends BaseMapper<Blog>{
      * @param uid
      */
     void updateBlogGood(String uid);
+
+    /**
+     * 查询当前博客的上下篇
+     * @param uid
+     * @return
+     */
+    List<BlogDto> queryPreAndNextBlog(@Param("uid") String uid, @Param("date") Date date);
 }

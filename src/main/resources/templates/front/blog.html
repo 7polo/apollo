@@ -57,6 +57,21 @@
                 <span th:text="'赞('+${blog.good}+')'"></span>
                 <span th:text="'评论(0)'"></span>
             </p>
+
+            <div class="row" th:if="${adjacent != null and adjacent.size() > 0}">
+                <th:block th:each="p, pStat : ${adjacent}">
+                    <div class="col-sm-6" style="text-align: left">
+                        <th:block th:if="${p.isPre}">
+                            上一篇：<a th:href="@{'/blog/'+ ${p.uid} +'.html'}" th:text="${p.name}"></a>
+                        </th:block>
+                    </div>
+                    <div class="col-sm-6" style="text-align: right" th:unless="${p.isPre}">
+                        <th:block th:unless="${p.isPre}">
+                            下一篇：<a th:href="@{'/blog/'+ ${p.uid} +'.html'}" th:text="${p.name}"></a>
+                        </th:block>
+                    </div>
+                </th:block>
+            </div>
         </th:block>
     </didv>
 </th:block>
