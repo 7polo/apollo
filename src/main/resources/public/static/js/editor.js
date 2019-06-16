@@ -93,10 +93,10 @@ function initDirTree() {
                             dirTree.edit(node);
                         }
                     };
-                    actions.delete = {
+                    actions.del = {
                         "label": "删除",
                         "action": function (data) {
-                            treeFunc.delete(dirTree.get_node(data.reference))
+                            treeFunc.del(dirTree.get_node(data.reference))
                         }
                     }
                 }
@@ -229,7 +229,7 @@ var treeFunc = {
     },
 
     // 删除节点
-    delete: function (node) {
+    del: function (node) {
         utils.post({
             url: TYPES[node.type].deleteUrl + '/' + node.id,
             success: function () {
