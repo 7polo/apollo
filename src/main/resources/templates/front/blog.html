@@ -60,7 +60,7 @@
 
             <div class="row" th:if="${adjacent != null and adjacent.size() > 0}">
                 <th:block th:each="p, pStat : ${adjacent}">
-                    <div class="col-sm-6" style="text-align: left">
+                    <div class="col-sm-6" style="text-align: left" th:if="${pStat.odd}">
                         <th:block th:if="${p.isPre}">
                             上一篇：<a th:href="@{'/blog/'+ ${p.uid} +'.html'}" th:text="${p.name}"></a>
                         </th:block>
