@@ -2,12 +2,7 @@
 <html lang="zh" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:layout="http://www.w3.org/1999/xhtml"
       layout:decorate="~{admin/components/layout}">
 <head>
-    <title>文档列表</title>
-    <style>
-        .action-bar {
-            margin-bottom: 10px;
-        }
-    </style>
+    <title>数据字典</title>
 </head>
 <body>
 <th:block layout:fragment="content">
@@ -16,7 +11,9 @@
             <div class="card">
                 <div class="card-body">
                     <div class="action-bar btn-group" role="group">
-                        <a class="btn btn-icon btn-success refreshBtn" href="#!" title="刷新" data-toggle="tooltip"><i
+                        <a class="btn btn-icon addBtn" href="#!" title="添加" data-toggle="tooltip"><i
+                                class="fa fa-plus"></i></a>
+                        <a class="btn btn-icon refreshBtn" href="#!" title="刷新" data-toggle="tooltip"><i
                                 class="fa fa-refresh"></i></a>
                     </div>
                     <div id="table"></div>
@@ -24,25 +21,27 @@
             </div>
         </div>
     </div>
-    <div class="modal" id="seoModal" tabindex="-1" role="dialog" data-backdrop="false" aria-labelledby="seoModalLabel"
+    <div class="modal" id="modal" tabindex="-1" role="dialog" data-backdrop="false" aria-labelledby="modalLabel"
          aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="seoModalLabel">SEO 设置</h5>
+                    <h5 class="modal-title" id="modalLabel">添加</h5>
                 </div>
                 <div class="modal-body">
-                    <form id="seo-form">
+                    <form id="datadic-form">
                         <div class="form-group">
-                            <label for="form-keyword" class="col-form-label">关键词(keyword):</label>
-                            <input type="text" class="form-control" id="form-keyword" name="keyword">
-                            <input type="hidden" name="relateId">
-                            <input type="hidden" name="type">
+                            <label class="col-form-label">类型:</label>
+                            <input type="text" class="form-control" name="type">
                             <input type="hidden" name="uid">
                         </div>
                         <div class="form-group">
-                            <label for="form-description" class="col-form-label">描述(description):</label>
-                            <textarea class="form-control" id="form-description" name="description"></textarea>
+                            <label class="col-form-label">名称:</label>
+                            <input type="text" class="form-control" name="name">
+                        </div>
+                        <div class="form-group">
+                            <label class="col-form-label">值:</label>
+                            <textarea class="form-control" name="value"></textarea>
                         </div>
                     </form>
                 </div>
@@ -59,94 +58,55 @@
     <script type="text/javascript">
         $(function () {
             var $table = $("#table").datagrid({
-                url: './blog/queryPage',
+                url: '/sys/datadic/queryPage',
                 column: [{
                     type: 'check'
                 }, {
-                    title: '标题',
-                    width: "200px",
+                    title: '类型',
+                    width: "100px",
+                    dataIndex: 'type'
+                }, {
+                    title: '名称',
+                    width: "100px",
                     dataIndex: 'name'
+                }, {
+                    title: '值',
+                    width: "200px",
+                    dataIndex: 'value'
                 }, {
                     title: '创建时间',
                     width: "100px",
                     dataIndex: 'createDt'
                 }, {
-                    title: '发布时间',
-                    width: "100px",
-                    dataIndex: 'publishDt',
-                    renderer: function (title, dataIndex, record) {
-                        if (record.publishDt) {
-                            return '<font color="green">' + record.publishDt + '</font>';
-                        }
-                        return '<font color="red">未发布</font>';
-                    }
-                }, {
-                    title: '标签',
-                    dataIndex: 'tagNames',
-                    align: "center",
-                    width: "120px",
-                    renderer: function (title, dataIndex, record) {
-                        var tags = (record.tagNames || "").split(",");
-                        var html = "";
-                        tags.forEach(function (tag, index) {
-                            if (tag) {
-                                html = html.concat('<a class="blog-tag bg-success">' + tag + '</a>')
-                            }
-                        });
-                        return html;
-                    }
-                }, {
                     type: 'action',
                     title: '操作',
-                    width: "80",
+                    width: "100px",
                     actions: [{
                         title: '修改',
                         icon: 'fa fa-edit',
                         handle: function (record) {
-                            parent.$(parent.document).data('multitabs').create({
-                                iframe: false,
-                                title: '编辑博客',
-                                url: './admin/note/index?noteId=' + record.noteId
-                            }, true);
+                            openModal(record)
                         }
                     }, {
                         title: '删除',
                         icon: 'fa fa-trash',
                         handle: function (record, index) {
                             utils.post({
-                                url: 'blog/delete/' + record.uid,
+                                url: '/sys/datadic/delete/' + record.uid,
                                 success: function () {
-                                    utils.notifySuccess("删除成功")
+                                    utils.notifySuccess("删除成功");
                                     $table.refresh()
                                 }
                             })
-                        }
-                    }, {
-                        title: '查看',
-                        icon: 'fa fa-eye',
-                        handle: function (record, index) {
-                            window.open('/blog/' + record.uid + '.html')
-                        }
-                    }, {
-                        title: 'SEO',
-                        icon: 'fa fa-cog',
-                        handle: function (record, index) {
-                            utils.fillForm($("#seo-form"), {type: 'blog', relateId: record.uid});
-                            $('#seoModal').unbind('show.bs.modal').on('show.bs.modal', function (e) {
-                                utils.ajax({
-                                    url: 'seo/blog/' + record.uid,
-                                    success: function (resp) {
-                                        if (resp.data) {
-                                            utils.fillForm($("#seo-form"), resp.data)
-                                        }
-                                    }
-                                })
-                            }).modal('toggle');
                         }
                     }]
                 }]
             });
             $table.renderer();
+
+            $(".addBtn").click(function () {
+                openModal({})
+            });
 
             $(".refreshBtn").click(function () {
                 $table.refresh()
@@ -154,15 +114,22 @@
 
             $(".seoSaveBtn").click(function () {
                 utils.post({
-                    url: 'seo/save',
-                    data: utils.formData($("#seo-form")),
+                    url: '/sys/datadic/save',
+                    data: utils.formData($("#datadic-form")),
                     success: function () {
-                        $('#seoModal').modal("hide");
+                        $('#modal').modal("hide");
                         utils.notifySuccess("保存成功")
+                        $table.refresh()
                     }
                 })
             })
         });
+
+        function openModal(record) {
+            $('#modal').unbind('show.bs.modal').on('show.bs.modal', function (e) {
+                utils.fillForm($("#datadic-form"), record)
+            }).modal('toggle');
+        }
     </script>
 </th:block>
 </body>
