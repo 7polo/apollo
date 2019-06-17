@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:layout="http://www.w3.org/1999/xhtml"
       layout:decorate="~{front/components/layout}">
 <head>
-    <title>Apollo首页</title>
+    <title th:text="${sys != null ?sys.title:''}">Apollo</title>
     <bloglist th:replace="~{components/bloglist :: css}"></bloglist>
 </head>
 
