@@ -1,13 +1,13 @@
 package com.polo.apollo.web.view;
 
 import com.polo.apollo.Application;
+import com.polo.apollo.aop.Log;
 import com.polo.apollo.common.Constant;
 import com.polo.apollo.entity.modal.blog.Blog;
 import com.polo.apollo.entity.modal.system.SkillTag;
 import com.polo.apollo.service.blog.BlogService;
 import com.polo.apollo.service.note.TagService;
 import com.polo.apollo.service.sytem.DataDicService;
-import com.polo.apollo.service.sytem.FriendLinkService;
 import com.polo.apollo.service.sytem.SeoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -36,14 +36,12 @@ public class FrontPage {
     private TagService tagService;
 
     @Autowired
-    private FriendLinkService friendLinkService;
-
-    @Autowired
     private SeoService seoService;
 
     @Autowired
     private DataDicService dataDicService;
 
+    @Log("首页")
     @RequestMapping
     public String index(Model model) {
         layout(model);
@@ -52,6 +50,7 @@ public class FrontPage {
         return MODULE + "/index";
     }
 
+    @Log("登录页")
     @RequestMapping("/login")
     public String login() {
         return MODULE + "/login";
@@ -64,17 +63,20 @@ public class FrontPage {
 
     @RequestMapping("sitemap.xml")
     @ResponseBody
+    @Log("网站地图")
     public String sitemaps() {
         // todo 网站地图
         return "功能暂未开发";
     }
 
+    @Log("关于")
     @RequestMapping("/about.html")
     public String about(Model model) {
         model.addAttribute(Constant.SYS, Application.sys);
         return MODULE + "/about";
     }
 
+    @Log("标签")
     @RequestMapping("/tag/{tag}.html")
     public String tag(@PathVariable String tag, Model model) {
         layout(model);
@@ -82,6 +84,7 @@ public class FrontPage {
         return MODULE + "/tag";
     }
 
+    @Log("首页")
     @RequestMapping("/blog/{uid}.html")
     public String blog(@PathVariable String uid, Model model) {
         layout(model);

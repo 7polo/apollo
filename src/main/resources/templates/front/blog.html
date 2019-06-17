@@ -92,7 +92,7 @@
                 smartypants: false,
                 preClass: 'hljs',
                 highlight: function (code, lang, callback) {
-                    console.log(code)
+                    console.logRecord(code)
                     lang = "java"
                     if (lang && hljs.getLanguage(lang)) {
                         return hljs.highlight(lang, code, true).value;

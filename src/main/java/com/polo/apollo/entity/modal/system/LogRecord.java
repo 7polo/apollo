@@ -5,12 +5,14 @@ import lombok.Data;
 
 /**
  * @author baoqianyong
- * @date 2019/06/02
+ * @date 2019/06/17
  */
 @Data
-public class FriendLink extends BaseEntity {
+public class LogRecord extends BaseEntity {
 
     private String name;
 
     private String url;
+
+    private String ip;
 }
