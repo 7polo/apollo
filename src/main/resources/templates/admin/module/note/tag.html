@@ -88,7 +88,6 @@
             $('.tag-input').focus().unbind('blur').on('keypress blur', function (event) {
                     if (event.type == "keypress") {
                         if (event.keyCode == "13") {
-                            console.logRecord(event.keyCode)
                             $(this).trigger("blur")
                         } else {
                             return;
