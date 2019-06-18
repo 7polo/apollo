@@ -1,4 +1,4 @@
-package com.polo.apollo.common;
+package com.polo.apollo.common.util;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -87,7 +87,6 @@ public class Utils {
             ObjectMapper objectMapper = new ObjectMapper();
             return objectMapper.readValue(json, clz);
         } catch (IOException e) {
-            e.printStackTrace();
         }
         return null;
     }

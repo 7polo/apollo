@@ -2,13 +2,12 @@ package com.polo.apollo.service.sytem.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.polo.apollo.common.Utils;
+import com.polo.apollo.common.util.Utils;
 import com.polo.apollo.dao.system.LogDao;
 import com.polo.apollo.entity.modal.system.LogRecord;
 import com.polo.apollo.service.sytem.LogService;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -29,6 +28,7 @@ public class LogServiceImpl implements LogService {
      */
     private ArrayBlockingQueue<LogRecord> queue = new ArrayBlockingQueue<>(50);
 
+
     @Autowired
     private LogDao logDao;
 
@@ -39,6 +39,18 @@ public class LogServiceImpl implements LogService {
             this.saveLog(getAllLog());
         }
         queue.offer(logRecord);
+    }
+
+    /**
+     * 取出队列全部的元素
+     *
+     * @return
+     */
+    @Override
+    public List<LogRecord> getAllLog() {
+        List<LogRecord> logRecordList = new ArrayList<>();
+        queue.drainTo(logRecordList);
+        return logRecordList;
     }
 
     @Override
@@ -52,29 +64,12 @@ public class LogServiceImpl implements LogService {
     public Page<LogRecord> queryPage(LogRecord log, int start, int limit) {
         LambdaQueryWrapper<LogRecord> query = new LambdaQueryWrapper<>();
         if (log != null) {
-            if (StringUtils.hasLength(log.getUrl())) {
+            if (StringUtils.hasLength(log.getName())) {
                 query.eq(LogRecord::getName, log.getName());
             }
         }
+        query.orderByDesc(LogRecord::getCreateDt);
         return (Page<LogRecord>) logDao.selectPage(new Page<>(start, limit), query);
     }
 
-    /**
-     * 5 分钟 记录一次
-     */
-    @Scheduled(fixedRate = 60000*5)
-    private void autoSave() {
-        this.saveLog(getAllLog());
-    }
-
-    /**
-     * 取出队列全部的元素
-     *
-     * @return
-     */
-    private List<LogRecord> getAllLog() {
-        List<LogRecord> logRecordList = new ArrayList<>();
-        queue.drainTo(logRecordList);
-        return logRecordList;
-    }
 }

@@ -33,3 +33,4 @@ logs
 
 application-dev.yml
 application-prod.yml
+application-test.yml

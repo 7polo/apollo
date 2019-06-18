@@ -1,6 +1,6 @@
 package com.polo.apollo.service.sytem.impl;
 
-import com.polo.apollo.common.EncryptUtil;
+import com.polo.apollo.common.util.EncryptUtil;
 import com.polo.apollo.dao.system.UserDao;
 import com.polo.apollo.entity.modal.system.User;
 import com.polo.apollo.service.sytem.UserService;

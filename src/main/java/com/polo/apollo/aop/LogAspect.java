@@ -1,6 +1,6 @@
 package com.polo.apollo.aop;
 
-import com.polo.apollo.common.WebUtils;
+import com.polo.apollo.common.util.WebUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;

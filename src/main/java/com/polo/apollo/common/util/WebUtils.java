@@ -1,4 +1,4 @@
-package com.polo.apollo.common;
+package com.polo.apollo.common.util;
 
 import javax.servlet.http.HttpServletRequest;
 

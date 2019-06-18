@@ -1,7 +1,7 @@
 package com.polo.apollo.aop;
 
-import com.polo.apollo.common.Utils;
-import com.polo.apollo.common.WebUtils;
+import com.polo.apollo.common.util.OkHttpUtil;
+import com.polo.apollo.common.util.Utils;
 import com.polo.apollo.entity.modal.system.LogRecord;
 import com.polo.apollo.service.sytem.LogService;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -12,6 +12,8 @@ import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Method;
 import java.util.Date;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author baoqianyong
@@ -20,6 +22,11 @@ import java.util.Date;
 @Component
 public class LogHandler {
 
+    /**
+     * 存储IP地址
+     */
+    private Map<String, Map<String, String>> ipMaps = new ConcurrentHashMap<>();
+
     @Autowired
     private LogService logService;
 
@@ -27,19 +34,43 @@ public class LogHandler {
     public void handler(ProceedingJoinPoint point, String url, String ip) {
         Method method = ((MethodSignature) point.getSignature()).getMethod();
         Log logAnno = method.getAnnotation(Log.class);
-        LogRecord log = new LogRecord();
+        LogRecord log = getIpInfo(ip);
         log.setUid(Utils.uuid());
         log.setCreateDt(new Date());
         log.setUrl(url);
         log.setName(logAnno.value());
         log.setIp(ip);
-
-        try {
-            Thread.sleep(1000 * 10);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
         logService.addLog(log);
-        System.out.println("asdasdasasdsd");
+    }
+
+    /**
+     * 获取ip的信息
+     *
+     * @param ip
+     * @return
+     */
+    private LogRecord getIpInfo(String ip) {
+        LogRecord log = new LogRecord();
+        Map<String, String> ipData = ipMaps.get(ip);
+        if (ipData == null) {
+            String str = OkHttpUtil.get("http://ip.taobao.com/service/getIpInfo.php?ip=" + ip);
+            Map<String, Object> json = Utils.json2Obj(str, Map.class);
+            if (json != null) {
+                ipData = (Map<String, String>) json.get("data");
+                if (ipData != null) {
+                    if (ipMaps.size() > 20) {
+                        ipMaps.clear();
+                    }
+                    ipMaps.put(ip, ipData);
+                }
+            }
+        }
+        if (ipData != null) {
+            log.setCountry(ipData.get("country"));
+            log.setRegion(ipData.get("region"));
+            log.setCity(ipData.get("city"));
+            log.setIsp(ipData.get("isp"));
+        }
+        return log;
     }
 }

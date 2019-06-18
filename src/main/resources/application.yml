@@ -1,6 +1,5 @@
 server:
   port: 8081
-
 spring:
   thymeleaf:
     mode: HTML
@@ -11,6 +10,8 @@ spring:
     username:
     password:
     type: com.alibaba.druid.pool.DruidDataSource
+  profiles:
+    active: dev
 
 mybatis-plus:
   mapper-locations: classpath*:mappers/*.xml

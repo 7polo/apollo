@@ -1,7 +1,7 @@
 package com.polo.apollo.common.config;
 
 
-import com.polo.apollo.common.EncryptUtil;
+import com.polo.apollo.common.util.EncryptUtil;
 import com.polo.apollo.shiro.UserRealm;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.mgt.SecurityManager;

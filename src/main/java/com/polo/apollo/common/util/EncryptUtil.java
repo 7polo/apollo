@@ -1,4 +1,4 @@
-package com.polo.apollo.common;
+package com.polo.apollo.common.util;
 
 import com.polo.apollo.entity.modal.system.User;
 import org.apache.shiro.crypto.hash.SimpleHash;

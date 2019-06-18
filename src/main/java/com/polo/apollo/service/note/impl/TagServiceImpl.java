@@ -1,6 +1,6 @@
 package com.polo.apollo.service.note.impl;
 
-import com.polo.apollo.common.Utils;
+import com.polo.apollo.common.util.Utils;
 import com.polo.apollo.dao.note.TagDao;
 import com.polo.apollo.dao.note.TagNoteDao;
 import com.polo.apollo.entity.dto.TagDto;

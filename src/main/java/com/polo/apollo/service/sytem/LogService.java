@@ -33,4 +33,6 @@ public interface LogService {
      * @return
      */
     Page<LogRecord> queryPage(LogRecord log, int start, int limit);
+
+    List<LogRecord> getAllLog();
 }

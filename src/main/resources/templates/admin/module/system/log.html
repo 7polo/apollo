@@ -44,6 +44,16 @@
                     title: 'ip',
                     width: "100px",
                     dataIndex: 'ip'
+                }, {
+                    title: '国/省/市',
+                    width: "100px",
+                    renderer: function (title, dataIndex, record) {
+                        return (record.country || "-") + "/" + (record.region || "-") + "/" + (record.city || "-");
+                    }
+                }, {
+                    title: '运营商',
+                    width: "100px",
+                    dataIndex: 'isp'
                 }]
             });
 
