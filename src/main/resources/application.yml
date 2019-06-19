@@ -12,6 +12,8 @@ spring:
     type: com.alibaba.druid.pool.DruidDataSource
   profiles:
     active: dev
+  jackson:
+    time-zone: GMT+8
 
 mybatis-plus:
   mapper-locations: classpath*:mappers/*.xml

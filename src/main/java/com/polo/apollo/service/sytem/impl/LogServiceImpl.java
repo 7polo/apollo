@@ -28,7 +28,6 @@ public class LogServiceImpl implements LogService {
      */
     private ArrayBlockingQueue<LogRecord> queue = new ArrayBlockingQueue<>(50);
 
-
     @Autowired
     private LogDao logDao;
 
