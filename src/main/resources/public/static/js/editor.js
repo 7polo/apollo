@@ -323,9 +323,24 @@ function markdownInit() {
         }
     });
 
-    $("#md").on("keyup blur", function () {
-        $('.md-html').html(marked($("#md").val()))
+    $("#md").on("keydown blur", function (e) {
+        if (e.keyCode === 9) {
+            e.preventDefault();
+            var indent = '    ';
+            var start = this.selectionStart;
+            var end = this.selectionEnd;
+            var selected = window.getSelection().toString();
+            selected = indent + selected.replace(/\n/g, '\n' + indent);
+            this.value = this.value.substring(0, start) + selected + this.value.substring(end);
+            this.setSelectionRange(start + indent.length, start + selected.length);
+        }
+        renderMd()
     });
+}
+
+function renderMd() {
+    console.log(new Date().toLocaleTimeString())
+    $('.md-html').html(marked($("#md").val()))
 }
 
 // 分享按钮
@@ -413,7 +428,7 @@ function searchInit() {
         }
         to = setTimeout(function () {
             var v = $('#search').val();
-            dirTree._search= true;
+            dirTree._search = true;
             dirTree.search(v);
         }, 250);
     });
@@ -434,4 +449,7 @@ $(function () {
     shareBtnInit();
     modeBtnInit();
     searchInit();
+
+    renderMd = debounce(600, renderMd)
+
 });
