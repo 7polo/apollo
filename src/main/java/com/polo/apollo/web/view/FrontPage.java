@@ -1,10 +1,8 @@
 package com.polo.apollo.web.view;
 
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.polo.apollo.Application;
 import com.polo.apollo.aop.Log;
 import com.polo.apollo.common.Constant;
-import com.polo.apollo.entity.dto.BlogDto;
 import com.polo.apollo.entity.modal.blog.Blog;
 import com.polo.apollo.entity.modal.system.SkillTag;
 import com.polo.apollo.entity.vo.BlogVo;
@@ -85,6 +83,9 @@ public class FrontPage {
     public String tag(@PathVariable String tag, Model model) {
         layout(model);
         model.addAttribute("tag", tag);
+        BlogVo vo = new BlogVo();
+        vo.setTagName(tag);
+        model.addAttribute("blogPage", blogService.queryPage(vo, 1, 10));
         return MODULE + "/tag";
     }
 

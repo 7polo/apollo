@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:layout="http://www.w3.org/1999/xhtml"
       layout:decorate="~{front/components/layout}">
 <head>
-    <title th:text="${sys != null ?sys.title:''}">Apollo</title>
+    <title th:text="${sys != null ?sys.title:''} + '个人博客'">Apollo</title>
     <bloglist th:replace="~{components/bloglist :: css}"></bloglist>
 </head>
 
@@ -45,13 +45,11 @@
 
 <th:block data-layout-fragment="script">
     <script th:inline="javascript">
-        /*<![CDATA[*/
         var page = {
             total: [[${blogPage.total}]],
             current: [[${blogPage.current}]],
             size: [[${blogPage.size}]]
         };
-        /*]]>*/
 
         function loadBlog(page, params) {
 

@@ -4,6 +4,8 @@
 <head>
     <title th:text="${tag}"></title>
     <bloglist th:replace="~{components/bloglist :: css}"></bloglist>
+    <meta name="keywords" th:content="${tag}"/>
+    <meta name=”description” th:content="${tag}"/>
 </head>
 <body>
 <div layout:fragment="content">
@@ -21,7 +23,13 @@
 </div>
 
 <th:block data-layout-fragment="script">
-    <script>
+    <script th:inline="javascript">
+        var page = {
+            total: [[${blogPage.total}]],
+            current: [[${blogPage.current}]],
+            size: [[${blogPage.size}]]
+        };
+
         function loadBlog(page, params) {
             var params = params || {};
             params.tagName = '[[${tag}]]';
@@ -41,7 +49,10 @@
         $(function () {
             $("#searchBtn").click(function () {
                 loadBlog(1, utils.formData($("#searchForm")))
-            }).trigger("click")
+            });
+            if (page && page.total) {
+                buildPagin(page, {})
+            }
         });
     </script>
 </th:block>
