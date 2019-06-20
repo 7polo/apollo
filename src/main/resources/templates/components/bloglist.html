@@ -73,7 +73,31 @@
 </head>
 <body>
 <div th:fragment="content">
-    <div class="blog-list"></div>
+    <div class="blog-list">
+        <th:block if="${blogPage != null}">
+            <th:block if="${blogPage.record != null and blogPage.record.size() > 0}">
+                <article class="blog-abi" th:each="blog, blogStat : ${blogPage.records}">
+                    <header>
+                        <a target="_blank" class="cat" th:href="@{'/catalog/' + ${blog.dirId}}"
+                           th:text="${blog.dirName}"><i></i></a>
+                        <h2><a target="_blank" th:href="@{'/blog/'+ ${blog.uid} +'.html'}" th:text="${blog.name}"></a>
+                        </h2>
+                    </header>
+                    <p class="meta">
+                        <time>
+                            <i class="fa fa-clock-o"></i>
+                            <span th:text="${#dates.format(blog.createDt, 'yyyy-MM-dd')}"></span>
+                        </time>
+                        <span class="author"><i class="fa fa-user"></i>7polo</span>
+                        <span class="pv"><i class="fa fa-eye"></i>(<span th:text="${blog.readCount}"></span>)</span>
+                        <a href="#" etap="like" class="post-like">
+                            <i class="fa fa-thumbs-o-up"></i>(<span th:text="${blog.good}"></span>)</a></p>
+                    <p class="blog-content" th:text="${blog.content}"></pre>
+                    </p>
+                </article>
+            </th:block>
+        </th:block>
+    </div>
     <div class="pageWrapper">
         <div>
             <ul class="pagination"></ul>
@@ -102,7 +126,7 @@
                 itemDom += '<span class="author"><i class="fa fa-user"></i>{author}</span>'.format(blog);
                 itemDom += '<span class="pv"><i class="fa fa-eye"></i>({readCount})</span>'.format(blog);
                 // itemDom += '<a class="pc" href="#"><i class="fa fa-comments-o"></i>评论({good})</a>'.format(blog);
-                itemDom += '<a href="javascript:;" etap="like" class="post-like" data-pid="3689"><i class="fa fa-thumbs-o-up"></i>(<span>{good}</span>)</a></p>'.format(blog);
+                itemDom += '<a href="javascript:;" etap="like" class="post-like"><i class="fa fa-thumbs-o-up"></i>(<span>{good}</span>)</a></p>'.format(blog);
                 itemDom += '<p class="blog-content">{content}</pre>'.format(blog);
                 itemDom += '</article>';
 

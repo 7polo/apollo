@@ -44,7 +44,14 @@
 </div>
 
 <th:block data-layout-fragment="script">
-    <script>
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        var page = {
+            total: [[${blogPage.total}]],
+            current: [[${blogPage.current}]],
+            size: [[${blogPage.size}]]
+        };
+        /*]]>*/
 
         function loadBlog(page, params) {
 
@@ -65,7 +72,11 @@
         $(function () {
             $("#searchBtn").click(function () {
                 loadBlog(1, utils.formData($("#searchForm")))
-            }).trigger("click")
+            });
+
+            if (page && page.total) {
+                buildPagin(page, {})
+            }
         });
     </script>
 </th:block>

@@ -1,10 +1,13 @@
 package com.polo.apollo.web.view;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.polo.apollo.Application;
 import com.polo.apollo.aop.Log;
 import com.polo.apollo.common.Constant;
+import com.polo.apollo.entity.dto.BlogDto;
 import com.polo.apollo.entity.modal.blog.Blog;
 import com.polo.apollo.entity.modal.system.SkillTag;
+import com.polo.apollo.entity.vo.BlogVo;
 import com.polo.apollo.service.blog.BlogService;
 import com.polo.apollo.service.note.TagService;
 import com.polo.apollo.service.sytem.DataDicService;
@@ -47,6 +50,7 @@ public class FrontPage {
         layout(model);
         // 轮播图配置
         model.addAttribute(Constant.DIC_CAROUSEL, dataDicService.queryListByType(Constant.DIC_CAROUSEL));
+        model.addAttribute("blogPage", blogService.queryPage(new BlogVo(), 1, 10));
         return MODULE + "/index";
     }
 
