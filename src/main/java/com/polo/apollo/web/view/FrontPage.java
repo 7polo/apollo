@@ -84,7 +84,7 @@ public class FrontPage {
         return MODULE + "/tag";
     }
 
-    @Log("首页")
+    @Log("博客")
     @RequestMapping("/blog/{uid}.html")
     public String blog(@PathVariable String uid, Model model) {
         layout(model);
