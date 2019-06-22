@@ -32,11 +32,11 @@ public class OkHttpUtil {
     private static String execNewCall(Request request) {
         Response response = null;
         try {
+            log.info("http ===> " + request.url().toString());
             response = okHttpClient.newCall(request).execute();
-            int status = response.code();
             if (response.isSuccessful()) {
                 String resp = response.body().string();
-                log.info("===> "+resp);
+                log.info("===> " + resp);
                 return resp;
             }
         } catch (Exception e) {

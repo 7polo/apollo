@@ -2,6 +2,7 @@ package com.polo.apollo.web.api;
 
 import com.polo.apollo.common.result.Result;
 import com.polo.apollo.entity.modal.system.User;
+import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class LoginController {
 
+    @ApiOperation(value = "登陆接口")
     @ResponseBody
     @PostMapping("login")
     public Result login(User user) {

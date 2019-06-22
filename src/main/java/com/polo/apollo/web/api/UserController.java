@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("user")
 public class UserController {
 
-
     @RequestMapping("updatePassword")
     public Result updatePassword(String oldPassword, String newPassword) {
         return Result.success();

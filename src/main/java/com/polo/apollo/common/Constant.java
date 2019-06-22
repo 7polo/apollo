@@ -30,4 +30,15 @@ public class Constant {
      * seo 网站
      */
     public static final String SEO_SITE = "site";
+
+
+    /**
+     * 已读blog
+     */
+    public static final String READ_BLOG = "readBlogs";
+
+    /**
+     * 已赞blog
+     */
+    public static final String GOOD_BLOG = "goodBlogs";
 }

@@ -1,7 +1,10 @@
 package com.polo.apollo.service.blog.impl;
 
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.polo.apollo.common.Constant;
 import com.polo.apollo.dao.blog.BlogDao;
-import com.polo.apollo.dao.system.SeoDao;
 import com.polo.apollo.entity.dto.BlogDto;
 import com.polo.apollo.entity.dto.BlogHotDto;
 import com.polo.apollo.entity.modal.blog.Blog;
@@ -9,9 +12,6 @@ import com.polo.apollo.entity.modal.note.Note;
 import com.polo.apollo.entity.vo.BlogVo;
 import com.polo.apollo.service.blog.BlogService;
 import com.polo.apollo.service.note.TagService;
-import com.baomidou.mybatisplus.core.conditions.Wrapper;
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -33,9 +33,6 @@ public class BlogServiceImpl implements BlogService {
 
     @Autowired
     private TagService tagService;
-
-    @Autowired
-    private SeoDao seoDao;
 
     @Autowired
     private HttpSession httpSession;
@@ -81,6 +78,7 @@ public class BlogServiceImpl implements BlogService {
 
     /**
      * 查询当前博客的上下篇
+     *
      * @param
      * @return
      */
@@ -112,9 +110,8 @@ public class BlogServiceImpl implements BlogService {
         List<String> blogIds = (List<String>) httpSession.getAttribute("readBlogs");
         if (blogIds == null) {
             blogIds = new ArrayList<>();
-            httpSession.setAttribute("readBlogs", blogIds);
+            httpSession.setAttribute(Constant.READ_BLOG, blogIds);
         }
-
         if (!blogIds.contains(uid)) {
             blogDao.updateBlogRead(uid);
             blogIds.add(uid);
@@ -126,9 +123,8 @@ public class BlogServiceImpl implements BlogService {
         List<String> blogIds = (List<String>) httpSession.getAttribute("goodBlogs");
         if (blogIds == null) {
             blogIds = new ArrayList<>();
-            httpSession.setAttribute("goodBlogs", blogIds);
+            httpSession.setAttribute(Constant.GOOD_BLOG, blogIds);
         }
-
         if (!blogIds.contains(uid)) {
             blogDao.updateBlogGood(uid);
             blogIds.add(uid);

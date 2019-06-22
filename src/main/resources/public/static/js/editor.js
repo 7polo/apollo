@@ -351,7 +351,7 @@ function shareBtnInit() {
             return
         }
         utils.post({
-            url: './blog/create',
+            url: './note/share',
             data: utils.formData($("#noteForm")),
             success: function () {
                 _this.removeAttr("disabled");

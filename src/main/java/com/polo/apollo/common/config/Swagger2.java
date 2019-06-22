@@ -14,12 +14,12 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
  * @author baoqianyong
  * @date 2019/05/27
  */
-@Configuration
-@EnableSwagger2
+//@Configuration
+//@EnableSwagger2
 //@Profile({"dev","test"})
 public class Swagger2 {
 
-    @Bean
+//    @Bean
     public Docket createRestApi() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(apiInfo())

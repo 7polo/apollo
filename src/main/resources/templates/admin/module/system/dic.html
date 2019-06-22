@@ -58,7 +58,7 @@
     <script type="text/javascript">
         $(function () {
             var $table = $("#table").datagrid({
-                url: '/sys/datadic/queryPage',
+                url: '/sys/dic/queryPage',
                 column: [{
                     type: 'check'
                 }, {
@@ -92,7 +92,7 @@
                         icon: 'fa fa-trash',
                         handle: function (record, index) {
                             utils.post({
-                                url: '/sys/datadic/delete/' + record.uid,
+                                url: '/sys/dic/delete/' + record.uid,
                                 success: function () {
                                     utils.notifySuccess("删除成功");
                                     $table.refresh()
@@ -113,7 +113,7 @@
 
             $(".seoSaveBtn").click(function () {
                 utils.post({
-                    url: '/sys/datadic/save',
+                    url: '/sys/dic/save',
                     data: utils.formData($("#datadic-form")),
                     success: function () {
                         $('#modal').modal("hide");
