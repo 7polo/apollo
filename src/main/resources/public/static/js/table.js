@@ -114,23 +114,27 @@ function Table(option) {
         var size = _pagination.size;
         var totalPage = Math.ceil(total / size);
         var html = "";
-        html += '<li class="page-item {disabled}" data-page="{page}"><a class="page-link" href="#" tabindex="-1">上一页</a></li>'.format({
-            disabled: page == 1 ? 'disabled' : '',
-            page: page - 1
-        });
-        for (var i = page - 5; i < page + 5 && i <= totalPage; i++) {
-            if (i <= 0) {
-                continue
+        if (total > 0) {
+            html += '<li class="page-item {disabled}" data-page="{page}"><a class="page-link" href="#" tabindex="-1">上一页</a></li>'.format({
+                disabled: page == 1 ? 'disabled' : '',
+                page: page - 1
+            });
+            for (var i = page - 5; i < page + 5 && i <= totalPage; i++) {
+                if (i <= 0) {
+                    continue
+                }
+                html += '<li class="page-item {active}" data-page="{page}"><a class="page-link" href="#">{page}</a></li>'.format({
+                    active: i == page ? "active" : "",
+                    page: i
+                })
             }
-            html += '<li class="page-item {active}" data-page="{page}"><a class="page-link" href="#">{page}</a></li>'.format({
-                active: i == page ? "active" : "",
-                page: i
-            })
+            html += '<li class="page-item {disabled}" data-page="{page}"><a class="page-link" href="#">下一页</a></li>'.format({
+                disabled: (page == totalPage) ? 'disabled' : '',
+                page: page + 1
+            });
         }
-        html += '<li class="page-item {disabled}" data-page="{page}"><a class="page-link" href="#">下一页</a></li>'.format({
-            disabled: (page == totalPage) ? 'disabled' : '',
-            page: page + 1
-        });
+
+        html += '<li class="page-total"><span>共 '+(total||0)+' 条</span></li>';
         return '<ul class="pagination">'.concat(html).concat('</ul>')
     }
 
