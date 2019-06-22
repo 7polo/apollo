@@ -50,7 +50,7 @@
                     </a>
                 </th:block>
             </p>
-            <div id="md-content" th:text="${blog.content}"></div>
+            <div id="md-content" class="markdown-body" th:text="${blog.content}"></div>
             <p class="meta">
                 <span th:text="${#dates.format(blog.createDt, 'yyyy-MM-dd')}"></span>
                 <span th:text="'阅读('+${blog.readCount}+')'"></span>
