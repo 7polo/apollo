@@ -416,3 +416,6 @@ a.bg-success:hover {
     font-size: .8em;
 }
 
+.markdown-body table{border-right:1px solid #aaa;border-bottom:1px solid #aaa}
+.markdown-body table td, .markdown-body table th{border-left:1px solid #aaa;border-top:1px solid #aaa}
+
