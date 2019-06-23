@@ -4,12 +4,14 @@ import com.polo.apollo.Application;
 import com.polo.apollo.aop.Log;
 import com.polo.apollo.common.Constant;
 import com.polo.apollo.entity.modal.blog.Blog;
+import com.polo.apollo.entity.modal.system.SiteMap;
 import com.polo.apollo.entity.modal.system.SkillTag;
 import com.polo.apollo.entity.vo.BlogVo;
 import com.polo.apollo.service.blog.BlogService;
 import com.polo.apollo.service.note.TagService;
 import com.polo.apollo.service.sytem.DataDicService;
 import com.polo.apollo.service.sytem.SeoService;
+import com.polo.apollo.service.sytem.SiteMapService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,6 +19,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,6 +47,9 @@ public class FrontPage {
     @Autowired
     private DataDicService dataDicService;
 
+    @Autowired
+    private SiteMapService siteMapService;
+
     @Log("首页")
     @RequestMapping
     public String index(Model model) {
@@ -64,11 +72,18 @@ public class FrontPage {
     }
 
     @RequestMapping("sitemap.xml")
-    @ResponseBody
     @Log("网站地图")
-    public String sitemaps() {
-        // todo 网站地图
-        return "功能暂未开发";
+    public void sitemaps(HttpServletResponse resp) {
+        SiteMap siteMap = siteMapService.getSiteMap();
+        try {
+            PrintWriter out = resp.getWriter();
+            resp.setContentType("text/xml;charset=UTF-8");
+            String content = siteMap.getContent()==null?"":siteMap.getContent();
+            out.write(content);
+            out.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Log("关于")
