@@ -396,8 +396,10 @@ hr {
     margin-top: .5rem;
 }
 
-.markdown-body h1 {
+.markdown-body h3, .markdown-body h2, .markdown-body h1 {
     font-size: 1.8em;
+    padding-top: 15px;
+    margin-bottom: 0;
 }
 
 .markdown-body h2 {
@@ -408,23 +410,14 @@ hr {
     font-size: 1.4em;
 }
 
-.markdown-body h3, .markdown-body h2, .markdown-body h1 {
-    padding-top: 8px;
-    padding-bottom: 8px;
-    margin-bottom: 0;
-}
-
-.markdown-body h4 {
+.markdown-body h4, .markdown-body h5 {
     font-size: 1.2em;
-    padding-top: 6px;
-    padding-bottom: 6px;
+    padding-top: 12px;
     margin-bottom: 0;
 }
 
 .markdown-body h5 {
     font-size: 1em;
-    padding-top: 4px;
-    margin-bottom: 0;
 }
 
 .markdown-body h6 {
