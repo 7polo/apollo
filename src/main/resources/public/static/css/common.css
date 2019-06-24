@@ -392,6 +392,10 @@ a.bg-success:hover {
     display: none;
 }
 
+hr {
+    margin-top: .5rem;
+}
+
 .markdown-body h1 {
     font-size: 1.8em;
 }
@@ -404,18 +408,37 @@ a.bg-success:hover {
     font-size: 1.4em;
 }
 
+.markdown-body h3, .markdown-body h2, .markdown-body h1 {
+    padding-top: 8px;
+    padding-bottom: 8px;
+    margin-bottom: 0;
+}
+
 .markdown-body h4 {
     font-size: 1.2em;
+    padding-top: 6px;
+    padding-bottom: 6px;
+    margin-bottom: 0;
 }
 
 .markdown-body h5 {
     font-size: 1em;
+    padding-top: 4px;
+    margin-bottom: 0;
 }
 
 .markdown-body h6 {
     font-size: .8em;
+    margin-bottom: 0;
 }
 
-.markdown-body table{border-right:1px solid #aaa;border-bottom:1px solid #aaa}
-.markdown-body table td, .markdown-body table th{border-left:1px solid #aaa;border-top:1px solid #aaa}
+.markdown-body table {
+    border-right: 1px solid #aaa;
+    border-bottom: 1px solid #aaa
+}
+
+.markdown-body table td, .markdown-body table th {
+    border-left: 1px solid #aaa;
+    border-top: 1px solid #aaa
+}
 
