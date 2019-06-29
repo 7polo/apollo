@@ -40,7 +40,7 @@ public interface NoteService {
      * @param dirId
      * @return
      */
-    List<CatalogDto> queryDtoList(String dirId);
+    List<CatalogDto> queryCatalogDtoList(String dirId);
 
     /**
      * 查询 note 的目录树

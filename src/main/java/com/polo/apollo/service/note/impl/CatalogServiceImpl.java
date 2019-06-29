@@ -47,7 +47,7 @@ public class CatalogServiceImpl implements CatalogService {
             // 查询当前目录节点
             List<CatalogDto> catList = catalogDao.queryList(dirId);
             // 查询当前 note 节点
-            List<CatalogDto> noteList = noteService.queryDtoList(dirId);
+            List<CatalogDto> noteList = noteService.queryCatalogDtoList(dirId);
 
             catList.addAll(noteList);
             return Utils.buildTree(catList, (c1, c2) -> c1.get("id").equals(c2.get("dirId")));
