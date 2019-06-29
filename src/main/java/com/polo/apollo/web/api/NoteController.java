@@ -64,7 +64,7 @@ public class NoteController {
     @ApiOperation(value = "根据主键id 点赞blog")
     @GetMapping("good/{blogId}")
     public Result good(@PathVariable String blogId) {
-        noteService.updateGood(blogId);
+        noteService.addGood(blogId);
         return Result.success();
     }
 }

@@ -38,11 +38,11 @@
         (SELECT uid, note_id, 'false' as isPre  FROM t_note WHERE uid != #{uid} and deleted = 0 and publish_dt is not null and publish_dt >= #{date} ORDER BY create_dt ASC LIMIT 1)
     </select>
 
-    <update id="updateRead">
+    <update id="addRead">
         update t_note set read_count = read_count + 1 where uid = #{uid}
     </update>
 
-    <update id="updateGood">
+    <update id="addGood">
         update t_note set good = good + 1 where uid = #{uid}
     </update>
 

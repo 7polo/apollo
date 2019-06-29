@@ -107,7 +107,7 @@ public class FrontPage {
     @RequestMapping("/blog/{uid}.html")
     public String blog(@PathVariable String uid, Model model) {
         layout(model);
-        noteService.updateRead(uid);
+        noteService.addRead(uid);
         Note blog = noteService.queryPublishedById(uid);
         if (blog != null) {
             model.addAttribute("blog", blog);

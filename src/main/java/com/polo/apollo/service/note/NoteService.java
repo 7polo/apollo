@@ -54,13 +54,13 @@ public interface NoteService {
      *
      * @param uid
      */
-    void updateRead(String uid);
+    void addRead(String uid);
 
     /**
      * 增加点赞数
      * @param uid
      */
-    void updateGood(String uid);
+    void addGood(String uid);
 
     Note queryPublishedById(String uid);
 

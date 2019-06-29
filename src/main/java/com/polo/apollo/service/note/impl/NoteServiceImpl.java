@@ -130,27 +130,27 @@ public class NoteServiceImpl implements NoteService {
     }
 
     @Override
-    public void updateRead(String uid) {
+    public void addRead(String uid) {
         List<String> blogIds = (List<String>) httpSession.getAttribute(Constant.READ_BLOG);
         if (blogIds == null) {
             blogIds = new ArrayList<>();
             httpSession.setAttribute(Constant.READ_BLOG, blogIds);
         }
         if (!blogIds.contains(uid)) {
-            noteDao.updateRead(uid);
+            noteDao.addRead(uid);
             blogIds.add(uid);
         }
     }
 
     @Override
-    public void updateGood(String uid) {
+    public void addGood(String uid) {
         List<String> blogIds = (List<String>) httpSession.getAttribute(Constant.GOOD_BLOG);
         if (blogIds == null) {
             blogIds = new ArrayList<>();
             httpSession.setAttribute(Constant.GOOD_BLOG, blogIds);
         }
         if (!blogIds.contains(uid)) {
-            noteDao.updateGood(uid);
+            noteDao.addGood(uid);
             blogIds.add(uid);
         }
     }
