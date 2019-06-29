@@ -3,11 +3,12 @@ package com.polo.apollo.web.view;
 import com.polo.apollo.Application;
 import com.polo.apollo.aop.Log;
 import com.polo.apollo.common.Constant;
+import com.polo.apollo.entity.dto.NoteDto;
 import com.polo.apollo.entity.modal.blog.Blog;
+import com.polo.apollo.entity.modal.note.Note;
 import com.polo.apollo.entity.modal.system.SiteMap;
 import com.polo.apollo.entity.modal.system.SkillTag;
 import com.polo.apollo.entity.vo.BlogVo;
-import com.polo.apollo.service.blog.BlogService;
 import com.polo.apollo.service.note.NoteService;
 import com.polo.apollo.service.note.TagService;
 import com.polo.apollo.service.sytem.DataDicService;
@@ -18,7 +19,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -35,9 +35,6 @@ import java.util.List;
 public class FrontPage {
 
     protected static final String MODULE = "front";
-
-    @Autowired
-    private BlogService blogService;
 
     @Autowired
     private NoteService noteService;
@@ -60,7 +57,7 @@ public class FrontPage {
         layout(model);
         // 轮播图配置
         model.addAttribute(Constant.DIC_CAROUSEL, dataDicService.queryListByType(Constant.DIC_CAROUSEL));
-        model.addAttribute("blogPage", blogService.queryPage(new BlogVo(), 1, 10));
+        model.addAttribute("blogPage", noteService.queryPage(new NoteDto(), 1, 10));
         return MODULE + "/index";
     }
 
@@ -102,9 +99,9 @@ public class FrontPage {
     public String tag(@PathVariable String tag, Model model) {
         layout(model);
         model.addAttribute("tag", tag);
-        BlogVo vo = new BlogVo();
-        vo.setTagName(tag);
-        model.addAttribute("blogPage", blogService.queryPage(vo, 1, 10));
+        NoteDto vo = new NoteDto();
+//        vo.setTagName(tag);
+        model.addAttribute("blogPage", noteService.queryPage(vo, 1, 10));
         return MODULE + "/tag";
     }
 
@@ -113,19 +110,19 @@ public class FrontPage {
     public String blog(@PathVariable String uid, Model model) {
         layout(model);
         noteService.updateBlogRead(uid);
-        Blog blog = blogService.queryById(uid);
+        Note blog = noteService.queryById(uid);
         if (blog != null) {
             model.addAttribute("blog", blog);
             model.addAttribute("seo", seoService.querySeoByRelateId(Constant.SEO_BLOG, uid));
             //相邻的博客
-            model.addAttribute("adjacent", blogService.queryPreAndNextBlog(blog));
+//            model.addAttribute("adjacent", blogService.queryPreAndNextBlog(blog));
         }
         return MODULE + "/blog";
     }
 
     private void layout(Model model) {
         model.addAttribute(Constant.SYS, Application.sys);
-        model.addAttribute("hots", blogService.queryHotBlog(5));
+//        model.addAttribute("hots", blogService.queryHotBlog(5));
         model.addAttribute("tags", tagService.queryBlogCount());
         model.addAttribute("friendLinks", dataDicService.queryListByType(Constant.DIC_FRIEND_LINK));
         model.addAttribute("skills", getList());

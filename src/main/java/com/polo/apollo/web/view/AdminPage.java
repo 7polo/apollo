@@ -2,14 +2,10 @@ package com.polo.apollo.web.view;
 
 import com.polo.apollo.Application;
 import com.polo.apollo.common.Constant;
-import com.polo.apollo.entity.modal.blog.Blog;
-import com.polo.apollo.service.blog.BlogService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  * @author baoqianyong
@@ -20,8 +16,7 @@ public class AdminPage {
 
     protected static final String MODULE = "admin";
 
-    @Autowired
-    private BlogService blogService;
+
 
     @RequestMapping
     public String index(Model model) {
@@ -29,15 +24,15 @@ public class AdminPage {
         return MODULE + "/" + "admin";
     }
 
-    @RequestMapping("/blog/editor")
-    public String module(@RequestParam(required = false) String uid, Model model) {
-        Blog blog = blogService.queryById(uid);
-        if (blog == null) {
-            blog = new Blog();
-        }
-        model.addAttribute("blog", blog);
-        return this.module(String.format("%s/%s", "blog", "editor"));
-    }
+//    @RequestMapping("/blog/editor")
+//    public String module(@RequestParam(required = false) String uid, Model model) {
+////        Blog blog = blogService.queryById(uid);
+//        if (blog == null) {
+//            blog = new Blog();
+//        }
+//        model.addAttribute("blog", blog);
+//        return this.module(String.format("%s/%s", "blog", "editor"));
+//    }
 
     @RequestMapping("/note/index")
     public String module(Model model, String noteId) {

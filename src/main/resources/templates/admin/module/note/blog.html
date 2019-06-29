@@ -61,7 +61,7 @@
     <script type="text/javascript">
         $(function () {
             var $table = $("#table").datagrid({
-                url: './blog/queryPage',
+                url: '/note/queryPage',
                 column: [{
                     type: 'check'
                 }, {
@@ -108,7 +108,7 @@
                             parent.$(parent.document).data('multitabs').create({
                                 iframe: false,
                                 title: '编辑博客',
-                                url: './admin/note/index?noteId=' + record.noteId
+                                url: './admin/note/index?noteId=' + record.uid
                             }, true);
                         }
                     }, {
@@ -116,7 +116,7 @@
                         icon: 'fa fa-trash',
                         handle: function (record, index) {
                             utils.post({
-                                url: 'blog/delete/' + record.uid,
+                                url: '/note/delete/' + record.uid,
                                 success: function () {
                                     utils.notifySuccess("删除成功")
                                     $table.refresh()

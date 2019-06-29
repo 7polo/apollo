@@ -2,9 +2,7 @@ package com.polo.apollo.web.api;
 
 import com.polo.apollo.common.result.Result;
 import com.polo.apollo.entity.dto.NoteDto;
-import com.polo.apollo.entity.modal.blog.Blog;
 import com.polo.apollo.entity.modal.note.Note;
-import com.polo.apollo.service.blog.BlogService;
 import com.polo.apollo.service.note.NoteService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,17 +19,16 @@ public class NoteController {
     @Autowired
     private NoteService noteService;
 
-    @Autowired
-    private BlogService blogService;
+
 
     @ApiOperation(value = "将 note 分享成 blog")
     @PostMapping("share")
     public Result shareToBlog(Note note) {
-        if (blogService.queryBlogNoteId(note.getUid()) != null) {
-            return Result.error("该笔已分享过， 无需再次分享");
-        }
-        Blog blog = blogService.createBlogWithNote(note);
-        return Result.success(blog);
+//        if (blogService.queryBlogNoteId(note.getUid()) != null) {
+//            return Result.error("该笔已分享过， 无需再次分享");
+//        }
+//        Blog blog = blogService.createBlogWithNote(note);
+        return Result.success();
     }
 
     @ApiOperation(value = "根据 noteid 查询 note")
