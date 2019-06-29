@@ -6,6 +6,7 @@ import com.polo.apollo.entity.modal.note.Note;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.polo.apollo.entity.vo.NoteVo;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
@@ -22,11 +23,10 @@ public interface NoteDao extends BaseMapper<Note> {
     /**
      * 分页查询
      * @param objectPage
-     * @param noteDto
-     * @param abbre 内容缩略
+     * @param vo
      * @return
      */
-    IPage<NoteDto> queryBlogPage(Page<Object> objectPage, NoteDto noteDto, boolean abbre);
+    IPage<NoteDto> queryBlogPage(Page<Object> objectPage, @Param("vo") NoteVo vo);
 
 
     /**
@@ -43,8 +43,16 @@ public interface NoteDao extends BaseMapper<Note> {
      */
     CatalogDto queryCatalogDto(@Param("uid") String uid);
 
+    /**
+     * 增加阅读量
+     * @param uid
+     */
     void addRead(String uid);
 
+    /**
+     * 点赞
+     * @param uid
+     */
     void addGood(String uid);
 
     /**
@@ -53,6 +61,6 @@ public interface NoteDao extends BaseMapper<Note> {
      * @param publishDt
      * @return
      */
-    List<Note> queryPublishedPreAndNext(@Param("uid") String uid, @Param("publishDt") Date publishDt);
+    List<NoteDto> queryPublishedPreAndNext(@Param("uid") String uid, @Param("publishDt") Date publishDt);
 
 }

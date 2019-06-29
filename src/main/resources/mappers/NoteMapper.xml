@@ -6,9 +6,37 @@
 
     <select id="queryBlogPage" resultType="com.polo.apollo.entity.dto.NoteDto">
         select
-        n.uid, n.create_dt, n.deleted, n.dir_id, n.name, left(n.content, 100) content, n.publish_dt, n.read_count, n.good,
-        c.name as catalog_name from t_note n
+        n.uid, n.create_dt, n.deleted, n.dir_id, n.name,  n.read_count, n.good,n.publish_dt,
+        <choose>
+            <when test="vo.abbre">
+                left(n.content, 100) as content
+            </when>
+            <otherwise>
+                n.content
+            </otherwise>
+        </choose>
+        , c.name  as catalog_name
+        from t_note n
         left join t_catalog c on c.uid = n.dir_id
+        left join t_tag_note tn on tn.note_id = n.uid
+        left join t_tag t on tn.tag_id = t.uid
+        <where>
+            <if test="vo.published != null">
+                <choose>
+                    <when test="vo.published">
+                        and n.publish_dt is not null
+                    </when>
+                    <otherwise>
+                        and n.publish_dt is null
+                    </otherwise>
+                </choose>
+            </if>
+
+            <if test='vo.tagName != null and vo.tagName != ""'>
+                and t.name = #{vo.tagName}
+            </if>
+        </where>
+        group by n.uid
     </select>
 
     <select id="queryDtoList" resultType="com.polo.apollo.entity.dto.CatalogDto">

@@ -3,10 +3,10 @@ package com.polo.apollo.web.view;
 import com.polo.apollo.Application;
 import com.polo.apollo.aop.Log;
 import com.polo.apollo.common.Constant;
-import com.polo.apollo.entity.dto.NoteDto;
 import com.polo.apollo.entity.modal.note.Note;
 import com.polo.apollo.entity.modal.system.SiteMap;
 import com.polo.apollo.entity.modal.system.SkillTag;
+import com.polo.apollo.entity.vo.NoteVo;
 import com.polo.apollo.service.note.NoteService;
 import com.polo.apollo.service.note.TagService;
 import com.polo.apollo.service.sytem.DataDicService;
@@ -55,7 +55,9 @@ public class FrontPage {
         layout(model);
         // 轮播图配置
         model.addAttribute(Constant.DIC_CAROUSEL, dataDicService.queryListByType(Constant.DIC_CAROUSEL));
-        model.addAttribute("blogPage", noteService.queryPage(new NoteDto(), 1, 10));
+        NoteVo vo = new NoteVo();
+        vo.setAbbre(true);
+        model.addAttribute("blogPage", noteService.queryPage(vo, 1, 10));
         return MODULE + "/index";
     }
 
@@ -97,8 +99,9 @@ public class FrontPage {
     public String tag(@PathVariable String tag, Model model) {
         layout(model);
         model.addAttribute("tag", tag);
-        NoteDto vo = new NoteDto();
-//        vo.setTagName(tag);
+        NoteVo vo = new NoteVo();
+        vo.setTagName(tag);
+        vo.setAbbre(true);
         model.addAttribute("blogPage", noteService.queryPage(vo, 1, 10));
         return MODULE + "/tag";
     }
@@ -111,6 +114,7 @@ public class FrontPage {
         Note blog = noteService.queryPublishedById(uid);
         if (blog != null) {
             model.addAttribute("blog", blog);
+            model.addAttribute("blogTag", tagService.queryByNoteId(uid));
             model.addAttribute("seo", seoService.querySeoByRelateId(Constant.SEO_BLOG, uid));
             //相邻的博客
             model.addAttribute("adjacent", noteService.queryPublishedPreAndNext(blog));

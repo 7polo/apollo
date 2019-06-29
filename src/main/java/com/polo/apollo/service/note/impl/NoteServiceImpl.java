@@ -12,6 +12,7 @@ import com.polo.apollo.entity.dto.CatalogDto;
 import com.polo.apollo.entity.dto.NoteDto;
 import com.polo.apollo.entity.modal.note.Note;
 import com.polo.apollo.entity.modal.note.Tag;
+import com.polo.apollo.entity.vo.NoteVo;
 import com.polo.apollo.service.note.NoteService;
 import com.polo.apollo.service.note.TagService;
 import org.springframework.beans.BeanUtils;
@@ -88,13 +89,8 @@ public class NoteServiceImpl implements NoteService {
     }
 
     @Override
-    public IPage<NoteDto> queryPage(NoteDto noteDto, int start, int limit) {
-        return noteDao.queryBlogPage(new Page<>(start, limit), noteDto, false);
-    }
-
-    @Override
-    public IPage<NoteDto> queryAbbrePage(NoteDto noteDto, int start, int limit) {
-        return noteDao.queryBlogPage(new Page<>(start, limit), noteDto, true);
+    public IPage<NoteDto> queryPage(NoteVo vo, int start, int limit) {
+        return noteDao.queryBlogPage(new Page<>(start, limit), vo);
     }
 
     @Override
@@ -168,7 +164,7 @@ public class NoteServiceImpl implements NoteService {
     }
 
     @Override
-    public List<Note> queryPublishedPreAndNext(Note note) {
+    public List<NoteDto> queryPublishedPreAndNext(Note note) {
         return noteDao.queryPublishedPreAndNext(note.getUid(), note.getPublishDt());
     }
 }

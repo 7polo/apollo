@@ -28,10 +28,6 @@ public class NoteDto extends Note {
      */
     private List<Tag> tags;
 
-    /**
-     * 标签 tag1,tag2
-     */
-    private String tagNames;
 
     /**
      * 是否是上一篇

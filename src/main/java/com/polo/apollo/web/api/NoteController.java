@@ -3,6 +3,7 @@ package com.polo.apollo.web.api;
 import com.polo.apollo.common.result.Result;
 import com.polo.apollo.entity.dto.NoteDto;
 import com.polo.apollo.entity.modal.note.Note;
+import com.polo.apollo.entity.vo.NoteVo;
 import com.polo.apollo.service.note.NoteService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,14 +52,18 @@ public class NoteController {
 
     @ApiOperation(value = "分页查询note")
     @GetMapping("queryPage")
-    public Result queryPage(NoteDto noteDto, int start, int limit) {
-        return Result.success(noteService.queryPage(noteDto, start, limit));
+    public Result queryPage(NoteVo vo, int start, int limit) {
+        return Result.success(noteService.queryPage(vo, start, limit));
     }
 
-    @ApiOperation(value = "分页查询note")
+    @ApiOperation(value = "分页查询 缩略内容的note")
     @GetMapping("queryAbbrePage")
-    public Result queryAbbrePage(NoteDto noteDto, int start, int limit) {
-        return Result.success(noteService.queryAbbrePage(noteDto, start, limit));
+    public Result queryAbbrePage(NoteVo vo, int start, int limit) {
+        if (vo == null) {
+            vo = new NoteVo();
+        }
+        vo.setAbbre(true);
+        return Result.success(noteService.queryPage(vo, start, limit));
     }
 
     @ApiOperation(value = "查找note的所有父节点， 构建该note的目录树")

@@ -1,10 +1,11 @@
 package com.polo.apollo.service.note;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.polo.apollo.common.entity.Tree;
 import com.polo.apollo.entity.dto.CatalogDto;
 import com.polo.apollo.entity.dto.NoteDto;
-import com.polo.apollo.common.entity.Tree;
 import com.polo.apollo.entity.modal.note.Note;
-import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.polo.apollo.entity.vo.NoteVo;
 
 import java.util.List;
 
@@ -18,34 +19,34 @@ public interface NoteService {
 
     /**
      * 分享博客
+     *
      * @param note
      */
     void share(Note note);
 
     void deleteByUid(String uid);
 
+    /**
+     * 根据id获取note
+     *
+     * @param uid
+     * @return
+     */
     NoteDto queryById(String uid);
 
     /**
      * 查询分页
-     * @param noteDto
+     *
+     * @param vo    查询参数
      * @param start
      * @param limit
      * @return
      */
-    IPage<NoteDto> queryPage(NoteDto noteDto, int start, int limit);
-
-    /**
-     * 分页缩略查询
-     * @param noteDto
-     * @param start
-     * @param limit
-     * @return
-     */
-    IPage<NoteDto> queryAbbrePage(NoteDto noteDto, int start, int limit);
+    IPage<NoteDto> queryPage(NoteVo vo, int start, int limit);
 
     /**
      * 查询 目录下的 note
+     *
      * @param dirId
      * @return
      */
@@ -53,6 +54,7 @@ public interface NoteService {
 
     /**
      * 查询 note 的目录树
+     *
      * @param uid
      * @return
      */
@@ -67,6 +69,7 @@ public interface NoteService {
 
     /**
      * 增加点赞数
+     *
      * @param uid
      */
     void addGood(String uid);
@@ -75,8 +78,9 @@ public interface NoteService {
 
     /**
      * 查询发布时间上下篇
+     *
      * @param note
      * @return
      */
-    List<Note> queryPublishedPreAndNext(Note note);
+    List<NoteDto> queryPublishedPreAndNext(Note note);
 }
