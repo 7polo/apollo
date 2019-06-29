@@ -167,4 +167,9 @@ public class NoteServiceImpl implements NoteService {
     public List<NoteDto> queryPublishedPreAndNext(Note note) {
         return noteDao.queryPublishedPreAndNext(note.getUid(), note.getPublishDt());
     }
+
+    @Override
+    public List<Note> queryHotBlog(int i) {
+        return noteDao.queryHotBlog(i);
+    }
 }

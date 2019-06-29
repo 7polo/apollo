@@ -58,7 +58,7 @@
                     <div class="hot-blog-item">
                         <div class="title" th:text="${hot.name}"></div>
                         <div class="meta"
-                             th:text="${#dates.format(hot.createDt, 'yyyy-MM-dd')} + '  阅读('+${hot.readCount}+')'"></div>
+                             th:text="${#dates.format(hot.publishDt, 'yyyy-MM-dd')} + '  阅读('+${hot.readCount}+')'"></div>
                     </div>
                 </a>
             </div>

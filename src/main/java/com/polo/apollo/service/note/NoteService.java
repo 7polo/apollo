@@ -89,4 +89,11 @@ public interface NoteService {
      * @return
      */
     List<NoteDto> queryPublishedPreAndNext(Note note);
+
+    /**
+     * 查询热门blog
+     * @param i
+     * @return
+     */
+    List<Note> queryHotBlog(int i);
 }

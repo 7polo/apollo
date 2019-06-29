@@ -66,6 +66,10 @@
         (SELECT uid, name, 'false' as isPre  FROM t_note WHERE uid != #{uid} and deleted = 0 and publish_dt is not null and publish_dt >= #{publishDt} ORDER BY publish_dt ASC LIMIT 1)
     </select>
 
+    <select id="queryHotBlog" resultType="com.polo.apollo.entity.modal.note.Note">
+        select n.name, n.read_count, n.publish_dt from t_note n where n.publish_dt is not null order by n.read_count desc limit #{limit}
+    </select>
+
     <update id="addRead">
         update t_note set read_count = read_count + 1 where uid = #{uid}
     </update>

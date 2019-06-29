@@ -57,6 +57,8 @@ public class FrontPage {
         model.addAttribute(Constant.DIC_CAROUSEL, dataDicService.queryListByType(Constant.DIC_CAROUSEL));
         NoteVo vo = new NoteVo();
         vo.setAbbre(true);
+        // 已发布的 note 才是 blog
+        vo.setPublished(true);
         model.addAttribute("blogPage", noteService.queryPage(vo, 1, 10));
         return MODULE + "/index";
     }
@@ -102,6 +104,8 @@ public class FrontPage {
         NoteVo vo = new NoteVo();
         vo.setTagName(tag);
         vo.setAbbre(true);
+        // 已发布的 note 才是 blog
+        vo.setPublished(true);
         model.addAttribute("blogPage", noteService.queryPage(vo, 1, 10));
         return MODULE + "/tag";
     }
@@ -124,7 +128,7 @@ public class FrontPage {
 
     private void layout(Model model) {
         model.addAttribute(Constant.SYS, Application.sys);
-//        model.addAttribute("hots", blogService.queryHotBlog(5));
+        model.addAttribute("hots", noteService.queryHotBlog(5));
         model.addAttribute("tags", tagService.queryTagCount(true));
         model.addAttribute("friendLinks", dataDicService.queryListByType(Constant.DIC_FRIEND_LINK));
         model.addAttribute("skills", getList());

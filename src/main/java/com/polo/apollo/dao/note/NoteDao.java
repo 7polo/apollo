@@ -69,4 +69,10 @@ public interface NoteDao extends BaseMapper<Note> {
      */
     List<NoteDto> queryPublishedPreAndNext(@Param("uid") String uid, @Param("publishDt") Date publishDt);
 
+    /**
+     * 查询热门博客
+     * @param limit 条数
+     * @return
+     */
+    List<Note> queryHotBlog(int limit);
 }
