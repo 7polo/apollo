@@ -42,14 +42,14 @@
         </th:block>
         <th:block th:if="${blog} != null">
             <h3 class="title" th:text="${blog.name}"></h3>
-            <p th:if="${blog.tags != null and blog.tags.size() > 0}">
-                <th:block th:each="tag, tagStat : ${blog.tags}">
-                    <a class="blog-tag bg-success" th:href="@{'/tag/'+${tag.name}}">
-                        <i class="fa fa-tag"></i>
-                        <span th:text="${tag.name}"></span>
-                    </a>
-                </th:block>
-            </p>
+<!--            <p th:if="${blog.tags != null and blog.tags.size() > 0}">-->
+<!--                <th:block th:each="tag, tagStat : ${blog.tags}">-->
+<!--                    <a class="blog-tag bg-success" th:href="@{'/tag/'+${tag.name}}">-->
+<!--                        <i class="fa fa-tag"></i>-->
+<!--                        <span th:text="${tag.name}"></span>-->
+<!--                    </a>-->
+<!--                </th:block>-->
+<!--            </p>-->
             <div id="md-content" class="markdown-body" th:text="${blog.content}"></div>
             <p class="meta">
                 <span th:text="${#dates.format(blog.createDt, 'yyyy-MM-dd')}"></span>

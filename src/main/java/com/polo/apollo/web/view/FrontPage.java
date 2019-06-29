@@ -77,7 +77,7 @@ public class FrontPage {
         try {
             PrintWriter out = resp.getWriter();
             resp.setContentType("text/xml;charset=UTF-8");
-            String content = siteMap.getContent()==null?"":siteMap.getContent();
+            String content = siteMap.getContent() == null ? "" : siteMap.getContent();
             out.write(content);
             out.flush();
         } catch (IOException e) {

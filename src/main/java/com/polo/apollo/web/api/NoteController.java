@@ -55,6 +55,12 @@ public class NoteController {
         return Result.success(noteService.queryPage(noteDto, start, limit));
     }
 
+    @ApiOperation(value = "分页查询note")
+    @GetMapping("queryAbbrePage")
+    public Result queryAbbrePage(NoteDto noteDto, int start, int limit) {
+        return Result.success(noteService.queryAbbrePage(noteDto, start, limit));
+    }
+
     @ApiOperation(value = "查找note的所有父节点， 构建该note的目录树")
     @GetMapping("queryNoteTree/{uid}")
     public Result queryNoteTree(@PathVariable String uid) {

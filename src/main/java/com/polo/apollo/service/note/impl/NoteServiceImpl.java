@@ -88,8 +88,13 @@ public class NoteServiceImpl implements NoteService {
     }
 
     @Override
-    public IPage<Note> queryPage(NoteDto noteDto, int start, int limit) {
-        return noteDao.queryBlogPage(new Page<>(start, limit), noteDto);
+    public IPage<NoteDto> queryPage(NoteDto noteDto, int start, int limit) {
+        return noteDao.queryBlogPage(new Page<>(start, limit), noteDto, false);
+    }
+
+    @Override
+    public IPage<NoteDto> queryAbbrePage(NoteDto noteDto, int start, int limit) {
+        return noteDao.queryBlogPage(new Page<>(start, limit), noteDto, true);
     }
 
     @Override
@@ -102,7 +107,7 @@ public class NoteServiceImpl implements NoteService {
 
     @Override
     public Tree queryNoteTree(String uid) {
-        CatalogDto dto = noteDao.queryDto(uid);
+        CatalogDto dto = noteDao.queryCatalogDto(uid);
         if (dto != null) {
 
             Map<String, CatalogDto> map = new HashMap<>();
@@ -158,7 +163,7 @@ public class NoteServiceImpl implements NoteService {
     @Override
     public Note queryPublishedById(String uid) {
         LambdaQueryWrapper<Note> query = new LambdaQueryWrapper<>();
-        query.eq(Note::getUid, uid).isNull(Note::getPublishDt);
+        query.eq(Note::getUid, uid).isNotNull(Note::getPublishDt);
         return noteDao.selectOne(query);
     }
 

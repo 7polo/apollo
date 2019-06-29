@@ -57,7 +57,7 @@
             params.limit = 10;
             // 此处采用工具ajax
             utils.ajax({
-                url: './note/queryPage',
+                url: './note/queryAbbrePage',
                 data: params,
                 success: function (resp) {
                     buildBlogList(resp.data);

@@ -33,7 +33,16 @@ public interface NoteService {
      * @param limit
      * @return
      */
-    IPage<Note> queryPage(NoteDto noteDto, int start, int limit);
+    IPage<NoteDto> queryPage(NoteDto noteDto, int start, int limit);
+
+    /**
+     * 分页缩略查询
+     * @param noteDto
+     * @param start
+     * @param limit
+     * @return
+     */
+    IPage<NoteDto> queryAbbrePage(NoteDto noteDto, int start, int limit);
 
     /**
      * 查询 目录下的 note

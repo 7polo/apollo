@@ -19,7 +19,15 @@ import java.util.List;
 @Repository
 public interface NoteDao extends BaseMapper<Note> {
 
-    IPage<Note> queryBlogPage(Page<Object> objectPage, NoteDto noteDto);
+    /**
+     * 分页查询
+     * @param objectPage
+     * @param noteDto
+     * @param abbre 内容缩略
+     * @return
+     */
+    IPage<NoteDto> queryBlogPage(Page<Object> objectPage, NoteDto noteDto, boolean abbre);
+
 
     /**
      * 查询list
@@ -33,7 +41,7 @@ public interface NoteDao extends BaseMapper<Note> {
      * @param uid
      * @return
      */
-    CatalogDto queryDto(@Param("uid") String uid);
+    CatalogDto queryCatalogDto(@Param("uid") String uid);
 
     void addRead(String uid);
 
@@ -45,5 +53,6 @@ public interface NoteDao extends BaseMapper<Note> {
      * @param publishDt
      * @return
      */
-    List<Note> queryPublishedPreAndNext(String uid, Date publishDt);
+    List<Note> queryPublishedPreAndNext(@Param("uid") String uid, @Param("publishDt") Date publishDt);
+
 }
