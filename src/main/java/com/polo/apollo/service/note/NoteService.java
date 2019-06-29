@@ -74,6 +74,12 @@ public interface NoteService {
      */
     void addGood(String uid);
 
+    /**
+     * 查询发布的note
+     *
+     * @param uid
+     * @return
+     */
     Note queryPublishedById(String uid);
 
     /**

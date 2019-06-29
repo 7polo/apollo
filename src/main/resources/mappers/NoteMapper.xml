@@ -39,7 +39,7 @@
         group by n.uid
     </select>
 
-    <select id="queryDtoList" resultType="com.polo.apollo.entity.dto.CatalogDto">
+    <select id="queryCatalogDtoList" resultType="com.polo.apollo.entity.dto.CatalogDto">
         select
         n.dir_id, n.uid as id, n.name as text,
         'note' as type

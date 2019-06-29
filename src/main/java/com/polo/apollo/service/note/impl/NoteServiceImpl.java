@@ -96,7 +96,7 @@ public class NoteServiceImpl implements NoteService {
     @Override
     public List<CatalogDto> queryCatalogDtoList(String dirId) {
         if (StringUtils.hasLength(dirId)) {
-            return noteDao.queryDtoList(dirId);
+            return noteDao.queryCatalogDtoList(dirId);
         }
         return new ArrayList<>();
     }
