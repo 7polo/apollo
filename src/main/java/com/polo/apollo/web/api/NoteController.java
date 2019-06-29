@@ -20,6 +20,12 @@ public class NoteController {
     @Autowired
     private NoteService noteService;
 
+    @ApiOperation(value = "根据 noteid 查询 note")
+    @GetMapping("{uid}")
+    public Result getNote(@PathVariable String uid) {
+        return Result.success(noteService.queryById(uid));
+    }
+
     @ApiOperation(value = "分享note ")
     @PostMapping("share")
     public Result share(String uid) {
@@ -29,12 +35,6 @@ public class NoteController {
         }
         noteService.share(note);
         return Result.success();
-    }
-
-    @ApiOperation(value = "根据 noteid 查询 note")
-    @GetMapping("{uid}")
-    public Result getNote(@PathVariable String uid) {
-        return Result.success(noteService.queryById(uid));
     }
 
     @PostMapping("save")

@@ -77,14 +77,8 @@ public class NoteServiceImpl implements NoteService {
         NoteDto dto = new NoteDto();
         Note note = noteDao.selectById(uid);
         BeanUtils.copyProperties(note, dto);
-        List<Tag> tags = tagService.queryByNoteId(uid);
-        if (!Utils.isEmpty(tags)) {
-            StringBuffer tagSb = new StringBuffer();
-            for (Tag tag : tags) {
-                tagSb.append(",").append(tag.getName());
-            }
-//            dto.setTags(tagSb.toString());
-        }
+        // 塞值 标签
+        dto.setTags(tagService.queryByNoteId(uid));
         return dto;
     }
 

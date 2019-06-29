@@ -28,7 +28,6 @@ public class NoteDto extends Note {
      */
     private List<Tag> tags;
 
-
     /**
      * 是否是上一篇
      */

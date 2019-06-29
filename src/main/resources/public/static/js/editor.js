@@ -159,11 +159,9 @@ var treeFunc = {
 
     initLoad: function (noteId) {
         if (noteId) {
-            console.log("载入笔记" + noteId);
             dirTree._mode = TYPES.note.name;
             treeFunc.loadNoteTree(noteId)
         } else {
-            console.log("载入全部");
             treeFunc.loadAllCatalogNodes()
         }
     },
@@ -286,13 +284,24 @@ function editNote(noteId) {
         success: function (resp) {
             utils.fillForm(form, resp.data);
             $("#md").trigger("blur");
+
+            var tagValues = [];
+            var tags = resp.data.tags;
+            if (tags && tags.length > 0) {
+               for (var i = 0; i < tags.length; i++) {
+                   if (tags[i].name) {
+                       tagValues.push(tags[i].name);
+                   }
+               }
+            }
+
             // 标签
             $("#tag").tag({
                 name: "tags",
                 placeholder: '请输入标签',
                 inputclass: 'form-control tag-input',
                 clear: true,
-                value: resp.data.tags || ''
+                value:  tagValues.join(",")
             });
         }
     })
