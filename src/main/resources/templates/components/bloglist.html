@@ -79,7 +79,7 @@
                 <article class="blog-abi" th:each="blog, blogStat : ${blogPage.records}">
                     <header>
                         <a target="_blank" class="cat" th:href="@{'/catalog/' + ${blog.dirId}}"
-                           th:text="${blog.dirName}"><i></i></a>
+                           th:text="${blog.catalogName}"><i></i></a>
                         <h2><a target="_blank" th:href="@{'/blog/'+ ${blog.uid} +'.html'}" th:text="${blog.name}"></a>
                         </h2>
                     </header>

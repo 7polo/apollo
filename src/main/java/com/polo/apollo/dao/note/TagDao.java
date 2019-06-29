@@ -26,16 +26,19 @@ public interface TagDao extends BaseMapper<Tag> {
     List<Tag> queryByNoteId(String noteId);
 
     /**
-     * 统计
+     * 查询标签个数
+     * @param published
+     * 1. null 全部
+     * 2. false 未发布
+     * 2. true 发布
      * @return
      */
-    List<TagDto> queryListWithCount();
+    List<TagDto> queryTagCount(@Param("published") Boolean published);
 
     /**
-     * 查询标签对应博客个数
+     * 查询
+     * @param notdIds
      * @return
      */
-    List<TagDto> queryBlogTagCount();
-
     List<TagDto> queryByNoteIds(@Param("notdIds") List<String> notdIds);
 }

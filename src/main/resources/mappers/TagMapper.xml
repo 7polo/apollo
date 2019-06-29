@@ -16,16 +16,21 @@
         where tn.note_id = #{nodeId} and t.uid = tn.tag_id
     </select>
 
-    <select id="queryListWithCount" resultType="com.polo.apollo.entity.dto.TagDto">
-       SELECT t.name, t.uid, count(tn.uid) as `count` FROM t_tag t,t_tag_note tn
-       WHERE t.deleted = 0 and t.uid = tn.tag_id GROUP BY t.uid
-    </select>
-
-    <select id="queryBlogTagCount" resultType="com.polo.apollo.entity.dto.TagDto">
-        SELECT t.name, count(b.uid) as `count`
+    <select id="queryTagCount" resultType="com.polo.apollo.entity.dto.TagDto">
+        SELECT t.name, count(n.uid) as `count`
         FROM t_tag t
         left join t_tag_note tn on t.uid = tn.tag_id
-        left join t_blog b on b.note_id = tn.note_id
+        left join t_note n on n.uid = tn.note_id and n.deleted = 0
+        <if test="published != null">
+            <choose>
+                <when test="published">
+                    and n.publish_dt is not null
+                </when>
+                <otherwise>
+                    and n.publish_dt is null
+                </otherwise>
+            </choose>
+        </if>
         WHERE t.deleted = 0
         GROUP BY t.uid
     </select>

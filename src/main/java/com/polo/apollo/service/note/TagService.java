@@ -13,12 +13,6 @@ import java.util.Set;
 public interface TagService {
     void save(Tag tag);
 
-    /**
-     * 查询tag 和 对应的count
-     * @return
-     */
-    List<TagDto> queryList();
-
     void deleteByUid(String uid);
 
     void addNoteTag(Set<String> tags, String noteId);
@@ -28,8 +22,12 @@ public interface TagService {
     List<TagDto> queryByNoteIds(List<String> notdIds);
 
     /**
-     * 查询博客对应的标签个数
+     * 查询标签个数
+     *
+     * @param published 1. null 全部
+     *                  2. false 未发布
+     *                  2. true 发布
      * @return
      */
-    List<TagDto> queryBlogCount();
+    List<TagDto> queryTagCount(Boolean published);
 }

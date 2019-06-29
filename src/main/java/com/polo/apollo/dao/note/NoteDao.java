@@ -9,6 +9,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -34,7 +35,15 @@ public interface NoteDao extends BaseMapper<Note> {
      */
     CatalogDto queryDto(@Param("uid") String uid);
 
-    void updateBlogRead(String uid);
+    void updateRead(String uid);
 
-    void updateBlogGood(String uid);
+    void updateGood(String uid);
+
+    /**
+     * 查询上下篇博客
+     * @param uid
+     * @param publishDt
+     * @return
+     */
+    List<Note> queryPublishedPreAndNext(String uid, Date publishDt);
 }

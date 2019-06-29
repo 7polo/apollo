@@ -33,14 +33,9 @@ public class TagServiceImpl implements TagService {
         tag.setName(tag.getName().trim());
         if (StringUtils.hasLength(tag.getUid())) {
             tagDao.updateById(tag);
-        }else {
+        } else {
             tagDao.insert(tag);
         }
-    }
-
-    @Override
-    public List<TagDto> queryList() {
-        return tagDao.queryListWithCount();
     }
 
     @Override
@@ -100,7 +95,7 @@ public class TagServiceImpl implements TagService {
     }
 
     @Override
-    public List<TagDto> queryBlogCount() {
-        return tagDao.queryBlogTagCount();
+    public List<TagDto> queryTagCount(Boolean published) {
+        return tagDao.queryTagCount(published);
     }
 }

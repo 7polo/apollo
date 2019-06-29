@@ -35,6 +35,6 @@ public class TagController {
     @ApiOperation(value = "获取所有标签")
     @GetMapping("getTags")
     public Result getTags() {
-        return Result.success(tagService.queryList());
+        return Result.success(tagService.queryTagCount(true));
     }
 }

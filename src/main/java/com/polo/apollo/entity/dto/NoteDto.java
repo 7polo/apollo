@@ -1,7 +1,10 @@
 package com.polo.apollo.entity.dto;
 
 import com.polo.apollo.entity.modal.note.Note;
+import com.polo.apollo.entity.modal.note.Tag;
 import lombok.Data;
+
+import java.util.List;
 
 /**
  * @author baoqianyong
@@ -10,5 +13,28 @@ import lombok.Data;
 @Data
 public class NoteDto extends Note {
 
-    private String tags;
+    /**
+     * 目录名称
+     */
+    private String catalogName;
+
+    /**
+     * 作者
+     */
+    private String authorName;
+
+    /**
+     * 标签
+     */
+    private List<Tag> tags;
+
+    /**
+     * 标签 tag1,tag2
+     */
+    private String tagNames;
+
+    /**
+     * 是否是上一篇
+     */
+    private Boolean isPre;
 }

@@ -4,8 +4,9 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.polo.apollo.dao.note.NoteDao">
 
-    <select id="queryBlogPage" resultType="com.polo.apollo.entity.modal.note.Note">
-        select * from t_note
+    <select id="queryBlogPage" resultType="com.polo.apollo.entity.dto.NoteDto">
+        select n.*, c.name as catalog_name from t_note n
+        left join t_catalog c on c.uid = n.dir_id
     </select>
 
     <select id="queryDtoList" resultType="com.polo.apollo.entity.dto.CatalogDto">
@@ -31,11 +32,17 @@
         where n.deleted = 0 and n.uid = #{uid}
     </select>
 
-    <update id="updateBlogRead">
+    <select id="queryPublishedPreAndNext" resultType="com.polo.apollo.entity.modal.note.Note">
+        (SELECT uid, note_id, 'true' as isPre  FROM t_note WHERE uid != #{uid} and deleted = 0 and publish_dt is not null and #{date} >= publish_dt ORDER BY create_dt DESC LIMIT 1)
+         UNION
+        (SELECT uid, note_id, 'false' as isPre  FROM t_note WHERE uid != #{uid} and deleted = 0 and publish_dt is not null and publish_dt >= #{date} ORDER BY create_dt ASC LIMIT 1)
+    </select>
+
+    <update id="updateRead">
         update t_note set read_count = read_count + 1 where uid = #{uid}
     </update>
 
-    <update id="updateBlogGood">
+    <update id="updateGood">
         update t_note set good = good + 1 where uid = #{uid}
     </update>
 

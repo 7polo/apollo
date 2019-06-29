@@ -1,18 +1,19 @@
 package com.polo.apollo.service.note.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.polo.apollo.common.Constant;
+import com.polo.apollo.common.entity.Tree;
 import com.polo.apollo.common.util.Utils;
 import com.polo.apollo.dao.note.CatalogDao;
 import com.polo.apollo.dao.note.NoteDao;
 import com.polo.apollo.entity.dto.CatalogDto;
 import com.polo.apollo.entity.dto.NoteDto;
-import com.polo.apollo.common.entity.Tree;
 import com.polo.apollo.entity.modal.note.Note;
 import com.polo.apollo.entity.modal.note.Tag;
 import com.polo.apollo.service.note.NoteService;
 import com.polo.apollo.service.note.TagService;
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -48,15 +49,21 @@ public class NoteServiceImpl implements NoteService {
         } else {
             noteDao.insert(note);
         }
+//
+//        if (StringUtils.hasLength(note.getTags())) {
+//            String[] tags = note.getTags().split(",");
+//            Set<String> tagSet = new HashSet<>();
+//            for (String tagName : tags) {
+//                tagSet.add(tagName);
+//            }
+//            tagService.addNoteTag(tagSet, note.getUid());
+//        }
+    }
 
-        if (StringUtils.hasLength(note.getTags())) {
-            String[] tags = note.getTags().split(",");
-            Set<String> tagSet = new HashSet<>();
-            for (String tagName : tags) {
-                tagSet.add(tagName);
-            }
-            tagService.addNoteTag(tagSet, note.getUid());
-        }
+    @Override
+    public void share(Note note) {
+        note.setPublishDt(new Date());
+        noteDao.updateById(note);
     }
 
     @Override
@@ -75,7 +82,7 @@ public class NoteServiceImpl implements NoteService {
             for (Tag tag : tags) {
                 tagSb.append(",").append(tag.getName());
             }
-            dto.setTags(tagSb.toString());
+//            dto.setTags(tagSb.toString());
         }
         return dto;
     }
@@ -123,28 +130,40 @@ public class NoteServiceImpl implements NoteService {
     }
 
     @Override
-    public void updateBlogRead(String uid) {
+    public void updateRead(String uid) {
         List<String> blogIds = (List<String>) httpSession.getAttribute(Constant.READ_BLOG);
         if (blogIds == null) {
             blogIds = new ArrayList<>();
             httpSession.setAttribute(Constant.READ_BLOG, blogIds);
         }
         if (!blogIds.contains(uid)) {
-            noteDao.updateBlogRead(uid);
+            noteDao.updateRead(uid);
             blogIds.add(uid);
         }
     }
 
     @Override
-    public void updateBlogGood(String uid) {
+    public void updateGood(String uid) {
         List<String> blogIds = (List<String>) httpSession.getAttribute(Constant.GOOD_BLOG);
         if (blogIds == null) {
             blogIds = new ArrayList<>();
             httpSession.setAttribute(Constant.GOOD_BLOG, blogIds);
         }
         if (!blogIds.contains(uid)) {
-            noteDao.updateBlogGood(uid);
+            noteDao.updateGood(uid);
             blogIds.add(uid);
         }
+    }
+
+    @Override
+    public Note queryPublishedById(String uid) {
+        LambdaQueryWrapper<Note> query = new LambdaQueryWrapper<>();
+        query.eq(Note::getUid, uid).isNull(Note::getPublishDt);
+        return noteDao.selectOne(query);
+    }
+
+    @Override
+    public List<Note> queryPublishedPreAndNext(Note note) {
+        return noteDao.queryPublishedPreAndNext(note.getUid(), note.getPublishDt());
     }
 }

@@ -19,15 +19,14 @@ public class NoteController {
     @Autowired
     private NoteService noteService;
 
-
-
-    @ApiOperation(value = "将 note 分享成 blog")
+    @ApiOperation(value = "分享note ")
     @PostMapping("share")
-    public Result shareToBlog(Note note) {
-//        if (blogService.queryBlogNoteId(note.getUid()) != null) {
-//            return Result.error("该笔已分享过， 无需再次分享");
-//        }
-//        Blog blog = blogService.createBlogWithNote(note);
+    public Result share(String uid) {
+        Note note = noteService.queryById(uid);
+        if (note.getPublishDt() != null) {
+            return Result.error("该笔已分享过， 无需再次分享");
+        }
+        noteService.share(note);
         return Result.success();
     }
 
@@ -65,7 +64,7 @@ public class NoteController {
     @ApiOperation(value = "根据主键id 点赞blog")
     @GetMapping("good/{blogId}")
     public Result good(@PathVariable String blogId) {
-        noteService.updateBlogGood(blogId);
+        noteService.updateGood(blogId);
         return Result.success();
     }
 }

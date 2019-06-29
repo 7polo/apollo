@@ -16,6 +16,12 @@ public interface NoteService {
 
     void save(NoteDto note);
 
+    /**
+     * 分享博客
+     * @param note
+     */
+    void share(Note note);
+
     void deleteByUid(String uid);
 
     NoteDto queryById(String uid);
@@ -48,11 +54,20 @@ public interface NoteService {
      *
      * @param uid
      */
-    void updateBlogRead(String uid);
+    void updateRead(String uid);
 
     /**
      * 增加点赞数
      * @param uid
      */
-    void updateBlogGood(String uid);
+    void updateGood(String uid);
+
+    Note queryPublishedById(String uid);
+
+    /**
+     * 查询发布时间上下篇
+     * @param note
+     * @return
+     */
+    List<Note> queryPublishedPreAndNext(Note note);
 }

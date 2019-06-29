@@ -4,11 +4,9 @@ import com.polo.apollo.Application;
 import com.polo.apollo.aop.Log;
 import com.polo.apollo.common.Constant;
 import com.polo.apollo.entity.dto.NoteDto;
-import com.polo.apollo.entity.modal.blog.Blog;
 import com.polo.apollo.entity.modal.note.Note;
 import com.polo.apollo.entity.modal.system.SiteMap;
 import com.polo.apollo.entity.modal.system.SkillTag;
-import com.polo.apollo.entity.vo.BlogVo;
 import com.polo.apollo.service.note.NoteService;
 import com.polo.apollo.service.note.TagService;
 import com.polo.apollo.service.sytem.DataDicService;
@@ -109,13 +107,13 @@ public class FrontPage {
     @RequestMapping("/blog/{uid}.html")
     public String blog(@PathVariable String uid, Model model) {
         layout(model);
-        noteService.updateBlogRead(uid);
-        Note blog = noteService.queryById(uid);
+        noteService.updateRead(uid);
+        Note blog = noteService.queryPublishedById(uid);
         if (blog != null) {
             model.addAttribute("blog", blog);
             model.addAttribute("seo", seoService.querySeoByRelateId(Constant.SEO_BLOG, uid));
             //相邻的博客
-//            model.addAttribute("adjacent", blogService.queryPreAndNextBlog(blog));
+            model.addAttribute("adjacent", noteService.queryPublishedPreAndNext(blog));
         }
         return MODULE + "/blog";
     }
@@ -123,7 +121,7 @@ public class FrontPage {
     private void layout(Model model) {
         model.addAttribute(Constant.SYS, Application.sys);
 //        model.addAttribute("hots", blogService.queryHotBlog(5));
-        model.addAttribute("tags", tagService.queryBlogCount());
+        model.addAttribute("tags", tagService.queryTagCount(true));
         model.addAttribute("friendLinks", dataDicService.queryListByType(Constant.DIC_FRIEND_LINK));
         model.addAttribute("skills", getList());
     }
