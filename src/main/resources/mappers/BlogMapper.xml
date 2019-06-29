@@ -69,13 +69,4 @@
             (SELECT uid, note_id, 'false' as isPre  FROM t_blog WHERE uid != #{uid} and deleted = 0 and create_dt >= #{date} ORDER BY create_dt ASC LIMIT 1)
         )  b, t_note n where b.note_id = n.uid
      </select>
-
-    <update id="updateBlogRead">
-        update t_blog set read_count = read_count + 1 where uid = #{uid}
-    </update>
-
-    <update id="updateBlogGood">
-        update t_blog set good = good + 1 where uid = #{uid}
-    </update>
-
 </mapper>

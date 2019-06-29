@@ -104,30 +104,4 @@ public class BlogServiceImpl implements BlogService {
     public void deleteById(String blogId) {
         blogDao.deleteById(blogId);
     }
-
-    @Override
-    public void updateBlogRead(String uid) {
-        List<String> blogIds = (List<String>) httpSession.getAttribute("readBlogs");
-        if (blogIds == null) {
-            blogIds = new ArrayList<>();
-            httpSession.setAttribute(Constant.READ_BLOG, blogIds);
-        }
-        if (!blogIds.contains(uid)) {
-            blogDao.updateBlogRead(uid);
-            blogIds.add(uid);
-        }
-    }
-
-    @Override
-    public void updateBlogGood(String uid) {
-        List<String> blogIds = (List<String>) httpSession.getAttribute("goodBlogs");
-        if (blogIds == null) {
-            blogIds = new ArrayList<>();
-            httpSession.setAttribute(Constant.GOOD_BLOG, blogIds);
-        }
-        if (!blogIds.contains(uid)) {
-            blogDao.updateBlogGood(uid);
-            blogIds.add(uid);
-        }
-    }
 }

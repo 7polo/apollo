@@ -37,11 +37,4 @@ public class BlogController {
         blogService.deleteById(blogId);
         return Result.success();
     }
-
-    @ApiOperation(value = "根据主键id 点赞blog")
-    @GetMapping("good/{blogId}")
-    public Result good(@PathVariable String blogId) {
-        blogService.updateBlogGood(blogId);
-        return Result.success();
-    }
 }

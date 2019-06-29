@@ -1,4 +1,4 @@
-package com.polo.apollo.entity.dto;
+package com.polo.apollo.common.entity;
 
 import java.util.ArrayList;
 import java.util.HashMap;

@@ -1,6 +1,6 @@
 package com.polo.apollo.service.note;
 
-import com.polo.apollo.entity.dto.Tree;
+import com.polo.apollo.common.entity.Tree;
 import com.polo.apollo.entity.modal.note.Catalog;
 
 import java.util.List;

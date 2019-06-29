@@ -8,6 +8,7 @@ import com.polo.apollo.entity.modal.system.SiteMap;
 import com.polo.apollo.entity.modal.system.SkillTag;
 import com.polo.apollo.entity.vo.BlogVo;
 import com.polo.apollo.service.blog.BlogService;
+import com.polo.apollo.service.note.NoteService;
 import com.polo.apollo.service.note.TagService;
 import com.polo.apollo.service.sytem.DataDicService;
 import com.polo.apollo.service.sytem.SeoService;
@@ -37,6 +38,9 @@ public class FrontPage {
 
     @Autowired
     private BlogService blogService;
+
+    @Autowired
+    private NoteService noteService;
 
     @Autowired
     private TagService tagService;
@@ -108,7 +112,7 @@ public class FrontPage {
     @RequestMapping("/blog/{uid}.html")
     public String blog(@PathVariable String uid, Model model) {
         layout(model);
-        blogService.updateBlogRead(uid);
+        noteService.updateBlogRead(uid);
         Blog blog = blogService.queryById(uid);
         if (blog != null) {
             model.addAttribute("blog", blog);

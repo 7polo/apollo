@@ -32,18 +32,6 @@ public interface BlogDao extends BaseMapper<Blog>{
 
     List<BlogHotDto> queryHotBlog(int top);
 
-    /**
-     * 增加博客阅读
-     * @param uid
-     */
-    void updateBlogRead(String uid);
-
-
-    /**
-     * 增加博客点赞数
-     * @param uid
-     */
-    void updateBlogGood(String uid);
 
     /**
      * 查询当前博客的上下篇

@@ -64,4 +64,11 @@ public class NoteController {
     public Result queryNoteTree(@PathVariable String uid) {
         return Result.success(noteService.queryNoteTree(uid));
     }
+
+    @ApiOperation(value = "根据主键id 点赞blog")
+    @GetMapping("good/{blogId}")
+    public Result good(@PathVariable String blogId) {
+        noteService.updateBlogGood(blogId);
+        return Result.success();
+    }
 }

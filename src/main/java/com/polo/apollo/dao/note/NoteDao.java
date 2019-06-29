@@ -33,4 +33,8 @@ public interface NoteDao extends BaseMapper<Note> {
      * @return
      */
     CatalogDto queryDto(@Param("uid") String uid);
+
+    void updateBlogRead(String uid);
+
+    void updateBlogGood(String uid);
 }

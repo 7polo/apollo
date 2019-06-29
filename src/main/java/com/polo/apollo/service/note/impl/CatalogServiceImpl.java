@@ -3,7 +3,7 @@ package com.polo.apollo.service.note.impl;
 import com.polo.apollo.common.util.Utils;
 import com.polo.apollo.dao.note.CatalogDao;
 import com.polo.apollo.entity.dto.CatalogDto;
-import com.polo.apollo.entity.dto.Tree;
+import com.polo.apollo.common.entity.Tree;
 import com.polo.apollo.entity.modal.note.Catalog;
 import com.polo.apollo.service.note.CatalogService;
 import com.polo.apollo.service.note.NoteService;

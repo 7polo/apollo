@@ -2,7 +2,7 @@ package com.polo.apollo.service.note;
 
 import com.polo.apollo.entity.dto.CatalogDto;
 import com.polo.apollo.entity.dto.NoteDto;
-import com.polo.apollo.entity.dto.Tree;
+import com.polo.apollo.common.entity.Tree;
 import com.polo.apollo.entity.modal.note.Note;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 
@@ -20,7 +20,13 @@ public interface NoteService {
 
     NoteDto queryById(String uid);
 
-
+    /**
+     * 查询分页
+     * @param noteDto
+     * @param start
+     * @param limit
+     * @return
+     */
     IPage<Note> queryPage(NoteDto noteDto, int start, int limit);
 
     /**
@@ -36,4 +42,17 @@ public interface NoteService {
      * @return
      */
     Tree queryNoteTree(String uid);
+
+    /**
+     * 增加博客阅读数
+     *
+     * @param uid
+     */
+    void updateBlogRead(String uid);
+
+    /**
+     * 增加点赞数
+     * @param uid
+     */
+    void updateBlogGood(String uid);
 }

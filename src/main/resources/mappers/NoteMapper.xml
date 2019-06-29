@@ -30,4 +30,13 @@
         from t_note n
         where n.deleted = 0 and n.uid = #{uid}
     </select>
+
+    <update id="updateBlogRead">
+        update t_note set read_count = read_count + 1 where uid = #{uid}
+    </update>
+
+    <update id="updateBlogGood">
+        update t_note set good = good + 1 where uid = #{uid}
+    </update>
+
 </mapper>

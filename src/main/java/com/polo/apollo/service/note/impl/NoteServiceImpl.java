@@ -1,11 +1,12 @@
 package com.polo.apollo.service.note.impl;
 
+import com.polo.apollo.common.Constant;
 import com.polo.apollo.common.util.Utils;
 import com.polo.apollo.dao.note.CatalogDao;
 import com.polo.apollo.dao.note.NoteDao;
 import com.polo.apollo.entity.dto.CatalogDto;
 import com.polo.apollo.entity.dto.NoteDto;
-import com.polo.apollo.entity.dto.Tree;
+import com.polo.apollo.common.entity.Tree;
 import com.polo.apollo.entity.modal.note.Note;
 import com.polo.apollo.entity.modal.note.Tag;
 import com.polo.apollo.service.note.NoteService;
@@ -17,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import javax.servlet.http.HttpSession;
 import java.util.*;
 
 /**
@@ -25,6 +27,9 @@ import java.util.*;
  */
 @Service
 public class NoteServiceImpl implements NoteService {
+
+    @Autowired
+    private HttpSession httpSession;
 
     @Autowired
     private NoteDao noteDao;
@@ -115,5 +120,31 @@ public class NoteServiceImpl implements NoteService {
             return treeList.size() > 0 ? treeList.get(0) : null;
         }
         return null;
+    }
+
+    @Override
+    public void updateBlogRead(String uid) {
+        List<String> blogIds = (List<String>) httpSession.getAttribute(Constant.READ_BLOG);
+        if (blogIds == null) {
+            blogIds = new ArrayList<>();
+            httpSession.setAttribute(Constant.READ_BLOG, blogIds);
+        }
+        if (!blogIds.contains(uid)) {
+            noteDao.updateBlogRead(uid);
+            blogIds.add(uid);
+        }
+    }
+
+    @Override
+    public void updateBlogGood(String uid) {
+        List<String> blogIds = (List<String>) httpSession.getAttribute(Constant.GOOD_BLOG);
+        if (blogIds == null) {
+            blogIds = new ArrayList<>();
+            httpSession.setAttribute(Constant.GOOD_BLOG, blogIds);
+        }
+        if (!blogIds.contains(uid)) {
+            noteDao.updateBlogGood(uid);
+            blogIds.add(uid);
+        }
     }
 }

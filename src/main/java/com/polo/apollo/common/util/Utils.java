@@ -3,7 +3,7 @@ package com.polo.apollo.common.util;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.polo.apollo.entity.dto.Tree;
+import com.polo.apollo.common.entity.Tree;
 
 import java.io.IOException;
 import java.util.*;

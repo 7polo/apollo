@@ -66,14 +66,4 @@ public interface BlogService {
      * @param blogId
      */
     void deleteById(String blogId);
-
-
-    /**
-     * 增加博客阅读数
-     *
-     * @param uid
-     */
-    void updateBlogRead(String uid);
-
-    void updateBlogGood(String uid);
 }
