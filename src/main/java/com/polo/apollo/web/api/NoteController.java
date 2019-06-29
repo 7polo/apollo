@@ -53,6 +53,10 @@ public class NoteController {
     @ApiOperation(value = "分页查询note")
     @GetMapping("queryPage")
     public Result queryPage(NoteVo vo, int start, int limit) {
+        if (vo == null) {
+            vo = new NoteVo();
+        }
+        vo.setAbbre(true);
         return Result.success(noteService.queryPage(vo, start, limit));
     }
 
@@ -63,6 +67,7 @@ public class NoteController {
             vo = new NoteVo();
         }
         vo.setAbbre(true);
+        vo.setPublished(true);
         return Result.success(noteService.queryPage(vo, start, limit));
     }
 

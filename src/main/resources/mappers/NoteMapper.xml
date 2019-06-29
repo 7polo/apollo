@@ -37,6 +37,7 @@
             </if>
         </where>
         group by n.uid
+        order by n.publish_dt desc
     </select>
 
     <select id="queryCatalogDtoList" resultType="com.polo.apollo.entity.dto.CatalogDto">
@@ -67,7 +68,7 @@
     </select>
 
     <select id="queryHotBlog" resultType="com.polo.apollo.entity.modal.note.Note">
-        select n.name, n.read_count, n.publish_dt from t_note n where n.publish_dt is not null order by n.read_count desc limit #{limit}
+        select n.uid, n.name, n.read_count, n.publish_dt from t_note n where n.publish_dt is not null order by n.read_count desc limit #{limit}
     </select>
 
     <update id="addRead">
