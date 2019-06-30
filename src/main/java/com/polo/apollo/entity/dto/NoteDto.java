@@ -29,6 +29,11 @@ public class NoteDto extends Note {
     private List<Tag> tags;
 
     /**
+     * 标签名： tag1,tag2....
+     */
+    private String tagNames;
+
+    /**
      * 是否是上一篇
      */
     private Boolean isPre;

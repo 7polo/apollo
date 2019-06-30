@@ -326,7 +326,7 @@ function editNote(noteId) {
 
             // 标签
             $("#tag").tag({
-                name: "tags",
+                name: "tagNames",
                 placeholder: '请输入标签',
                 inputclass: 'form-control tag-input',
                 clear: true,

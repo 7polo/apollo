@@ -17,9 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * @author baoqianyong
@@ -45,15 +43,15 @@ public class NoteServiceImpl implements NoteService {
         } else {
             noteDao.insert(note);
         }
-//
-//        if (StringUtils.hasLength(note.getTags())) {
-//            String[] tags = note.getTags().split(",");
-//            Set<String> tagSet = new HashSet<>();
-//            for (String tagName : tags) {
-//                tagSet.add(tagName);
-//            }
-//            tagService.addNoteTag(tagSet, note.getUid());
-//        }
+
+        if (StringUtils.hasLength(note.getTagNames())) {
+            String[] tags = note.getTagNames().split(",");
+            Set<String> tagSet = new HashSet<>();
+            for (String tagName : tags) {
+                tagSet.add(tagName);
+            }
+            tagService.addNoteTag(tagSet, note.getUid());
+        }
     }
 
     @Override
