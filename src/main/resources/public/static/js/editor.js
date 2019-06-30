@@ -280,7 +280,7 @@ function editNote(noteId) {
     var form = $("#noteForm");
     form.show();
     utils.ajax({
-        url: './note/' + noteId,
+        url: '/note/' + noteId,
         success: function (resp) {
             utils.fillForm(form, resp.data);
             $("#md").trigger("blur");
@@ -348,7 +348,6 @@ function markdownInit() {
 }
 
 function renderMd() {
-    console.log(new Date().toLocaleTimeString())
     $('.md-html').html(marked($("#md").val()))
 }
 
@@ -370,6 +369,20 @@ function shareBtnInit() {
                 utils.notifySuccess(e.msg)
             }
         });
+    });
+}
+
+// 查看按钮
+function viewBlogBtnInit() {
+    $(".viewBlogBtn").click(function () {
+
+        var note = utils.formData($("#noteForm"));
+        debugger
+        if (note.uid && note.publishDt) {
+            window.open('/blog/' + note.uid + '.html')
+        } else {
+            utils.notifyError("该笔记未分享，无法查看")
+        }
     });
 }
 
@@ -490,6 +503,8 @@ $(function () {
     saveBtnInit();
     shareBtnInit();
     modeBtnInit();
+    viewBlogBtnInit();
+
     searchInit();
     seoInit();
 

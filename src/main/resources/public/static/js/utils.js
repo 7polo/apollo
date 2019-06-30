@@ -116,7 +116,6 @@ var utils = function () {
         $form.find('input[type=text],select,textarea,input[type=hidden]').each(function () {
             $(this).val(null);
         });
-        console.log(utils.formData($form));
         $.each(data, function (index, item) {
             $form.find("[name=" + index + "]").val(item);
         });
