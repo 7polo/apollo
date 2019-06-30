@@ -23,6 +23,12 @@
         .blog-wrapper .meta > span:first-child {
             margin-right: 5px;
         }
+
+        @media (min-width: 576px) {
+            .next-blog {
+                text-align: right;
+            }
+        }
     </style>
 </head>
 <body>
@@ -56,7 +62,7 @@
                             上一篇：<a th:href="@{'/blog/'+ ${p.uid} +'.html'}" th:text="${p.name}"></a>
                         </th:block>
                     </div>
-                    <div class="col-sm-6" style="text-align: right" th:unless="${p.isPre}">
+                    <div class="col-sm-6 next-blog" th:unless="${p.isPre}">
                         <th:block th:unless="${p.isPre}">
                             下一篇：<a th:href="@{'/blog/'+ ${p.uid} +'.html'}" th:text="${p.name}"></a>
                         </th:block>
