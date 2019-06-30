@@ -440,3 +440,7 @@ hr {
     display: block;
 }
 
+.markdown-body ul{
+    padding-inline-start: 20px
+}
+

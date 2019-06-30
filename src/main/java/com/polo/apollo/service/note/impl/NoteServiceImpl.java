@@ -96,32 +96,8 @@ public class NoteServiceImpl implements NoteService {
     }
 
     @Override
-    public Tree queryNoteTree(String uid) {
-        CatalogDto dto = noteDao.queryCatalogDto(uid);
-        if (dto != null) {
-
-            Map<String, CatalogDto> map = new HashMap<>();
-            for (CatalogDto cat : catalogDao.queryList(null)) {
-                map.put(cat.getId(), cat);
-            }
-            List<CatalogDto> catList = new ArrayList<>();
-            while (true) {
-                catList.add(dto);
-                dto = map.get(dto.getDirId());
-                if (dto == null) {
-                    break;
-                }
-                // 移除
-                map.remove(dto.getId());
-                if ("root".equals(dto.getDirId())) {
-                    catList.add(dto);
-                    break;
-                }
-            }
-            List<Tree> treeList = Utils.buildTree(catList, (c1, c2) -> c1.get("id").equals(c2.get("dirId")));
-            return treeList.size() > 0 ? treeList.get(0) : null;
-        }
-        return null;
+    public CatalogDto queryCatalogDto(String uid) {
+        return noteDao.queryCatalogDto(uid);
     }
 
     @Override

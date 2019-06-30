@@ -53,12 +53,11 @@ public interface NoteService {
     List<CatalogDto> queryCatalogDtoList(String dirId);
 
     /**
-     * 查询 note 的目录树
-     *
+     * 查询 note 对应的 CatalogDto
      * @param uid
      * @return
      */
-    Tree queryNoteTree(String uid);
+    CatalogDto queryCatalogDto(String uid);
 
     /**
      * 增加博客阅读数

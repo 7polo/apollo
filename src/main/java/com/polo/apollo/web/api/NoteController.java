@@ -71,10 +71,10 @@ public class NoteController {
         return Result.success(noteService.queryPage(vo, start, limit));
     }
 
-    @ApiOperation(value = "查找note的所有父节点， 构建该note的目录树")
-    @GetMapping("queryNoteTree/{uid}")
-    public Result queryNoteTree(@PathVariable String uid) {
-        return Result.success(noteService.queryNoteTree(uid));
+    @ApiOperation(value = "查找 note 目录信息")
+    @GetMapping("queryCatalogDto/{uid}")
+    public Result queryCatalogDto(@PathVariable String uid) {
+        return Result.success(noteService.queryCatalogDto(uid));
     }
 
     @ApiOperation(value = "根据主键id 点赞blog")

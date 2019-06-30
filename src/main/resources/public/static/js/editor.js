@@ -105,9 +105,21 @@ function initDirTree() {
         }
     });
 
-    treeInst.on("select_node.jstree", treeFunc.select);
+    treeInst.on("select_node.jstree", function (event, data) {
+        var node = data.node;
+        console.log(node)
+        debugger
+        if (treeFunc.needIgnorEvent(node)) {
+            return;
+        }
+        treeFunc.select(event, data)
+    });
 
     treeInst.on("after_open.jstree", function (event, data) {
+        var node = data.node;
+        if (treeFunc.needIgnorEvent(node)) {
+            return;
+        }
         treeFunc.loadChildNodes(data.node);
     });
 
@@ -146,6 +158,7 @@ var treeFunc = {
         return false;
     },
 
+
     // 排序
     sort: function (a, b) {
         var nodeA = this.get_node(a);
@@ -159,15 +172,14 @@ var treeFunc = {
 
     initLoad: function (noteId) {
         if (noteId) {
-            dirTree._mode = TYPES.note.name;
-            treeFunc.loadNoteTree(noteId)
+            treeFunc.loadNoteToEdit(noteId)
         } else {
             treeFunc.loadAllCatalogNodes()
         }
     },
 
     // 加载全部目录节点
-    loadAllCatalogNodes: function () {
+    loadAllCatalogNodes: function (callback) {
         utils.ajax({
             url: 'catalog/loadTreeAll',
             success: function (resp) {
@@ -175,28 +187,42 @@ var treeFunc = {
                 resp.data.forEach(function (node) {
                     dirTree.create_node(root, node, "last")
                 });
+                if (callback) {
+                    callback()
+                }
             }
         });
     },
 
     //其他页面编辑是进入的接口
-    loadNoteTree: function (noteId) {
-        utils.ajax({
-            url: 'note/queryNoteTree/' + noteId,
-            success: function (resp) {
-                var root = dirTree.get_node("root");
-                dirTree.create_node(root, resp.data, "last");
-                dirTree.select_node({id: noteId})
-            }
-        });
+    loadNoteToEdit: function (noteId) {
+        treeFunc.loadAllCatalogNodes(function () {
+            utils.ajax({
+                url: 'note/queryCatalogDto/' + noteId,
+                success: function (resp) {
+                    var pNode = dirTree.get_node(resp.data.dirId);
+                    treeFunc.loadChildNodes(pNode, function () {
+                        treeFunc.selectNodeWithoutEvent(pNode);
+                        dirTree.select_node({id: noteId})
+                    });
+                }
+            });
+        })
     },
 
-    // 第一次加载全部 目录
-    // 点击目录时，请求当前子节点数据， 智能更新
-    loadChildNodes: function (dir) {
-        if (dirTree._mode == TYPES.note.name) {
+    selectNodeWithoutEvent: function (node) {
+        treeFunc.ignoreEvent(node);
+        if (node.id == "root") {
+            dirTree.open_node(node);
             return
         }
+        var pNode = dirTree.get_node(dirTree.get_parent(node));
+        treeFunc.selectNodeWithoutEvent(pNode);
+        dirTree.open_node(node)
+    },
+
+    // 点击目录时，请求当前子节点数据， 智能更新
+    loadChildNodes: function (dir, callback) {
         utils.ajax({
             url: 'catalog/loadChildNode/' + dir.id,
             success: function (resp) {
@@ -207,7 +233,12 @@ var treeFunc = {
                         if (node.type == TYPES.note.name) {
                             dirTree.create_node(dir, node, "last")
                         }
-                    })
+                    });
+                    treeFunc.ignoreEvent(dir);
+                    dirTree.open_node(dir);
+                    if (callback) {
+                        callback()
+                    }
                 }
             }
         });
@@ -377,7 +408,6 @@ function viewBlogBtnInit() {
     $(".viewBlogBtn").click(function () {
 
         var note = utils.formData($("#noteForm"));
-        debugger
         if (note.uid && note.publishDt) {
             window.open('/blog/' + note.uid + '.html')
         } else {
