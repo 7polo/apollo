@@ -107,8 +107,6 @@ function initDirTree() {
 
     treeInst.on("select_node.jstree", function (event, data) {
         var node = data.node;
-        console.log(node)
-        debugger
         if (treeFunc.needIgnorEvent(node)) {
             return;
         }
