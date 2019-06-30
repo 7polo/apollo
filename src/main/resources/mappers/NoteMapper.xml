@@ -35,6 +35,14 @@
             <if test='vo.tagName != null and vo.tagName != ""'>
                 and t.name = #{vo.tagName}
             </if>
+
+            <if test='vo.name != null and vo.name != ""'>
+                and n.name like concat('%', #{vo.name}, '%')
+            </if>
+
+            <if test='vo.content != null and vo.content != ""'>
+                and n.content like concat('%', #{vo.content}, '%')
+            </if>
         </where>
         group by n.uid
         order by n.publish_dt desc

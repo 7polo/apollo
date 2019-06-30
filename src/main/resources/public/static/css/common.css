@@ -345,7 +345,7 @@ a.bg-success:hover {
 }
 
 .page-total > span {
-    line-height: 35px;
+    line-height: 32px;
 }
 
 .checkbox.form-control:focus {
@@ -433,5 +433,10 @@ hr {
 .markdown-body table td, .markdown-body table th {
     border-left: 1px solid #aaa;
     border-top: 1px solid #aaa
+}
+
+.markdown-body img {
+    max-width: 100%;
+    display: block;
 }
 

@@ -17,6 +17,9 @@ public class NoteVo {
      */
     private Boolean published;
 
+    private String name;
+
+    private String content;
 
     /**
      * 标签名

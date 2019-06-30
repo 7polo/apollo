@@ -55,6 +55,7 @@
             text-align: center;
             padding: 10px;
         }
+
         #search {
             width: 100%;
             padding: 5px;
@@ -137,11 +138,12 @@
                         <input type="hidden" name="uid">
                         <input class="form-control" type="text" id="noteName" name="name" placeholder="请输入标题">
                     </div>
-                    <div class="col-sm-6 col-lg-6 col-md-6">
-                        <div class="btn-group" role="group">
-                            <a class="btn btn-success saveBtn">保存</a>
-                            <a class="btn btn-primary shareBlogBtn">分享</a>
-                            <a class="btn  modeBtn" data-mode=""></a>
+                    <div class="col-sm-6 col-lg-6 col-md-6" style="padding-left: 0;">
+                        <div style="line-height: 33px">
+                            <a class="btn btn-icon saveBtn" data-toggle="tooltip" title="保存"><i class="fa fa-save"></i></a>
+                            <a class="btn btn-icon shareBlogBtn" data-toggle="tooltip" title="分享"><i class="fa fa-share"></i></a>
+                            <a class="btn btn-icon modeBtn" data-toggle="tooltip" data-mode=""></a>
+                            <a class="btn btn-icon seoBtn" data-toggle="tooltip" title="SEO"><i class="fa fa-cog"></i></a>
                         </div>
                     </div>
                 </div>
@@ -153,12 +155,42 @@
                 <div class="content-area row">
                     <div class="col-sm-6 col-lg-6 col-md-6 md-wrapper">
                         <textarea id="md" name="content" class="form-control" style="resize: none"
-                                  placeholder="请输入Markdown代码"></textarea>
+                                  placeholder="请输入Markdown"></textarea>
                     </div>
                     <div class="col-lg-6 col-sm-6 col-md-6 md-html markdown-body">
                     </div>
                 </div>
             </form>
+        </div>
+    </div>
+
+    <div class="modal" id="seoModal" tabindex="-1" role="dialog" data-backdrop="false" aria-labelledby="seoModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="seoModalLabel">SEO 设置</h5>
+                </div>
+                <div class="modal-body">
+                    <form id="seo-form">
+                        <div class="form-group">
+                            <label for="form-keyword" class="col-form-label">关键词(keyword):</label>
+                            <input type="text" class="form-control" id="form-keyword" name="keyword">
+                            <input type="hidden" name="relateId">
+                            <input type="hidden" name="type">
+                            <input type="hidden" name="uid">
+                        </div>
+                        <div class="form-group">
+                            <label for="form-description" class="col-form-label">描述(description):</label>
+                            <textarea class="form-control" id="form-description" name="description"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary seoSaveBtn">保存</button>
+                </div>
+            </div>
         </div>
     </div>
 </th:block>

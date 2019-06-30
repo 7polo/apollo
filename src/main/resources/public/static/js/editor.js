@@ -2,14 +2,14 @@ var dirTree;
 var TYPES = {
     note: {
         name: 'note',
-        saveUrl: './note/save',
-        deleteUrl: './note/delete',
+        saveUrl: '/note/save',
+        deleteUrl: '/note/delete',
         order: 2
     },
     catalog: {
         name: 'catalog',
-        saveUrl: './catalog/save',
-        deleteUrl: './catalog/delete',
+        saveUrl: '/catalog/save',
+        deleteUrl: '/catalog/delete',
         order: 1
     }
 };
@@ -288,11 +288,11 @@ function editNote(noteId) {
             var tagValues = [];
             var tags = resp.data.tags;
             if (tags && tags.length > 0) {
-               for (var i = 0; i < tags.length; i++) {
-                   if (tags[i].name) {
-                       tagValues.push(tags[i].name);
-                   }
-               }
+                for (var i = 0; i < tags.length; i++) {
+                    if (tags[i].name) {
+                        tagValues.push(tags[i].name);
+                    }
+                }
             }
 
             // 标签
@@ -301,7 +301,7 @@ function editNote(noteId) {
                 placeholder: '请输入标签',
                 inputclass: 'form-control tag-input',
                 clear: true,
-                value:  tagValues.join(",")
+                value: tagValues.join(",")
             });
         }
     })
@@ -360,8 +360,7 @@ function shareBtnInit() {
             return
         }
         utils.post({
-            url: './note/share',
-            data: utils.formData($("#noteForm")),
+            url: '/note/share/' + utils.formData($("#noteForm")).uid,
             success: function () {
                 _this.removeAttr("disabled");
                 utils.notifySuccess("分享成功")
@@ -401,31 +400,34 @@ function saveBtnInit() {
 function modeBtnInit() {
     var mode = [{
         type: 'readAndWrite',
-        name: '读写'
+        name: '读写',
+        clz: 'fa fa-columns'
     }, {
         type: 'fullRead',
-        name: '阅读'
+        name: '阅读',
+        clz: 'fa fa-eye'
     }, {
         type: 'fullWrite',
-        name: '编辑'
+        name: '编辑',
+        clz: 'fa fa-pencil'
     }];
     var currMode = mode[0];
     // 初始状态
-    $(".content-area").addClass(currMode.type);
-    $(".modeBtn").attr("data-mode", currMode.type).text(currMode.name);
-
     $(".modeBtn").click(function () {
         var type = $(this).attr("data-mode");
+        if (!type) {
+            type = currMode
+        }
         mode.forEach(function (it, index) {
             if (it.type == type) {
                 currMode = mode[(index + 1) % mode.length];
                 return true
             }
         });
-        $(this).attr("data-mode", currMode.type).text(currMode.name);
+        $(this).attr("data-mode", currMode.type).attr("data-original-title", currMode.name).html('<i class="' + currMode.clz + '"></i>');
         $(".content-area").removeClass([mode[0].type, mode[1].type, mode[2].type])
             .addClass(currMode.type);
-    })
+    }).trigger("click")
 }
 
 // 查询
@@ -443,6 +445,37 @@ function searchInit() {
     });
 }
 
+// seo 设置
+function seoInit() {
+    $(".seoBtn").click(function () {
+        var noteId = utils.formData($("#noteForm")).uid;
+        if (noteId != null) {
+            utils.fillForm($("#seo-form"), {type: 'blog', relateId: noteId});
+            $('#seoModal').unbind('show.bs.modal').on('show.bs.modal', function (e) {
+                utils.ajax({
+                    url: 'seo/blog/' + noteId,
+                    success: function (resp) {
+                        if (resp.data) {
+                            utils.fillForm($("#seo-form"), resp.data)
+                        }
+                    }
+                })
+            }).modal('toggle');
+        }
+    });
+
+    $(".seoSaveBtn").click(function () {
+        utils.post({
+            url: 'seo/save',
+            data: utils.formData($("#seo-form")),
+            success: function () {
+                $('#seoModal').modal("hide");
+                utils.notifySuccess("保存成功")
+            }
+        })
+    })
+}
+
 $(function () {
     initDirTree();
     markdownInit();
@@ -458,6 +491,7 @@ $(function () {
     shareBtnInit();
     modeBtnInit();
     searchInit();
+    seoInit();
 
     renderMd = debounce(600, renderMd)
 

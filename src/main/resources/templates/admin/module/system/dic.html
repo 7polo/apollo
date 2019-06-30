@@ -84,13 +84,13 @@
                     actions: [{
                         title: '修改',
                         icon: 'fa fa-edit',
-                        handle: function (record) {
+                        handler: function (record) {
                             openModal(record)
                         }
                     }, {
                         title: '删除',
                         icon: 'fa fa-trash',
-                        handle: function (record, index) {
+                        handler: function (record, index) {
                             utils.post({
                                 url: '/sys/dic/delete/' + record.uid,
                                 success: function () {

@@ -13,6 +13,7 @@
     <div layout:fragment="content"></div>
 </div>
 <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdn.staticfile.org/popper.js/1.12.5/umd/popper.min.js"></script>
 <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
 <script>
@@ -30,6 +31,10 @@
             }, idle)
         }
     }
+
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
 </script>
 <div layout:fragment="script"></div>
 </body>

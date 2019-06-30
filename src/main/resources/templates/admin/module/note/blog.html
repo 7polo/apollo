@@ -13,7 +13,8 @@
                 <div class="card-body">
                     <div class="mb10 btn-group" role="group">
                         <form class="form-inline" id="searchForm" onsubmit="return false">
-                            <input type="text" class="form-control mb-2 mr-sm-4" name="name" placeholder="标题" style="width: 400px">
+                            <input type="text" class="form-control mb-2 mr-sm-4" name="name" placeholder="标题"
+                                   style="width: 400px">
                             <input type="text" class="form-control mb-2 mr-sm-2" name="content" placeholder="内容">
                             <div style="position: relative;top: -3px;">
                                 <a class="btn btn-icon searchBtn" href="#!"><i class="fa fa-search"></i></a>
@@ -69,6 +70,11 @@
                     width: "200px",
                     dataIndex: 'name'
                 }, {
+                    title: '目录',
+                    dataIndex: 'catalogName',
+                    align: "center",
+                    width: "80px"
+                }, {
                     title: '创建时间',
                     width: "100px",
                     dataIndex: 'createDt'
@@ -83,28 +89,13 @@
                         return '<font color="red">未发布</font>';
                     }
                 }, {
-                    title: '标签',
-                    dataIndex: 'tagNames',
-                    align: "center",
-                    width: "120px",
-                    renderer: function (title, dataIndex, record) {
-                        var tags = (record.tagNames || "").split(",");
-                        var html = "";
-                        tags.forEach(function (tag, index) {
-                            if (tag) {
-                                html = html.concat('<a class="blog-tag bg-success">' + tag + '</a>')
-                            }
-                        });
-                        return html;
-                    }
-                }, {
                     type: 'action',
                     title: '操作',
                     width: "80",
                     actions: [{
                         title: '修改',
                         icon: 'fa fa-edit',
-                        handle: function (record) {
+                        handler: function (record) {
                             parent.$(parent.document).data('multitabs').create({
                                 iframe: false,
                                 title: '编辑博客',
@@ -114,7 +105,7 @@
                     }, {
                         title: '删除',
                         icon: 'fa fa-trash',
-                        handle: function (record, index) {
+                        handler: function (record, index) {
                             utils.post({
                                 url: '/note/delete/' + record.uid,
                                 success: function () {
@@ -126,13 +117,28 @@
                     }, {
                         title: '查看',
                         icon: 'fa fa-eye',
-                        handle: function (record, index) {
+                        handler: function (record, index) {
                             window.open('/blog/' + record.uid + '.html')
+                        }
+                    }, {
+                        title: '分享',
+                        icon: 'fa fa-share',
+                        handler: function (record, index) {
+                            utils.post({
+                                url: '/note/share/'+record.uid,
+                                success: function () {
+                                    utils.notifySuccess("分享成功")
+                                    $table.query(utils.formData($("#searchForm")))
+                                },
+                                error: function (e) {
+                                    utils.notifySuccess(e.msg)
+                                }
+                            });
                         }
                     }, {
                         title: 'SEO',
                         icon: 'fa fa-cog',
-                        handle: function (record, index) {
+                        handler: function (record, index) {
                             utils.fillForm($("#seo-form"), {type: 'blog', relateId: record.uid});
                             $('#seoModal').unbind('show.bs.modal').on('show.bs.modal', function (e) {
                                 utils.ajax({

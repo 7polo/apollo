@@ -27,8 +27,8 @@ public class NoteController {
     }
 
     @ApiOperation(value = "分享note ")
-    @PostMapping("share")
-    public Result share(String uid) {
+    @PostMapping("share/{uid}")
+    public Result share(@PathVariable String uid) {
         Note note = noteService.queryById(uid);
         if (note.getPublishDt() != null) {
             return Result.error("该笔已分享过， 无需再次分享");
