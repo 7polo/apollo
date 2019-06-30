@@ -12,6 +12,14 @@ body {
     height: 100%;
 }
 
+.form-control:focus{
+    box-shadow: none;
+}
+
+.btn.focus, .btn:focus{
+    box-shadow: none;
+}
+
 /*公共的样式*/
 p {
     margin-bottom: .5rem
@@ -196,11 +204,6 @@ a.bg-success:hover {
     color: #f96868;
 }
 
-/*右边内容区域*/
-.right-main-wrapper {
-    height: calc(100% - 15px);
-    padding-top: 10px;
-}
 
 
 /**------------
@@ -385,7 +388,8 @@ a.bg-success:hover {
 }
 
 .tag .in {
-    height: 25px
+    height: 25px;
+    width: 100px;
 }
 
 .hide {
