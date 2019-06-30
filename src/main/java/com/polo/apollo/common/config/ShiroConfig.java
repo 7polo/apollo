@@ -31,10 +31,11 @@ public class ShiroConfig {
 
     /**
      * 设置默认加密方式
+     *
      * @return
      */
     @Bean
-    public HashedCredentialsMatcher hashedCredentialsMatcher(){
+    public HashedCredentialsMatcher hashedCredentialsMatcher() {
         HashedCredentialsMatcher hashedCredentialsMatcher = new HashedCredentialsMatcher();
         // 使用md5 算法进行加密
         hashedCredentialsMatcher.setHashAlgorithmName(EncryptUtil.HASH_NAME);

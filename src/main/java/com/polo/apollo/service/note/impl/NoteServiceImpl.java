@@ -4,14 +4,10 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.polo.apollo.common.Constant;
-import com.polo.apollo.common.entity.Tree;
-import com.polo.apollo.common.util.Utils;
-import com.polo.apollo.dao.note.CatalogDao;
 import com.polo.apollo.dao.note.NoteDao;
 import com.polo.apollo.entity.dto.CatalogDto;
 import com.polo.apollo.entity.dto.NoteDto;
 import com.polo.apollo.entity.modal.note.Note;
-import com.polo.apollo.entity.modal.note.Tag;
 import com.polo.apollo.entity.vo.NoteVo;
 import com.polo.apollo.service.note.NoteService;
 import com.polo.apollo.service.note.TagService;
@@ -21,7 +17,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import javax.servlet.http.HttpSession;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 /**
  * @author baoqianyong
@@ -35,9 +33,6 @@ public class NoteServiceImpl implements NoteService {
 
     @Autowired
     private NoteDao noteDao;
-
-    @Autowired
-    private CatalogDao catalogDao;
 
     @Autowired
     private TagService tagService;
@@ -84,7 +79,17 @@ public class NoteServiceImpl implements NoteService {
 
     @Override
     public IPage<NoteDto> queryPage(NoteVo vo, int start, int limit) {
-        return noteDao.queryBlogPage(new Page<>(start, limit), vo);
+        return noteDao.queryPage(new Page<>(start, limit), vo);
+    }
+
+    @Override
+    public IPage<NoteDto> queryBlogPage(NoteVo vo, int start, int limit) {
+        if (vo == null) {
+            vo = new NoteVo();
+        }
+        vo.setAbbre(true);
+        vo.setPublished(true);
+        return noteDao.queryPage(new Page<>(start, limit), vo);
     }
 
     @Override

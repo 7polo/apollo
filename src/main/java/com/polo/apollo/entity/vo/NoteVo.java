@@ -28,6 +28,9 @@ public class NoteVo {
 
     /**
      * 是否压缩 content
+     * null： 不查询
+     * true： 压缩
+     * false： 不压缩
      */
-    private boolean abbre = false;
+    private Boolean abbre = false;
 }

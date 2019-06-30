@@ -117,7 +117,6 @@ function Table(option) {
         var stepTpl = '<li class="page-item {active} {disabled}" data-page="{page}"><a class="page-link" href="#">{text}</a></li>';
 
         var html = "";
-
         var steps = [];
         if (total > 0) {
             // 1。上一页

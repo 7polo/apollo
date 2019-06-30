@@ -101,7 +101,7 @@
     </div>
     <div class="pageWrapper">
         <div>
-            <ul class="pagination"></ul>
+            <ul class="pagination pagination-sm"></ul>
         </div>
     </div>
     <script>
@@ -143,28 +143,94 @@
                 return
             }
             var total = pagin.total;
-            var page = pagin.current;
+            var current = pagin.current;
             var size = pagin.size;
             var totalPage = Math.ceil(total / size);
 
+            var stepTpl = '<li class="page-item {active} {disabled}" data-page="{page}"><a class="page-link" href="#">{text}</a></li>';
+
             var html = "";
-            html += '<li class="page-item {disabled}" data-page="{page}"><a class="page-link" href="#" tabindex="-1">上一页</a></li>'.format({
-                disabled: page == 1 ? 'disabled' : '',
-                page: page - 1
-            });
-            for (var i = page - 3; i < page + 3 && i <= totalPage; i++) {
-                if (i <= 0) {
-                    continue
+            var steps = [];
+            if (total > 0) {
+                // 1。上一页
+                steps.push({
+                    disabled: current == 1 ? 'disabled' : '',
+                    page: current - 1,
+                    text: '上一页'
+                });
+
+
+                var stepCount = 8;
+                var half = Math.ceil((stepCount - 1) / 2);
+                var leftIndex = Math.max(1, current - half);
+                var rightIndex = Math.min(totalPage, current + half);
+                // 补充左边
+                if (leftIndex > 1 && rightIndex == totalPage) {
+                    // 左边位置 = 总量 - 右边偏移量
+                    leftIndex = Math.max(1, current - (stepCount - (rightIndex - current)));
                 }
-                html += '<li class="page-item {active}" data-page="{page}"><a class="page-link" href="#">{page}</a></li>'.format({
-                    active: i == page ? "active" : "",
-                    page: i
-                })
+                // 补充右边
+                if (leftIndex == 1 && rightIndex < totalPage) {
+                    rightIndex = Math.min(totalPage, current + (stepCount - (current - leftIndex)));
+                }
+                // 2。左边页码
+                if (leftIndex != 1) {
+                    // 第一页
+                    steps.push({
+                        page: 1
+                    });
+                    leftIndex++;
+                    // 省略号
+                    if (leftIndex != 2) {
+                        steps.push({
+                            disabled: 'disabled',
+                            page: '...'
+                        });
+                        leftIndex++;
+                    }
+                }
+                for (var i = leftIndex; i < current; i++) {
+                    steps.push({
+                        page: i
+                    });
+                }
+
+                // 3。当前页
+                steps.push({
+                    active: "active",
+                    page: current
+                });
+
+                // 4。右边页码
+                for (var i = current + 1; i <= rightIndex; i++) {
+                    if (i == rightIndex && i != totalPage) {
+                        steps[steps.length - 1].page = totalPage;
+                        if (rightIndex != totalPage - 1) {
+                            steps[steps.length - 2] = {
+                                page: '...',
+                                disabled: 'disabled'
+                            }
+                        }
+                    } else {
+                        steps.push({
+                            page: i
+                        })
+                    }
+                }
+
+                // 5。 下一页
+                steps.push({
+                    disabled: (current == totalPage) ? 'disabled' : '',
+                    page: current + 1,
+                    text: '下一页'
+                });
+
+                for (var i = 0; i < steps.length; i++) {
+                    steps[i].text = steps[i].text || steps[i].page;
+                    steps[i].active = steps[i].active || '';
+                    html += stepTpl.format(steps[i])
+                }
             }
-            html += '<li class="page-item {disabled}" data-page="{page}"><a class="page-link" href="#">下一页</a></li>'.format({
-                disabled: page == totalPage ? 'disabled' : '',
-                page: page + 1
-            });
             $(".pagination").html(html);
 
             $(".page-item").unbind("click").click(function () {

@@ -44,6 +44,8 @@ public interface NoteService {
      */
     IPage<NoteDto> queryPage(NoteVo vo, int start, int limit);
 
+    IPage<NoteDto> queryBlogPage(NoteVo vo, int start, int limit);
+
     /**
      * 查询 目录下的 note
      *

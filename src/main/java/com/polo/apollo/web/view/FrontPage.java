@@ -55,11 +55,7 @@ public class FrontPage {
         layout(model);
         // 轮播图配置
         model.addAttribute(Constant.DIC_CAROUSEL, dataDicService.queryListByType(Constant.DIC_CAROUSEL));
-        NoteVo vo = new NoteVo();
-        vo.setAbbre(true);
-        // 已发布的 note 才是 blog
-        vo.setPublished(true);
-        model.addAttribute("blogPage", noteService.queryPage(vo, 1, 10));
+        model.addAttribute("blogPage", noteService.queryBlogPage(null, 1, 10));
         return MODULE + "/index";
     }
 

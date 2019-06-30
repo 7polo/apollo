@@ -56,18 +56,6 @@ public class NoteController {
         if (vo == null) {
             vo = new NoteVo();
         }
-        vo.setAbbre(true);
-        return Result.success(noteService.queryPage(vo, start, limit));
-    }
-
-    @ApiOperation(value = "分页查询 缩略内容的note")
-    @GetMapping("queryAbbrePage")
-    public Result queryAbbrePage(NoteVo vo, int start, int limit) {
-        if (vo == null) {
-            vo = new NoteVo();
-        }
-        vo.setAbbre(true);
-        vo.setPublished(true);
         return Result.success(noteService.queryPage(vo, start, limit));
     }
 
@@ -75,12 +63,5 @@ public class NoteController {
     @GetMapping("queryCatalogDto/{uid}")
     public Result queryCatalogDto(@PathVariable String uid) {
         return Result.success(noteService.queryCatalogDto(uid));
-    }
-
-    @ApiOperation(value = "根据主键id 点赞blog")
-    @GetMapping("good/{blogId}")
-    public Result good(@PathVariable String blogId) {
-        noteService.addGood(blogId);
-        return Result.success();
     }
 }

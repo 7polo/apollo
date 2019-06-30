@@ -23,11 +23,11 @@ public interface NoteDao extends BaseMapper<Note> {
     /**
      * 分页查询
      *
-     * @param objectPage
+     * @param page
      * @param vo
      * @return
      */
-    IPage<NoteDto> queryBlogPage(Page<Object> objectPage, @Param("vo") NoteVo vo);
+    IPage<NoteDto> queryPage(Page<Note> page, @Param("vo") NoteVo vo);
 
 
     /**
@@ -71,6 +71,7 @@ public interface NoteDao extends BaseMapper<Note> {
 
     /**
      * 查询热门博客
+     *
      * @param limit 条数
      * @return
      */
