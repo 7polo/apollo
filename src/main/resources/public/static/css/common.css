@@ -12,13 +12,10 @@ body {
     height: 100%;
 }
 
-.form-control:focus{
-    box-shadow: none;
+input:focus,a:focus, div:focus{
+    box-shadow: none !important;
 }
 
-.btn.focus, .btn:focus{
-    box-shadow: none;
-}
 
 /*公共的样式*/
 p {
