@@ -57,22 +57,21 @@
 }
 
 .tag-panel .item {
-    color: #999;
-    background-color: #f6f6f6;
     border-radius: 3px;
     display: inline-block;
     width: 31%;
     margin: 0 1.3% 1% 0;
-    padding: 0 8px;
+    padding: 0 5px;
     font-size: 12px;
     height: 29px;
     line-height: 29px;
     overflow: hidden;
+    background-color: rgba(25,190,107, .7);
+    color: white;
 }
 
-.tag-panel .item:hover {
-    background-color: #33cabb;
-    color: white;
+.hot-tags .card-body {
+    padding: 10px 5px 5px 5px
 }
 
 /*热门博客*/
@@ -104,9 +103,11 @@
     border-bottom-left-radius: unset;
     border-bottom-right-radius: unset;
 }
+
 .related {
     margin-bottom: 5px;
 }
+
 .related > i {
     margin-right: 5px;
 }
