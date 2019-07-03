@@ -33,7 +33,7 @@
 </head>
 <body>
 <th:block data-layout-fragment="content">
-    <didv class="blog-wrapper card" style="display: none;padding: 15px 20px">
+    <didv class="blog-wrapper card" style="padding: 15px 20px">
         <th:block th:if="${blog == null}">
             <div>文章不存在</div>
         </th:block>
@@ -47,7 +47,7 @@
                     </a>
                 </th:block>
             </p>
-            <div id="md-content" class="markdown-body" th:text="${blog.content}"></div>
+            <div id="md-content" class="markdown-body" th:utext="${blog.mdHtml}"></div>
             <p class="meta">
                 <span th:text="${#dates.format(blog.createDt, 'yyyy-MM-dd')}"></span>
                 <span th:text="'阅读('+${blog.readCount}+')'"></span>
@@ -74,36 +74,6 @@
 </th:block>
 <th:block data-layout-fragment="script">
     <script src="https://cdn.bootcss.com/highlight.js/9.14.2/highlight.min.js"></script>
-    <script th:src="@{/static/js/marked.min.js}"></script>
-    <script>
-        /*<![CDATA[*/
-        $(function () {
-            marked.setOptions({
-                renderer: new marked.Renderer(),
-                gfm: true,
-                tables: true,
-                breaks: false,
-                pedantic: false,
-                sanitize: false,
-                smartLists: true,
-                smartypants: false,
-                preClass: 'hljs',
-                highlight: function (code, lang, callback) {
-                    if (lang && hljs.getLanguage(lang)) {
-                        return hljs.highlight(lang, code, true).value;
-                    } else {
-                        return hljs.highlightAuto(code).value;
-                    }
-                }
-            });
-            var $md = $("#md-content");
-            if ($md.length > 0) {
-                $md.html(marked(utils.escape2Html($md.html())));
-            }
-            $(".blog-wrapper").show();
-        })
-        /*]]>*/
-    </script>
 </th:block>
 
 </body>

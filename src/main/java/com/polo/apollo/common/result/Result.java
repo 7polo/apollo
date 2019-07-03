@@ -7,7 +7,6 @@ import lombok.Data;
  * @author baoqianyong
  */
 @Data
-@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Result {
 
     private ResultCode code;

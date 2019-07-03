@@ -113,6 +113,7 @@ public class FrontPage {
         noteService.addRead(uid);
         Note blog = noteService.queryPublishedById(uid);
         if (blog != null) {
+            blog.setContent(null);
             model.addAttribute("blog", blog);
             model.addAttribute("blogTag", tagService.queryByNoteId(uid));
             model.addAttribute("seo", seoService.querySeoByRelateId(Constant.SEO_BLOG, uid));

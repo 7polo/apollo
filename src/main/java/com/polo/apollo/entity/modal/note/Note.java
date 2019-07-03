@@ -29,6 +29,11 @@ public class Note extends BaseEntity {
     private String content;
 
     /**
+     * md-html markdown 渲染后的html
+     */
+    private String mdHtml;
+
+    /**
      * 发布时间
      */
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")

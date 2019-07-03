@@ -423,9 +423,12 @@ function saveBtnInit() {
             return
         }
         _this.attr("disabled", true);
+        debugger
+        var values = utils.formData($("#noteForm"));
+        values.mdHtml =  $('.md-html').html();
         utils.post({
             url: TYPES.note.saveUrl,
-            data: utils.formData($("#noteForm")),
+            data: values,
             success: function () {
                 _this.removeAttr("disabled");
                 utils.notifySuccess("保存成功")
