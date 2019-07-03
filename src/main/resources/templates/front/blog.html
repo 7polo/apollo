@@ -2,7 +2,7 @@
 <html lang="en" xmlns:layout="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
       layout:decorate="~{front/components/layout}">
 <head>
-    <title th:text="${blog!=null?blog.name:'文章不存在'}"></title>
+    <title th:text="${(sys!=null?sys.title:'') +' '+ (blog!=null?blog.name:'文章不存在')}"></title>
     <link th:href="@{/static/css/editor/tomorrow-night-eighties.css}" rel="stylesheet">
     <th:block th:if="${seo != null}">
         <meta name="keywords" th:content="${seo.keyword}"/>
