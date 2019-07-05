@@ -423,7 +423,6 @@ function saveBtnInit() {
             return
         }
         _this.attr("disabled", true);
-        debugger
         var values = utils.formData($("#noteForm"));
         values.mdHtml =  $('.md-html').html();
         utils.post({
