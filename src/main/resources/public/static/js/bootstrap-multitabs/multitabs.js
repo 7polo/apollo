@@ -331,7 +331,8 @@ if (typeof jQuery === "undefined") {
             if (!$tabPane.html()) {
                 if ($tabPane.is('iframe')) {
                     if (!$tabPane.attr('src')) {
-                        if (param.url.indexOf("login")) {
+
+                        if (param.url.indexOf("login")>-1) {
                             window.top.location.href = param.url
                         }else {
                             $tabPane.attr('src', param.url);
