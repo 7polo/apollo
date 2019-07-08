@@ -331,7 +331,11 @@ if (typeof jQuery === "undefined") {
             if (!$tabPane.html()) {
                 if ($tabPane.is('iframe')) {
                     if (!$tabPane.attr('src')) {
-                        $tabPane.attr('src', param.url);
+                        if (param.url.indexOf("login")) {
+                            window.top.location.href = param.url
+                        }else {
+                            $tabPane.attr('src', param.url);
+                        }
                     }
                 } else {
                     $.ajax({

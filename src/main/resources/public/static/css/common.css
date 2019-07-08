@@ -428,7 +428,10 @@ hr {
 
 .markdown-body table {
     border-right: 1px solid #aaa;
-    border-bottom: 1px solid #aaa
+    border-bottom: 1px solid #aaa;
+    width: 100%;
+    text-align: center;
+    margin-bottom: 10px;
 }
 
 .markdown-body table td, .markdown-body table th {
