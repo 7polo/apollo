@@ -338,19 +338,15 @@ function editNote(noteId) {
 
 // 编辑器初始化
 function markdownInit() {
-    var renderer = new marked.Renderer();
-    renderer.blockquote = function (html) {
-        return html;
-    };
     marked.setOptions({
-        renderer: renderer,
+        renderer: new marked.Renderer(),
         gfm: true,
         tables: true,
-        breaks: false,
+        breaks: true,
         pedantic: false,
         sanitize: false,
         smartLists: true,
-        smartypants: false,
+        smartypants: true,
         preClass: 'hljs',
         highlight: function (code, lang, callback) {
             if (lang && hljs.getLanguage(lang)) {

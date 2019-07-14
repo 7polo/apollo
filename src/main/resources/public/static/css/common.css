@@ -12,7 +12,7 @@ body {
     height: 100%;
 }
 
-input:focus,a:focus, div:focus{
+input:focus, a:focus, div:focus {
     box-shadow: none !important;
 }
 
@@ -200,7 +200,6 @@ a.bg-success:hover {
 .c-danger {
     color: #f96868;
 }
-
 
 
 /**------------
@@ -444,7 +443,27 @@ hr {
     display: block;
 }
 
-.markdown-body ul{
+.markdown-body ul {
     padding-inline-start: 20px
+}
+
+.markdown-body blockquote {
+    border-left: .5em solid #eee;
+    padding: 0 0 0 2em;
+    margin-left: 0;
+}
+
+.markdown-body blockquote cite {
+    font-size: 14px;
+    line-height: 20px;
+    color: #bfbfbf;
+}
+
+.markdown-body blockquote cite:before {
+    content: '\2014 \00A0';
+}
+
+.markdown-body blockquote p {
+    color: #666;
 }
 
