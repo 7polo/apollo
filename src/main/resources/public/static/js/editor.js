@@ -364,9 +364,22 @@ function markdownInit() {
             var start = this.selectionStart;
             var end = this.selectionEnd;
             var selected = window.getSelection().toString();
-            selected = indent + selected.replace(/\n/g, '\n' + indent);
-            this.value = this.value.substring(0, start) + selected + this.value.substring(end);
-            this.setSelectionRange(start + indent.length, start + selected.length);
+
+            if (e.shiftKey) {
+                var selecteds = selected.split("\n");
+                if (selecteds.length > 0) {
+                    selected = [];
+                    $.each(selecteds, function (s) {
+                        selected.push(selecteds[s].replace(/(\s{1,4})?/, ''))
+                    });
+                    selected = selected.join("\n")
+                }
+                this.value = this.value.substring(0, start) + selected + this.value.substring(end);
+            } else {
+                selected = indent + selected.replace(/\n/g, '\n' + indent);
+                this.value = this.value.substring(0, start) + selected + this.value.substring(end);
+            }
+            this.setSelectionRange(start, start + selected.length);
         }
         renderMd()
     });
@@ -420,7 +433,7 @@ function saveBtnInit() {
         }
         _this.attr("disabled", true);
         var values = utils.formData($("#noteForm"));
-        values.mdHtml =  $('.md-html').html();
+        values.mdHtml = $('.md-html').html();
         utils.post({
             url: TYPES.note.saveUrl,
             data: values,
