@@ -27,6 +27,8 @@ public class LogHandler {
      */
     private Map<String, Map<String, String>> ipMaps = new ConcurrentHashMap<>();
 
+    private static final int capacity = 100;
+
     @Autowired
     private LogService logService;
 
@@ -58,7 +60,7 @@ public class LogHandler {
             if (json != null) {
                 ipData = (Map<String, String>) json.get("data");
                 if (ipData != null) {
-                    if (ipMaps.size() > 20) {
+                    if (ipMaps.size() > capacity) {
                         ipMaps.clear();
                     }
                     ipMaps.put(ip, ipData);

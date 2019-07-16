@@ -1,4 +1,4 @@
-package com.polo.apollo.common.config;
+package com.polo.apollo.shiro.config;
 
 
 import com.polo.apollo.common.util.EncryptUtil;

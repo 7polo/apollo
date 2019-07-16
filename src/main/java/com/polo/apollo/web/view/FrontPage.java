@@ -125,7 +125,7 @@ public class FrontPage {
 
     private void layout(Model model) {
         model.addAttribute(Constant.SYS, Application.sys);
-        model.addAttribute("hots", noteService.queryHotBlog(5));
+        model.addAttribute("hots", noteService.queryHotBlog(10));
         model.addAttribute("tags", tagService.queryTagCount(true));
         model.addAttribute("friendLinks", dataDicService.queryListByType(Constant.DIC_FRIEND_LINK));
         model.addAttribute("skills", getList());
