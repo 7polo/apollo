@@ -1,6 +1,5 @@
 package com.polo.apollo.common.util;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.polo.apollo.common.entity.Tree;
@@ -20,33 +19,7 @@ public class Utils {
         return c == null || c.size() == 0;
     }
 
-    /**
-     * 根据 list 构建树
-     *
-     * @param list
-     * @param parentBi 节点关系比较器
-     * @return
-     */
-    public static List<Tree> buildTree(List list, BiPredicate<Tree, Tree> parentBi) {
-
-        List<Tree> treeList = new ArrayList<>();
-        for (Object obj : list) {
-            treeList.add(Utils.obj2Obj(obj, Tree.class));
-        }
-        for (Tree pNode : treeList) {
-            for (Tree cNode : treeList) {
-                if (pNode == cNode) {
-                    continue;
-                }
-                if (parentBi.test(pNode, cNode)) {
-                    pNode.addChildren(cNode);
-                    cNode.setHasParent(true);
-                }
-            }
-        }
-        // 过滤出顶层的父节点
-        return treeList.stream().filter(tree -> !tree.hasParent()).collect(Collectors.toList());
-    }
+    private static final ObjectMapper objectMapper = new ObjectMapper();
 
     /**
      * 获取uuid
@@ -57,7 +30,6 @@ public class Utils {
         return UUID.randomUUID().toString().replaceAll("-", "");
     }
 
-
     /**
      * obj 转成json
      *
@@ -65,9 +37,8 @@ public class Utils {
      * @return
      */
     public static String obj2Json(Object obj) {
-        ObjectMapper mapper = new ObjectMapper();
         try {
-            return mapper.writeValueAsString(obj);
+            return objectMapper.writeValueAsString(obj);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
@@ -84,7 +55,6 @@ public class Utils {
      */
     public static <T> T json2Obj(String json, Class<T> clz) {
         try {
-            ObjectMapper objectMapper = new ObjectMapper();
             return objectMapper.readValue(json, clz);
         } catch (IOException e) {
         }
@@ -98,10 +68,7 @@ public class Utils {
      * @return
      */
     public static Map<String, Object> obj2Map(Object obj) {
-        ObjectMapper oMapper = new ObjectMapper();
-        // 忽略 null 字段
-        oMapper.setDefaultPropertyInclusion(JsonInclude.Include.NON_NULL);
-        return oMapper.convertValue(obj, Map.class);
+        return objectMapper.convertValue(obj, Map.class);
     }
 
     /**
@@ -111,9 +78,6 @@ public class Utils {
      * @return
      */
     public static <T> T obj2Obj(Object obj, Class<T> clz) {
-        ObjectMapper oMapper = new ObjectMapper();
-        // 忽略 null 字段
-        oMapper.setDefaultPropertyInclusion(JsonInclude.Include.NON_NULL);
-        return oMapper.convertValue(obj, clz);
+        return objectMapper.convertValue(obj, clz);
     }
 }

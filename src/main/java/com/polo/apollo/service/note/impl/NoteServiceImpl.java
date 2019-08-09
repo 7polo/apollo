@@ -95,7 +95,12 @@ public class NoteServiceImpl implements NoteService {
         if (StringUtils.hasLength(dirId)) {
             return noteDao.queryCatalogDtoList(dirId);
         }
-        return new ArrayList<>();
+        return Collections.emptyList();
+    }
+
+    @Override
+    public List<CatalogDto> queryAllCatalogDtoList() {
+        return noteDao.queryCatalogDtoList(null);
     }
 
     @Override

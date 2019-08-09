@@ -467,3 +467,7 @@ hr {
     color: #666;
 }
 
+.markdown-body ol {
+    padding-inline-start: 20px;
+}
+

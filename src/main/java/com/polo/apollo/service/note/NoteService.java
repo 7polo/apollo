@@ -54,6 +54,8 @@ public interface NoteService {
      */
     List<CatalogDto> queryCatalogDtoList(String dirId);
 
+    List<CatalogDto> queryAllCatalogDtoList();
+
     /**
      * 查询 note 对应的 CatalogDto
      * @param uid

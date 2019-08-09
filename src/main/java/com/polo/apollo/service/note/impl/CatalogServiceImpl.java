@@ -38,7 +38,9 @@ public class CatalogServiceImpl implements CatalogService {
     @Override
     public List<Tree> loadTreeAll() {
         List<CatalogDto> list = catalogDao.queryList(null);
-        return Utils.buildTree(list, (c1, c2) -> c1.get("id").equals(c2.get("dirId")));
+        List<CatalogDto> noteList = noteService.queryAllCatalogDtoList();
+        list.addAll(noteList);
+        return buildCateTree(list);
     }
 
     @Override
@@ -48,9 +50,8 @@ public class CatalogServiceImpl implements CatalogService {
             List<CatalogDto> catList = catalogDao.queryList(dirId);
             // 查询当前 note 节点
             List<CatalogDto> noteList = noteService.queryCatalogDtoList(dirId);
-
             catList.addAll(noteList);
-            return Utils.buildTree(catList, (c1, c2) -> c1.get("id").equals(c2.get("dirId")));
+            return buildCateTree(catList);
         }
         return null;
     }
@@ -58,5 +59,9 @@ public class CatalogServiceImpl implements CatalogService {
     @Override
     public void deleteByUid(String uid) {
         catalogDao.deleteById(uid);
+    }
+
+    private List<Tree> buildCateTree(List<CatalogDto> list) {
+        return Tree.buildTree(list, "id", tree -> tree.get("dirId"), false);
     }
 }
