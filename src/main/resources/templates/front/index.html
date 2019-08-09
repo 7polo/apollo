@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:layout="http://www.w3.org/1999/xhtml"
-      layout:decorate="~{front/components/layout}">
+      layout:decorate="~{front/layout/layout}">
 <head>
     <title th:text="${sys != null ?sys.title:''} + '个人博客'">Apollo</title>
     <bloglist th:replace="~{components/bloglist :: css}"></bloglist>

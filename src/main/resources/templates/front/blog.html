@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:layout="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
-      layout:decorate="~{front/components/layout}">
+      layout:decorate="~{front/layout/blog-layout}">
 <head>
     <title th:text="${(sys!=null?sys.title:'') +' '+ (blog!=null?blog.name:'文章不存在')}"></title>
     <link th:href="@{/static/css/editor/tomorrow-night-eighties.css}" rel="stylesheet">
@@ -28,6 +28,31 @@
             .next-blog {
                 text-align: right;
             }
+        }
+        .md-doc, h1.md-doc, .md-doc.md-title {
+            font-size: .8rem;
+            padding-left: 10px;
+            color: #007bff;
+            cursor: pointer
+        }
+
+        h2.md-doc {
+            padding-left: 20px;
+        }
+        h3.md-doc {
+            padding-left: 30px;
+        }
+        h4.md-doc {
+            padding-left: 40px;
+            font-size: .6rem;
+        }
+        h5.md-doc {
+            padding-left: 50px;
+            font-size: .6rem;
+        }
+        h6.md-doc {
+            padding-left: 60px;
+            font-size: .6rem;
         }
     </style>
 </head>
@@ -74,6 +99,23 @@
 </th:block>
 <th:block data-layout-fragment="script">
     <script src="https://cdn.bootcss.com/highlight.js/9.14.2/highlight.min.js"></script>
+    <script>
+        $(function () {
+            var docHtml = "";
+            $(":header").each(function () {
+                var clz = 'md-doc';
+                var tag = $(this)[0].tagName;
+                var anchor = $(this).text();
+                if ($(this).hasClass('title')){
+                    clz += " md-title"
+                }
+                docHtml += '<'+tag+' class="'+clz+'"><a href="#'+anchor+'">'+$(this).text()+'</a></'+tag+'>';
+
+                $(this).html('<a name="'+anchor+'">'+$(this).html()+'</a>')
+            });
+            $("#md-doc").html(docHtml);
+        })
+    </script>
 </th:block>
 
 </body>

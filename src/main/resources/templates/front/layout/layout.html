@@ -22,34 +22,8 @@
         </div>
     </div>
     <div class="sidebar">
-        <div class="card web-notice">
-            <div class="card-body">
-                <div style="text-align: center;margin-bottom: 5px">
-                    <img class="img-avatar img-avatar-64" th:src="@{/static/images/users/avatar.png}"/>
-                </div>
-                <div class="card-text">
-                    <p style="text-align: center">没有什么能够阻挡</p>
-                    <p th:if="${skills != null and skills.size() > 0}">
-                        <th:block th:each="skill, skillStat : ${skills}">
-                            <a class="blog-tag btn-primary">
-                                <i class="fa fa-tag"></i>
-                                <span th:text="${skill.name}"></span>
-                            </a>
-                        </th:block>
-                    </p>
-                    <div>
-                        <div class="related">
-                            <i class="fa fa-envelope-o"></i>
-                            <a href="mailto:apologizebao@163.com" target="_blank">apologizebao@163.com</a>
-                        </div>
-                        <div>
-                            <i class="fa fa-github"></i>
-                            <a href="https://github.com/7polo" target="_blank">Github</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+
+        <user-card th:replace="~{front/components/user-card :: user-card}"></user-card>
 
         <div class="card hot-blog">
             <div class="card-header">热门文章&nbsp;<i class="c-danger fa fa-fire"></i></div>
