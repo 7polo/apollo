@@ -22,30 +22,11 @@
         </div>
     </div>
     <div class="sidebar">
-        <user-card th:replace="~{front/components/user-card :: user-card}"></user-card>
+        <user-card th:replace="~{front/components/user-card :: index}"></user-card>
 
-        <div class="card hot-tags">
-            <div class="card-header">热门标签&nbsp;<i class="c-success fa fa-tags"></i></div>
-            <div class="card-body">
-                <div class="tag-panel" th:if="${tags != null}">
-                    <th:block th:each="tag, tagStat : ${tags}">
-                        <th:block th:unless="${tag.count}">
-                            <a class="item" th:href="@{'/tag/'+${tag.name}+'.html'}" th:text="${tag.name}"></a>
-                        </th:block>
-                        <th:block th:if="${tag.count}">
-                            <a class="item" th:href="@{'/tag/'+${tag.name}+'.html'}"
-                               th:text="${tag.name} +'('+${tag.count}+')'"></a>
-                        </th:block>
-                    </th:block>
-                </div>
-            </div>
-        </div>
+        <hot-tags-card th:replace="~{front/components/hot-tags-card :: index}"></hot-tags-card>
 
-        <div class="card md-doc-wrapper">
-            <div class="card-header">大纲&nbsp;<i class="c-danger fa fa-fire"></i></div>
-            <div class="card-body" id="md-doc">
-            </div>
-        </div>
+        <md-doc-card th:replace="~{front/components/md-doc-card :: index}"></md-doc-card>
     </div>
 </div>
 <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>

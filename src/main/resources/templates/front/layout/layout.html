@@ -23,49 +23,14 @@
     </div>
     <div class="sidebar">
 
-        <user-card th:replace="~{front/components/user-card :: user-card}"></user-card>
+        <user-card th:replace="~{front/components/user-card :: index}"></user-card>
 
-        <div class="card hot-blog">
-            <div class="card-header">热门文章&nbsp;<i class="c-danger fa fa-fire"></i></div>
-            <div class="card-body" th:if="${hots != null}">
-                <a  th:each="hot, hotStat : ${hots}" th:href="@{'/blog/'+ ${hot.uid} +'.html'}">
-                    <div class="hot-blog-item">
-                        <div class="title" th:text="${hot.name}"></div>
-                        <div class="meta"
-                             th:text="${#dates.format(hot.publishDt, 'yyyy-MM-dd')} + '  阅读('+${hot.readCount}+')'"></div>
-                    </div>
-                </a>
-            </div>
-        </div>
+        <hot-tags-card th:replace="~{front/components/hot-tags-card :: index}"></hot-tags-card>
 
-        <div class="card hot-tags">
-            <div class="card-header">热门标签&nbsp;<i class="c-success fa fa-tags"></i></div>
-            <div class="card-body">
-                <div class="tag-panel" th:if="${tags != null}">
-                    <th:block th:each="tag, tagStat : ${tags}">
-                        <th:block th:unless="${tag.count}">
-                            <a class="item" th:href="@{'/tag/'+${tag.name}+'.html'}" th:text="${tag.name}"></a>
-                        </th:block>
-                        <th:block th:if="${tag.count}">
-                            <a class="item" th:href="@{'/tag/'+${tag.name}+'.html'}"
-                               th:text="${tag.name} +'('+${tag.count}+')'"></a>
-                        </th:block>
-                    </th:block>
-                </div>
-            </div>
-        </div>
+        <hot-blog-card th:replace="~{front/components/hot-blog-card :: index}"></hot-blog-card>
 
-        <div class="card friend-links">
-            <div class="card-header">友情链接</div>
-            <div class="card-body">
-                <div class="card-text">
-                    <th:block th:each="link, linkStat : ${friendLinks}">
-                        <p th:class="${linkStat.index > 5?'hide':''}"><a target="_blank" th:href="${link.value}"
-                                                                         th:text="${link.name}"></a></p>
-                    </th:block>
-                </div>
-            </div>
-        </div>
+        <friendlink-card th:replace="~{front/components/friendlink-card :: index}"></friendlink-card>
+
     </div>
 </div>
 <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>

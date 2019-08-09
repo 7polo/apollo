@@ -29,30 +29,37 @@
                 text-align: right;
             }
         }
+
         .md-doc, h1.md-doc, .md-doc.md-title {
-            font-size: .8rem;
+            font-size: .9rem;
             padding-left: 10px;
             color: #007bff;
             cursor: pointer
         }
 
         h2.md-doc {
+            padding-left: 10px;
+        }
+
+        h3.md-doc {
             padding-left: 20px;
         }
-        h3.md-doc {
-            padding-left: 30px;
-        }
-        h4.md-doc {
+
+        h4.md-doc, h5.md-doc, h6.md-doc {
             padding-left: 40px;
-            font-size: .6rem;
+            font-size: .75rem;
         }
+
         h5.md-doc {
             padding-left: 50px;
-            font-size: .6rem;
         }
+
         h6.md-doc {
             padding-left: 60px;
-            font-size: .6rem;
+        }
+
+        .md-doc-wrapper .card-body {
+            padding: 10px 10px 10px 0;
         }
     </style>
 </head>
@@ -106,12 +113,12 @@
                 var clz = 'md-doc';
                 var tag = $(this)[0].tagName;
                 var anchor = $(this).text();
-                if ($(this).hasClass('title')){
+                if ($(this).hasClass('title')) {
                     clz += " md-title"
                 }
-                docHtml += '<'+tag+' class="'+clz+'"><a href="#'+anchor+'">'+$(this).text()+'</a></'+tag+'>';
+                docHtml += '<' + tag + ' class="' + clz + '"><a href="#' + anchor + '">' + $(this).text() + '</a></' + tag + '>';
 
-                $(this).html('<a name="'+anchor+'">'+$(this).html()+'</a>')
+                $(this).html('<a name="' + anchor + '">' + $(this).html() + '</a>')
             });
             $("#md-doc").html(docHtml);
         })

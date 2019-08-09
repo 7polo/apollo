@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/html">
+<body>
+<div th:fragment="index" class="card friend-links">
+    <div class="card-header">友情链接</div>
+    <div class="card-body">
+        <div class="card-text">
+            <th:block th:each="link, linkStat : ${friendLinks}">
+                <p th:class="${linkStat.index > 5?'hide':''}"><a target="_blank" th:href="${link.value}"
+                                                                 th:text="${link.name}"></a></p>
+            </th:block>
+        </div>
+    </div>
+</div>
+</body>
+</html>
