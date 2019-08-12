@@ -1,4 +1,5 @@
 var dirTree;
+var unsave = false;
 var TYPES = {
     note: {
         name: 'note',
@@ -312,6 +313,7 @@ function editNote(noteId) {
         url: '/note/' + noteId,
         success: function (resp) {
             utils.fillForm(form, resp.data);
+            unsave = false;
             $("#md").trigger("blur");
 
             var tagValues = [];
@@ -381,7 +383,10 @@ function markdownInit() {
             }
             this.setSelectionRange(start, start + selected.length);
         }
-        renderMd()
+        if (e.type != "blur") {
+            unsave = true;
+            renderMd();
+        }
     });
 }
 
@@ -426,7 +431,7 @@ function viewBlogBtnInit() {
 // 保存按钮
 function saveBtnInit() {
     // 注册按钮事件
-    $(".saveBtn").click(function () {
+    $(".saveBtn").click(function (e, saveType) {
         var _this = $(this);
         if (_this.attr("disabled")) {
             return
@@ -439,7 +444,11 @@ function saveBtnInit() {
             data: values,
             success: function () {
                 _this.removeAttr("disabled");
-                utils.notifySuccess("保存成功")
+                if (saveType != "autoSave") {
+                    utils.notifySuccess("保存成功");
+                }
+
+                unsave = false;
             },
             error: function () {
                 _this.removeAttr("disabled");
@@ -528,6 +537,16 @@ function seoInit() {
     })
 }
 
+// 定时保存
+function intervalSave() {
+    setInterval(function () {
+        if (unsave) {
+            console.log("auto save ...."+ new Date().toLocaleDateString());
+            $(".saveBtn").trigger("click", ["autoSave"])
+        }
+    }, 60*1000)
+}
+
 $(function () {
     initDirTree();
     markdownInit();
@@ -546,7 +565,8 @@ $(function () {
 
     searchInit();
     seoInit();
-
+    intervalSave();
     renderMd = debounce(600, renderMd)
-
 });
+
+
