@@ -56,8 +56,8 @@
         select
         n.dir_id, n.uid as id, n.name as text,
         'note' as type
-        from t_note n
-        where n.deleted = 0
+        from t_note n, t_catalog c
+        where n.dir_id = c.uid and n.deleted = 0 and c.deleted = 0
         <if test='dirId != null and dirId !=""'>
             and n.dir_id = #{dirId}
         </if>

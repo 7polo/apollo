@@ -49,6 +49,8 @@ public class ShiroConfig {
         ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
         //设置安全管理器
         shiroFilterFactoryBean.setSecurityManager(securityManager);
+        shiroFilterFactoryBean.getFilters().put("authc", new ShiroFilter());
+
         //默认跳转到登陆页面
         shiroFilterFactoryBean.setLoginUrl("/login");
         //登陆成功后的页面

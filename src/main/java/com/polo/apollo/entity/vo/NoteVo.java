@@ -1,12 +1,14 @@
 package com.polo.apollo.entity.vo;
 
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 /**
  * @author baoqianyong
  * @date 2019/06/30
  */
 @Data
+@Accessors(chain = true)
 public class NoteVo {
 
     /**

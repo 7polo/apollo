@@ -33,12 +33,11 @@ public class Result {
         return Result.success(null, null);
     }
 
-    public static Result error(String msg) {
-        return new Result(ResultCode.ERROR, null, msg);
-    }
-
     public static Result error(Object data, String msg) {
-        return Result.error(data, msg);
+        return new Result(ResultCode.ERROR, data, msg);
+    }
+    public static Result error(String msg) {
+        return Result.error(null, msg);
     }
 
     public static Result error() {

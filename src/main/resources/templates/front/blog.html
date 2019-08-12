@@ -38,7 +38,7 @@
         }
 
         h2.md-doc {
-            padding-left: 10px;
+            padding-left: 15px;
         }
 
         h3.md-doc {
@@ -46,20 +46,26 @@
         }
 
         h4.md-doc, h5.md-doc, h6.md-doc {
-            padding-left: 40px;
+            padding-left: 35px;
             font-size: .75rem;
         }
 
         h5.md-doc {
-            padding-left: 50px;
+            padding-left: 55px;
         }
 
         h6.md-doc {
-            padding-left: 60px;
+            padding-left: 65px;
         }
 
         .md-doc-wrapper .card-body {
             padding: 10px 10px 10px 0;
+        }
+
+        .md-doc-wrapper.fixed {
+            position: fixed;
+            top: 5px;
+            width: 320px;
         }
     </style>
 </head>
@@ -107,20 +113,37 @@
 <th:block data-layout-fragment="script">
     <script src="https://cdn.bootcss.com/highlight.js/9.14.2/highlight.min.js"></script>
     <script>
-        $(function () {
+        // 首次渲染md-doc
+        function rendererMdDoc() {
             var docHtml = "";
             $(":header").each(function () {
                 var clz = 'md-doc';
                 var tag = $(this)[0].tagName;
-                var anchor = $(this).text();
+                var anchor = $(this).text() + Math.floor(Math.random() * 100 + 1);
                 if ($(this).hasClass('title')) {
                     clz += " md-title"
                 }
                 docHtml += '<' + tag + ' class="' + clz + '"><a href="#' + anchor + '">' + $(this).text() + '</a></' + tag + '>';
-
                 $(this).html('<a name="' + anchor + '">' + $(this).html() + '</a>')
             });
             $("#md-doc").html(docHtml);
+        }
+
+        // 滚动悬浮md-doc
+        function adjustPostionBySrcoll() {
+            var el = $(".md-doc-wrapper");
+            $(window).scroll(function (event) {
+                if ($(document).scrollTop() >= 510) {
+                    el.addClass("fixed")
+                } else {
+                    el.removeClass("fixed")
+                }
+            });
+        }
+
+        $(function () {
+            rendererMdDoc();
+            adjustPostionBySrcoll();
         })
     </script>
 </th:block>

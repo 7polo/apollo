@@ -4,6 +4,7 @@ import com.polo.apollo.common.result.Result;
 import com.polo.apollo.entity.modal.system.User;
 import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Controller;
@@ -23,8 +24,11 @@ public class LoginController {
     public Result login(User user) {
         Subject subject = SecurityUtils.getSubject();
         UsernamePasswordToken token = new UsernamePasswordToken(user.getUsername(), user.getPassword());
-        // todo 异常捕获
-        subject.login(token);
+        try {
+            subject.login(token);
+        } catch (AuthenticationException e) {
+            return Result.error();
+        }
         return Result.success();
     }
 }

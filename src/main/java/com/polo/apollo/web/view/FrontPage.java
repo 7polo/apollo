@@ -97,11 +97,8 @@ public class FrontPage {
     public String tag(@PathVariable String tag, Model model) {
         layout(model);
         model.addAttribute("tag", tag);
-        NoteVo vo = new NoteVo();
-        vo.setTagName(tag);
-        vo.setAbbre(true);
         // 已发布的 note 才是 blog
-        vo.setPublished(true);
+        NoteVo vo = new NoteVo().setTagName(tag).setAbbre(true).setPublished(true);
         model.addAttribute("blogPage", noteService.queryPage(vo, 1, 10));
         return MODULE + "/tag";
     }
@@ -109,7 +106,7 @@ public class FrontPage {
     @Log("博客")
     @RequestMapping("/blog/{uid}.html")
     public String blog(@PathVariable String uid, Model model) {
-        layout(model);
+        blogLayout(model);
         noteService.addRead(uid);
         Note blog = noteService.queryPublishedById(uid);
         if (blog != null) {
@@ -128,6 +125,12 @@ public class FrontPage {
         model.addAttribute("hots", noteService.queryHotBlog(10));
         model.addAttribute("tags", tagService.queryTagCount(true));
         model.addAttribute("friendLinks", dataDicService.queryListByType(Constant.DIC_FRIEND_LINK));
+        model.addAttribute("skills", getList());
+    }
+
+    private void blogLayout(Model model) {
+        model.addAttribute(Constant.SYS, Application.sys);
+        model.addAttribute("tags", tagService.queryTagCount(true));
         model.addAttribute("skills", getList());
     }
 
