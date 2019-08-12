@@ -314,8 +314,6 @@ function editNote(noteId) {
         success: function (resp) {
             utils.fillForm(form, resp.data);
             unsave = false;
-            $("#md").trigger("blur");
-
             var tagValues = [];
             var tags = resp.data.tags;
             if (tags && tags.length > 0) {
@@ -334,6 +332,8 @@ function editNote(noteId) {
                 clear: true,
                 value: tagValues.join(",")
             });
+            // 渲染
+            renderMd();
         }
     })
 }
@@ -359,7 +359,7 @@ function markdownInit() {
         }
     });
 
-    $("#md").on("keydown blur", function (e) {
+    $("#md").on("keydown", function (e) {
         if (e.keyCode === 9) {
             e.preventDefault();
             var indent = '    ';
@@ -383,10 +383,8 @@ function markdownInit() {
             }
             this.setSelectionRange(start, start + selected.length);
         }
-        if (e.type != "blur") {
-            unsave = true;
-            renderMd();
-        }
+        unsave = true;
+        renderMd();
     });
 }
 
