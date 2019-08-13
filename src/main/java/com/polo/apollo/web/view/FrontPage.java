@@ -5,7 +5,6 @@ import com.polo.apollo.aop.Log;
 import com.polo.apollo.common.Constant;
 import com.polo.apollo.entity.modal.note.Note;
 import com.polo.apollo.entity.modal.system.SiteMap;
-import com.polo.apollo.entity.modal.system.SkillTag;
 import com.polo.apollo.entity.vo.NoteVo;
 import com.polo.apollo.service.note.NoteService;
 import com.polo.apollo.service.note.TagService;
@@ -125,22 +124,22 @@ public class FrontPage {
         model.addAttribute("hots", noteService.queryHotBlog(10));
         model.addAttribute("tags", tagService.queryTagCount(true));
         model.addAttribute("friendLinks", dataDicService.queryListByType(Constant.DIC_FRIEND_LINK));
-        model.addAttribute("skills", getList());
+//        model.addAttribute("skills", getList());
     }
 
     private void blogLayout(Model model) {
         model.addAttribute(Constant.SYS, Application.sys);
         model.addAttribute("tags", tagService.queryTagCount(true));
-        model.addAttribute("skills", getList());
+//        model.addAttribute("skills", getList());
     }
 
-    private List<SkillTag> getList() {
-        List<SkillTag> list = new ArrayList<>();
-        for (String skill : new String[]{"Java", "Spring", "MySQL", "Linux", "Docker"}) {
-            SkillTag tag = new SkillTag();
-            tag.setName(skill);
-            list.add(tag);
-        }
-        return list;
-    }
+//    private List<SkillTag> getList() {
+//        List<SkillTag> list = new ArrayList<>();
+//        for (String skill : new String[]{"Java", "Spring", "MySQL", "Linux", "Docker"}) {
+//            SkillTag tag = new SkillTag();
+//            tag.setName(skill);
+//            list.add(tag);
+//        }
+//        return list;
+//    }
 }

@@ -24,3 +24,7 @@ mybatis-plus:
       logic-not-delete-value: false
       table-prefix: t_
       id-type: uuid
+
+polo:
+  ip-get-url: http://ip.taobao.com/service/getIpInfo.php?ip=%s
+  local-ips: 127.0.0.1,0:0:0:0:0:0:0:1

@@ -7,11 +7,15 @@ import com.polo.apollo.service.sytem.LogService;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
 import java.lang.reflect.Method;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -22,12 +26,18 @@ import java.util.concurrent.ConcurrentHashMap;
 @Component
 public class LogHandler {
 
+    private static final int capacity = 100;
+
     /**
      * 存储IP地址
      */
-    private Map<String, Map<String, String>> ipMaps = new ConcurrentHashMap<>();
+    private Map<String, Map<String, String>> ipMaps = new HashMap<>();
 
-    private static final int capacity = 100;
+    @Value("${polo.ip-get-url}")
+    private String ipGetUrl;
+
+    @Value("#{'${polo.local-ips}'.split(',')}")
+    private List<String> localIps;
 
     @Autowired
     private LogService logService;
@@ -52,27 +62,36 @@ public class LogHandler {
      * @return
      */
     private LogRecord getIpInfo(String ip) {
-        LogRecord log = new LogRecord();
+
+        if (localIps.contains(ip)) {
+            return new LogRecord().setIp(ip);
+        }
         Map<String, String> ipData = ipMaps.get(ip);
         if (ipData == null) {
-            String str = OkHttpUtil.get("http://ip.taobao.com/service/getIpInfo.php?ip=" + ip);
-            Map<String, Object> json = Utils.json2Obj(str, Map.class);
-            if (json != null) {
-                ipData = (Map<String, String>) json.get("data");
-                if (ipData != null) {
-                    if (ipMaps.size() > capacity) {
-                        ipMaps.clear();
+            if (StringUtils.hasLength(ipGetUrl)) {
+                synchronized (this) {
+                    // 发送 http 请求， 并转换为 json 对象
+                    Map<String, Object> json = Utils.json2Obj(OkHttpUtil.get(String.format(ipGetUrl, ip)), Map.class);
+                    if (json != null) {
+                        ipData = (Map<String, String>) json.get("data");
+                        if (ipData != null) {
+                            if (ipMaps.size() > capacity) {
+                                ipMaps.clear();
+                            }
+                            ipMaps.put(ip, ipData);
+                        }
                     }
-                    ipMaps.put(ip, ipData);
                 }
             }
         }
+
         if (ipData != null) {
-            log.setCountry(ipData.get("country"));
-            log.setRegion(ipData.get("region"));
-            log.setCity(ipData.get("city"));
-            log.setIsp(ipData.get("isp"));
+            return new LogRecord()
+                    .setCountry(ipData.get("country"))
+                    .setRegion(ipData.get("region"))
+                    .setCity(ipData.get("city"))
+                    .setIsp(ipData.get("isp"));
         }
-        return log;
+        return null;
     }
 }

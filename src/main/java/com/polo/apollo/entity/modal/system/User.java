@@ -17,4 +17,14 @@ public class User extends BaseEntity {
     private String salt;
 
     private String email;
+
+    /**
+     * 头像
+     */
+    private String icon;
+
+    /**
+     * 技能
+     */
+    private String skills;
 }

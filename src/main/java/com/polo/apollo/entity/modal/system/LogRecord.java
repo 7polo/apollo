@@ -2,12 +2,14 @@ package com.polo.apollo.entity.modal.system;
 
 import com.polo.apollo.common.entity.BaseEntity;
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 /**
  * @author baoqianyong
  * @date 2019/06/17
  */
 @Data
+@Accessors(chain = true)
 public class LogRecord extends BaseEntity {
 
     private String name;
