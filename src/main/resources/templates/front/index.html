@@ -32,51 +32,18 @@
         </div>
     </th:block>
 
-<!--    <div class="card search">-->
-<!--        <form class="form-inline" id="searchForm" onsubmit="return false">-->
-<!--            <input type="text" class="form-control mb-2 mr-sm-2" name="name" placeholder="标题">-->
-<!--            <input type="text" class="form-control mb-2 mr-sm-2" name="dirName" placeholder="归档">-->
-<!--            <input type="text" class="form-control mb-2 mr-sm-2" name="content" placeholder="内容">-->
-<!--            <button id="searchBtn" class="btn btn-icon" style="top: -3px;position: relative;"><i class="fa fa-search"></i></button>-->
-<!--        </form>-->
-<!--    </div>-->
+    <!--    <div class="card search">-->
+    <!--        <form class="form-inline" id="searchForm" onsubmit="return false">-->
+    <!--            <input type="text" class="form-control mb-2 mr-sm-2" name="name" placeholder="标题">-->
+    <!--            <input type="text" class="form-control mb-2 mr-sm-2" name="dirName" placeholder="归档">-->
+    <!--            <input type="text" class="form-control mb-2 mr-sm-2" name="content" placeholder="内容">-->
+    <!--            <button id="searchBtn" class="btn btn-icon" style="top: -3px;position: relative;"><i class="fa fa-search"></i></button>-->
+    <!--        </form>-->
+    <!--    </div>-->
     <bloglist th:replace="~{components/bloglist :: content}"></bloglist>
+    <page th:replace="~{components/pagination :: page_pager(${blogPage.current}, 0, ${T(Math).ceil(1.0*blogPage.total/blogPage.size).intValue()}, ${''})}"></page>
 </div>
-
-<th:block data-layout-fragment="script">
-    <script th:inline="javascript">
-        var page = {
-            total: [[${blogPage.total}]],
-            current: [[${blogPage.current}]],
-            size: [[${blogPage.size}]]
-        };
-
-        function loadBlog(page, params) {
-            var params = params || {};
-            params.start = page;
-            params.limit = 10;
-            // 此处采用工具ajax
-            utils.ajax({
-                url: '/blog/queryPage',
-                data: params,
-                success: function (resp) {
-                    buildBlogList(resp.data);
-                    buildPagin(resp.data, params);
-                }
-            });
-        }
-
-        $(function () {
-            $("#searchBtn").click(function () {
-                loadBlog(1, utils.formData($("#searchForm")))
-            });
-
-            if (page && page.total) {
-                buildPagin(page, {})
-            }
-        });
-    </script>
-</th:block>
+</div>
 </body>
 </html>
 

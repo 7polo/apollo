@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!--
+	number 页码。页码从1开始，如：1，2，3，4，5，...
+	offset 页码偏移量。如果页码是从0开始，则偏移量为-1；如果页码从1开始，偏移量为0
+	totalPages 分页后，页的总数量。
+	url URL地址。形如：/c , /c?id=1, /c/b?id=1&limit=10。
+
+	1,会自动向url中添加页码，如：/c?id=1&page=1, /c/b?id=1&limit=10&page=1
+	2,当超过totalPages>maxButtons时，会显示...代替多余的按钮
+	3,maxButtons>=floatButtons*2
+	 -->
+<div class="pageWrapper" th:fragment="page_pager(number, offset, totalPages, url)"
+     th:with="maxButtons=10,floatButtons=5">
+    <ul class="pagination pagination-sm">
+        <!-- 上一页 -->
+        <li th:classappend="${number == 1}? 'disabled'" class="page-item">
+            <a class="page-link" th:href="@{${url}(page=${number+offset-1})}">上一页</a>
+        </li>
+
+        <!-- 首页 -->
+        <li th:classappend="${number == 1}?'active'" class="page-item">
+            <a class="page-link" th:href="@{${url}(page=${1+offset})}">1</a>
+        </li>
+
+        <th:block th:if="${totalPages>2 && totalPages<=maxButtons}" th:each="i : ${#numbers.sequence(2,totalPages-1)}">
+            <li th:classappend="${number == i}?'active'" class="page-item">
+                <a class="page-link" th:href="@{${url}(page=${i+offset})}" th:text="${i}">页码</a>
+            </li>
+        </th:block>
+
+        <th:block th:if="${totalPages > maxButtons}">
+            <th:block th:if="${(number-(floatButtons/2)) <= 2}" th:each="i : ${#numbers.sequence(2,2+floatButtons-1)}">
+                <li th:classappend="${number == i}?'active'" class="page-item">
+                    <a class="page-link" th:href="@{${url}(page=${i+offset})}" th:text="${i}">页码</a>
+                </li>
+            </th:block>
+            <!-- ... -->
+            <li th:if="${(number-(floatButtons/2))>2}"><span>...</span></li>
+
+            <th:block
+                    th:if="${((number-(floatButtons/2))>2) && ((number+(floatButtons/2)-(floatButtons%2==0?1:0)) < (totalPages-1))}"
+                    th:each="i : ${#numbers.sequence(number-(floatButtons/2),number+(floatButtons/2)-(floatButtons%2==0?1:0))}">
+                <li th:classappend="${number == i}?'active'" class="page-item">
+                    <a class="page-link" th:href="@{${url}(page=${i+offset})}" th:text="${i}">页码</a>
+                </li>
+            </th:block>
+
+            <!-- ... -->
+            <li th:if="${(number+(floatButtons/2)-(floatButtons%2==0?1:0)) < (totalPages-1)}"><span>...</span></li>
+            <th:block th:if="${(number+(floatButtons/2)-(floatButtons%2==0?1:0)) >= (totalPages-1)}"
+                      th:each="i : ${#numbers.sequence(totalPages-floatButtons,totalPages-1)}">
+                <li th:classappend="${number == i}?'active'" class="page-item">
+                    <a class="page-link" th:href="@{${url}(page=${i+offset})}" th:text="${i}">页码</a>
+                </li>
+            </th:block>
+        </th:block>
+
+        <!-- 最后一页 -->
+        <li th:if="${totalPages>1}" th:classappend="${number == totalPages}?'active'" class="page-item">
+            <a class="page-link" th:href="@{${url}(page=${totalPages+offset})}" th:text="${totalPages}">页码</a>
+        </li>
+
+        <!-- 下一页 -->
+        <li th:classappend="${number >= totalPages}? 'disabled'" class="page-item">
+            <a class="page-link" th:href="@{${url}(page=${number+offset+1})}">下一页</a>
+        </li>
+    </ul>
+</div>
+</body>
+</html>

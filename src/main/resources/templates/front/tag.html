@@ -20,6 +20,7 @@
         </form>
     </div>
     <bloglist th:replace="~{components/bloglist :: content}"></bloglist>
+    <page th:replace="~{components/pagination :: page_pager(${blogPage.current}, 0, ${T(Math).ceil(1.0*blogPage.total/blogPage.size).intValue()}, ${'/tag/'+tag+'.html'})}"></page>
 </div>
 
 <th:block data-layout-fragment="script">

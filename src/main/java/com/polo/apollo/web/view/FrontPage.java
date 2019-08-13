@@ -14,8 +14,10 @@ import com.polo.apollo.service.sytem.SiteMapService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -47,16 +49,6 @@ public class FrontPage {
 
     @Autowired
     private SiteMapService siteMapService;
-
-    @Log("首页")
-    @RequestMapping
-    public String index(Model model) {
-        layout(model);
-        // 轮播图配置
-        model.addAttribute(Constant.DIC_CAROUSEL, dataDicService.queryListByType(Constant.DIC_CAROUSEL));
-        model.addAttribute("blogPage", noteService.queryBlogPage(null, 1, 10));
-        return MODULE + "/index";
-    }
 
     @Log("登录页")
     @RequestMapping("/login")
@@ -91,14 +83,23 @@ public class FrontPage {
         return MODULE + "/about";
     }
 
+    @Log("首页")
+    @RequestMapping
+    public String index(Model model, @RequestParam(required = false, defaultValue = "1") int page) {
+        layout(model);
+        // 轮播图配置
+        model.addAttribute(Constant.DIC_CAROUSEL, dataDicService.queryListByType(Constant.DIC_CAROUSEL));
+        model.addAttribute("blogPage", noteService.queryBlogPage(null, page, 10));
+        return MODULE + "/index";
+    }
+
     @Log("标签")
     @RequestMapping("/tag/{tag}.html")
-    public String tag(@PathVariable String tag, Model model) {
+    public String tag(Model model, @ModelAttribute("tag") @PathVariable String tag, @RequestParam(required = false, defaultValue = "1") int page) {
         layout(model);
-        model.addAttribute("tag", tag);
         // 已发布的 note 才是 blog
         NoteVo vo = new NoteVo().setTagName(tag).setAbbre(true).setPublished(true);
-        model.addAttribute("blogPage", noteService.queryPage(vo, 1, 10));
+        model.addAttribute("blogPage", noteService.queryPage(vo, page, 10));
         return MODULE + "/tag";
     }
 
@@ -132,14 +133,4 @@ public class FrontPage {
         model.addAttribute("tags", tagService.queryTagCount(true));
 //        model.addAttribute("skills", getList());
     }
-
-//    private List<SkillTag> getList() {
-//        List<SkillTag> list = new ArrayList<>();
-//        for (String skill : new String[]{"Java", "Spring", "MySQL", "Linux", "Docker"}) {
-//            SkillTag tag = new SkillTag();
-//            tag.setName(skill);
-//            list.add(tag);
-//        }
-//        return list;
-//    }
 }
