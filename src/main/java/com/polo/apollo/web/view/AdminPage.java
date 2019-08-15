@@ -16,23 +16,11 @@ public class AdminPage {
 
     protected static final String MODULE = "admin";
 
-
-
     @RequestMapping
     public String index(Model model) {
         model.addAttribute(Constant.SYS, Application.sys);
         return MODULE + "/" + "admin";
     }
-
-//    @RequestMapping("/blog/editor")
-//    public String module(@RequestParam(required = false) String uid, Model model) {
-////        Blog blog = blogService.queryById(uid);
-//        if (blog == null) {
-//            blog = new Blog();
-//        }
-//        model.addAttribute("blog", blog);
-//        return this.module(String.format("%s/%s", "blog", "editor"));
-//    }
 
     @RequestMapping("/note/index")
     public String module(Model model, String noteId) {

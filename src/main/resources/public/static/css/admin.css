@@ -16,7 +16,7 @@
     transition: .5s;
 }
 
-.lyear-layout-sidebar-scroll {
+.sidemenubar-scroll {
     height: -moz-calc(100% - 68px);
     height: -webkit-calc(100% - 68px);
     height: calc(100% - 68px);
