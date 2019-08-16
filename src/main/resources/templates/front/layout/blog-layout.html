@@ -8,30 +8,42 @@
     <link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <link th:href="@{/static/css/common.css}" rel="stylesheet">
     <link th:href="@{/static/css/front.css}" rel="stylesheet">
+    <link th:href="@{/static/css/perfect-scrollbar.css}" rel="stylesheet">
     <th:block th:if="${sys != null}">
         <meta name="keywords" th:content="${sys.keyword}"/>
         <meta name=”description” th:content="${sys.description}"/>
     </th:block>
 </head>
 <body>
-<navbar th:replace="~{front/components/navbar :: navbar}"></navbar>
-<div class="container-fluid main max-width">
-    <div class="content-wrap">
-        <div class="content">
-            <div layout:fragment="content"></div>
+<div class="polo-contanier">
+    <navbar th:replace="~{front/components/navbar :: navbar}"></navbar>
+    <div class="container-fluid main max-width">
+        <div class="content-wrap">
+            <div class="content">
+                <div layout:fragment="content"></div>
+            </div>
         </div>
-    </div>
-    <div class="sidebar">
-        <user-card th:replace="~{front/components/user-card :: index}"></user-card>
+        <div class="sidebar">
+            <user-card th:replace="~{front/components/user-card :: index}"></user-card>
 
-        <hot-tags-card th:replace="~{front/components/hot-tags-card :: index}"></hot-tags-card>
+            <hot-tags-card th:replace="~{front/components/hot-tags-card :: index}"></hot-tags-card>
 
-        <md-doc-card th:replace="~{front/components/md-doc-card :: index}"></md-doc-card>
+            <md-doc-card th:replace="~{front/components/md-doc-card :: index}"></md-doc-card>
+        </div>
     </div>
 </div>
 <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
 <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script type="text/javascript" th:src="@{/static/js/lib/perfect-scrollbar.min.js}"></script>
 <script type="text/javascript" th:src="@{/static/js/utils.js}"></script>
+<script>
+    $(function () {
+        var ps = new PerfectScrollbar('.polo-contanier', {
+            swipeEasing: false,
+            suppressScrollX: true
+        });
+    })
+</script>
 <div layout:fragment="script"></div>
 </body>
 </html>

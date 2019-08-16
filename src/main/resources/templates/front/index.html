@@ -5,7 +5,6 @@
     <title th:text="${sys != null ?sys.title:''} + '个人博客'">Apollo</title>
     <bloglist th:replace="~{components/bloglist :: css}"></bloglist>
 </head>
-
 <body>
 <div layout:fragment="content">
 
@@ -44,6 +43,9 @@
     <page th:replace="~{components/pagination :: page_pager(${blogPage.current}, 0, ${T(Math).ceil(1.0*blogPage.total/blogPage.size).intValue()}, ${''})}"></page>
 </div>
 </div>
+<th:block data-layout-fragment="script">
+
+</th:block>
 </body>
 </html>
 

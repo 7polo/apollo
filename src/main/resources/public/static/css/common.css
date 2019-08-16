@@ -16,6 +16,9 @@ input:focus, a:focus, div:focus {
     box-shadow: none !important;
 }
 
+.no-overflow {
+    overflow: hidden;
+}
 
 /*公共的样式*/
 p {
@@ -201,109 +204,6 @@ a.bg-success:hover {
     color: #f96868;
 }
 
-
-/**------------
- * 滚动条样式
- -------------------------------------- */
-.ps {
-    overflow: hidden !important;
-    overflow-anchor: none;
-    -ms-overflow-style: none;
-    touch-action: auto;
-    -ms-touch-action: auto;
-}
-
-.ps__rail-x {
-    display: none;
-    opacity: 0;
-    transition: background-color .2s linear, opacity .2s linear;
-    -webkit-transition: background-color .2s linear, opacity .2s linear;
-    height: 6px;
-    bottom: 2px;
-    position: absolute;
-}
-
-.ps__rail-y {
-    display: none;
-    opacity: 0;
-    transition: background-color .2s linear, opacity .2s linear;
-    -webkit-transition: background-color .2s linear, opacity .2s linear;
-    width: 6px;
-    right: 2px;
-    position: absolute;
-}
-
-.ps--active-x > .ps__rail-x,
-.ps--active-y > .ps__rail-y {
-    display: block;
-    background-color: transparent;
-}
-
-.ps:hover > .ps__rail-x,
-.ps:hover > .ps__rail-y,
-.ps--focus > .ps__rail-x,
-.ps--focus > .ps__rail-y,
-.ps--scrolling-x > .ps__rail-x,
-.ps--scrolling-y > .ps__rail-y {
-    opacity: 0.6;
-}
-
-.ps .ps__rail-x:hover,
-.ps .ps__rail-y:hover,
-.ps .ps__rail-x:focus,
-.ps .ps__rail-y:focus,
-.ps .ps__rail-x.ps--clicking,
-.ps .ps__rail-y.ps--clicking {
-    background-color: #eee;
-    opacity: 0.9;
-}
-
-.ps__thumb-x {
-    background-color: #aaa;
-    border-radius: 6px;
-    transition: background-color .2s linear, height .2s ease-in-out;
-    -webkit-transition: background-color .2s linear, height .2s ease-in-out;
-    height: 3px;
-    bottom: 0px;
-    position: absolute;
-}
-
-.ps__thumb-y {
-    background-color: #aaa;
-    border-radius: 6px;
-    transition: background-color .2s linear, width .2s ease-in-out;
-    -webkit-transition: background-color .2s linear, width .2s ease-in-out;
-    width: 3px;
-    right: 0px;
-    position: absolute;
-}
-
-.ps__rail-x:hover > .ps__thumb-x,
-.ps__rail-x:focus > .ps__thumb-x,
-.ps__rail-x.ps--clicking .ps__thumb-x {
-    background-color: #999;
-    height: 6px;
-}
-
-.ps__rail-y:hover > .ps__thumb-y,
-.ps__rail-y:focus > .ps__thumb-y,
-.ps__rail-y.ps--clicking .ps__thumb-y {
-    background-color: #999;
-    width: 6px;
-}
-
-@supports (-ms-overflow-style: none) {
-    .ps {
-        overflow: auto !important;
-    }
-}
-
-@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
-    .ps {
-        overflow: auto !important;
-    }
-}
-
 .img-avatar-32 {
     width: 32px;
     height: 32px;
@@ -394,6 +294,14 @@ a.bg-success:hover {
 
 hr {
     margin-top: .5rem;
+}
+
+.polo-contanier {
+    position: relative;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow: auto;
 }
 
 .markdown-body h3, .markdown-body h2, .markdown-body h1 {

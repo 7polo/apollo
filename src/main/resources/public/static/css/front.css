@@ -43,6 +43,9 @@
     }
 }
 
+.body-scrollbar {
+}
+
 /*热门标签*/
 .blog-user, .hot-tags, .friend-links, .hot-blog {
     margin-bottom: 15px;
