@@ -136,12 +136,10 @@ public class FrontPage {
         model.addAttribute("hots", noteService.queryHotBlog(10));
         model.addAttribute("tags", tagService.queryTagCount(true));
         model.addAttribute("friendLinks", dataDicService.queryListByType(Constant.DIC_FRIEND_LINK));
-//        model.addAttribute("skills", getList());
     }
 
     private void blogLayout(Model model) {
         model.addAttribute(Constant.SYS, Application.sys);
         model.addAttribute("tags", tagService.queryTagCount(true));
-//        model.addAttribute("skills", getList());
     }
 }
