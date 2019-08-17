@@ -47,6 +47,13 @@
             <if test='vo.content != null and vo.content != ""'>
                 and n.content like concat('%', #{vo.content}, '%')
             </if>
+            <if test='vo.search != null and vo.search != ""'>
+                and (
+                    n.content like concat('%', #{vo.search}, '%')
+                    or n.name like concat('%', #{vo.search}, '%')
+                    or t.name like concat('%', #{vo.search}, '%')
+                )
+            </if>
         </where>
         group by n.uid
         order by n.publish_dt desc

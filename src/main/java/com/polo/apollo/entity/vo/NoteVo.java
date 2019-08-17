@@ -24,6 +24,11 @@ public class NoteVo {
     private String content;
 
     /**
+     * 查询内容（搜索范围 标签、标题、内容）
+     */
+    private String search;
+
+    /**
      * 标签名
      */
     private String tagName;

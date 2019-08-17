@@ -1,8 +1,10 @@
 package com.polo.apollo.web.view;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.polo.apollo.Application;
 import com.polo.apollo.aop.Log;
 import com.polo.apollo.common.Constant;
+import com.polo.apollo.entity.dto.NoteDto;
 import com.polo.apollo.entity.modal.note.Note;
 import com.polo.apollo.entity.modal.system.SiteMap;
 import com.polo.apollo.entity.vo.NoteVo;
@@ -22,8 +24,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author baoqianyong
@@ -105,12 +105,12 @@ public class FrontPage {
 
     @Log("搜索")
     @RequestMapping("/search")
-    public String search(Model model, @RequestParam(required = false, defaultValue = "") @ModelAttribute("search") String search, @RequestParam(required = false, defaultValue = "1") int page) {
+    public String search(Model model, @ModelAttribute("search") String search, @RequestParam(required = false, defaultValue = "1") int page) {
         layout(model);
-        model.addAttribute("search", search);
         // 已发布的 note 才是 blog
-        NoteVo vo = new NoteVo().setAbbre(true).setPublished(true);
-        model.addAttribute("blogPage", noteService.queryPage(vo, page, 10));
+        NoteVo vo = new NoteVo().setAbbre(true).setPublished(true).setSearch(search);
+        IPage<NoteDto> pageResult = noteService.queryPage(vo, page, 10);
+        model.addAttribute("blogPage", pageResult);
         return MODULE + "/search";
     }
 
