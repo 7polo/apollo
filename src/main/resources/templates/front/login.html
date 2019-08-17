@@ -97,6 +97,10 @@
                 $(".loginBtn").trigger("click")
             }
         });
+
+        if (self != top) {
+            top.location.href = self.location.href
+        }
     })
 </script>
 </body>
