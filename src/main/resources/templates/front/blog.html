@@ -67,6 +67,15 @@
             top: 5px;
             width: 320px;
         }
+        .pre-scroll {
+            margin-bottom: 1rem;
+        }
+        .pre-scroll pre {
+            position: relative;
+            margin: 0;
+            padding: 0;
+            overflow: auto;
+        }
     </style>
 </head>
 <body>
@@ -116,21 +125,29 @@
         // 首次渲染md-doc
         function rendererMdDoc() {
             var docHtml = "";
+            var hasDoc = false;
             $(":header").each(function () {
                 var clz = 'md-doc';
                 var tag = $(this)[0].tagName;
                 var anchor = $(this).text() + Math.floor(Math.random() * 100 + 1);
                 if ($(this).hasClass('title')) {
                     clz += " md-title"
+                }else {
+                    hasDoc = true;
                 }
                 docHtml += '<' + tag + ' class="' + clz + '"><a href="#' + anchor + '">' + $(this).text() + '</a></' + tag + '>';
                 $(this).html('<a name="' + anchor + '">' + $(this).html() + '</a>')
             });
-            $("#md-doc").html(docHtml);
+            if (hasDoc) {
+                $("#md-doc").html(docHtml);
+            }else {
+                $(".md-doc-wrapper").hide();
+            }
         }
 
         // 滚动悬浮md-doc
         function adjustPostionBySrcoll() {
+            // todo 失效
             var el = $(".md-doc-wrapper");
             $(window).scroll(function (event) {
                 if ($(document).scrollTop() >= 510) {
@@ -141,9 +158,22 @@
             });
         }
 
+        // 滚动条
+        function initPreScroll() {
+            $("pre").wrap("<div class='pre-scroll'></div>");
+
+            var preScrolls = document.querySelectorAll(".pre-scroll pre");
+            if (preScrolls) {
+                preScrolls.forEach(function (ele) {
+                    new PerfectScrollbar(ele)
+                })
+            }
+        }
+
         $(function () {
             rendererMdDoc();
             adjustPostionBySrcoll();
+            initPreScroll();
         })
     </script>
 </th:block>

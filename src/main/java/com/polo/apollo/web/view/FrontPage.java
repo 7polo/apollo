@@ -103,6 +103,17 @@ public class FrontPage {
         return MODULE + "/tag";
     }
 
+    @Log("搜索")
+    @RequestMapping("/search")
+    public String search(Model model, @RequestParam(required = false, defaultValue = "") @ModelAttribute("search") String search, @RequestParam(required = false, defaultValue = "1") int page) {
+        layout(model);
+        model.addAttribute("search", search);
+        // 已发布的 note 才是 blog
+        NoteVo vo = new NoteVo().setAbbre(true).setPublished(true);
+        model.addAttribute("blogPage", noteService.queryPage(vo, page, 10));
+        return MODULE + "/search";
+    }
+
     @Log("博客")
     @RequestMapping("/blog/{uid}.html")
     public String blog(@PathVariable String uid, Model model) {

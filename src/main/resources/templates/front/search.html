@@ -2,20 +2,17 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:layout="http://www.w3.org/1999/xhtml"
       layout:decorate="~{front/layout/layout}">
 <head>
-    <title th:text="${tag}"></title>
+    <!--    <title th:text="${tag}"></title>-->
     <bloglist th:replace="~{components/bloglist :: css}"></bloglist>
-    <meta name="keywords" th:content="${tag}"/>
-    <meta name=”description” th:content="${tag}"/>
 </head>
 <body>
 <div layout:fragment="content">
     <div class="card" style="padding: 10px">
-        <div><span>标签: </span><span style="color: #33cabb;" th:text="${tag}"></span></div>
+        <div><span>搜索: </span><span style="color: #33cabb;" th:text="${search}"></span></div>
     </div>
     <bloglist th:replace="~{components/bloglist :: content}"></bloglist>
-    <page th:replace="~{components/pagination :: page_pager(${blogPage.current}, 0, ${T(Math).ceil(1.0*blogPage.total/blogPage.size).intValue()}, ${'/tag/'+tag+'.html'})}"></page>
+    <page th:replace="~{components/pagination :: page_pager(${blogPage.current}, 0, ${T(Math).ceil(1.0*blogPage.total/blogPage.size).intValue()}, ${'/search/?search='+search})}"></page>
 </div>
-
 <th:block data-layout-fragment="script">
 </th:block>
 </body>
