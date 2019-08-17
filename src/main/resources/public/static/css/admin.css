@@ -1,7 +1,7 @@
 /** ----------------------------------
  * 左侧导航
  -------------------------------------- */
-.lyear-layout-sidebar {
+.polo-layout-sidebar {
     position: fixed;
     top: 0;
     bottom: 0;
@@ -50,7 +50,7 @@
 /** ----------------------------------
  * 头部信息
  -------------------------------------- */
-.lyear-layout-header {
+.polo-layout-header {
     position: fixed;
     top: 0;
     right: 0;
@@ -143,7 +143,7 @@ li.nav-item a {
     padding-left: 70px;
 }
 
-.expand .lyear-layout-sidebar {
+.expand .polo-layout-sidebar {
     transform: translate(-220px, 0px);
     transition: 0.5s;
 }
@@ -153,7 +153,7 @@ li.nav-item a {
     user-select: none;
 }
 
-.expand .lyear-layout-header {
+.expand .polo-layout-header {
     -webkit-transition: padding 0.5s;
     transition: padding 0.5s;
     padding-left: 0;

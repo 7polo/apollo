@@ -11,7 +11,7 @@
         <div class="collapse navbar-collapse" id="navbarText" style="justify-content: flex-end">
             <ul class="navbar-nav">
                 <li>
-                    <input class="form-control header-search" placeholder="查询" th:value="${search}">
+                    <input class="form-control header-search" placeholder="搜索一下..." th:value="${search}">
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" th:href="@{/admin}">后台</a>
@@ -24,7 +24,7 @@
     </nav>
     <script>
         function initSearch() {
-            var baseUrl = $(".index-href").attr("href")+"search";
+            var baseUrl = $(".index-href").attr("href") + "search";
             $(".header-search").keyup(function (event) {
                 if (event.keyCode == 13) {
                     var value = $(this).val();

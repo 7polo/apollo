@@ -15,7 +15,9 @@
 	2,当超过totalPages>maxButtons时，会显示...代替多余的按钮
 	3,maxButtons>=floatButtons*2
 	 -->
-<div class="pageWrapper" th:fragment="page_pager(number, offset, totalPages, url)"
+<div class="pageWrapper"
+     th:classappend="${totalPages == 0}? 'hide'"
+     th:fragment="page_pager(number, offset, totalPages, url)"
      th:with="maxButtons=10,floatButtons=5">
     <ul class="pagination pagination-sm">
         <!-- 上一页 -->

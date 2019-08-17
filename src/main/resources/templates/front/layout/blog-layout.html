@@ -38,12 +38,13 @@
 <script type="text/javascript" th:src="@{/static/js/utils.js}"></script>
 <script>
     $(function () {
+        initSearch();
         var ps = new PerfectScrollbar('.polo-contanier', {
             swipeEasing: false,
             suppressScrollX: true
         });
     })
 </script>
-<div layout:fragment="script"></div>
+<th:block layout:fragment="script"></th:block>
 </body>
 </html>

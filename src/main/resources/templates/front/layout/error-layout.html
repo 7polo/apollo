@@ -11,6 +11,10 @@
         <meta name="keywords" th:content="${sys.keyword}"/>
         <meta name=”description” th:content="${sys.description}"/>
     </th:block>
+    <style>
+        .polo-contanier .navbar {
+        }
+    </style>
 </head>
 <body>
 <div class="polo-contanier">
@@ -22,14 +26,14 @@
 <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
 <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
 <script th:inline="javascript">
-    $(function () {
-        initSearch();
-        new PerfectScrollbar('.polo-contanier', {
-            swipeEasing: false,
-            suppressScrollX: true
-        });
-    })
+    initSearch();
+    if (self != top) {
+        $(".polo-contanier .navbar").hide();
+    } else {
+        $(".polo-contanier .navbar").show()
+    }
 </script>
 <div layout:fragment="script"></div>
 </body>
 </html>
+
