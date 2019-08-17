@@ -145,19 +145,6 @@
             }
         }
 
-        // 滚动悬浮md-doc
-        function adjustPostionBySrcoll() {
-            // todo 失效
-            var el = $(".md-doc-wrapper");
-            $(window).scroll(function (event) {
-                if ($(document).scrollTop() >= 510) {
-                    el.addClass("fixed")
-                } else {
-                    el.removeClass("fixed")
-                }
-            });
-        }
-
         // 滚动条
         function initPreScroll() {
             $("pre").wrap("<div class='pre-scroll'></div>");
@@ -172,7 +159,6 @@
 
         $(function () {
             rendererMdDoc();
-            adjustPostionBySrcoll();
             initPreScroll();
         })
     </script>

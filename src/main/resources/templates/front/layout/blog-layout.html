@@ -37,12 +37,28 @@
 <script type="text/javascript" th:src="@{/static/js/lib/perfect-scrollbar.min.js}"></script>
 <script type="text/javascript" th:src="@{/static/js/utils.js}"></script>
 <script>
+
+    // 滚动悬浮md-doc
+    function doScrollFixed(scrollCmp) {
+        var el = $(".md-doc-wrapper");
+        scrollCmp.addEventListener('ps-scroll-y', function (e) {
+            if (this.scrollTop > 510) {
+                el.addClass("fixed")
+            } else {
+                el.removeClass("fixed")
+            }
+        });
+    }
+
     $(function () {
         initSearch();
-        var ps = new PerfectScrollbar('.polo-contanier', {
+        var scrollCmp = document.querySelector(".polo-contanier");
+        new PerfectScrollbar(scrollCmp, {
             swipeEasing: false,
             suppressScrollX: true
         });
+
+        doScrollFixed(scrollCmp);
     })
 </script>
 <th:block layout:fragment="script"></th:block>
