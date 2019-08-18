@@ -39,7 +39,8 @@ public interface UserService {
 
     /**
      * 获取作者
+     * @param load 是否从数据库加载
      * @return
      */
-    UserDto getAutor();
+    UserDto getAuthor(boolean load);
 }

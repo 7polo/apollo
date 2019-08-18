@@ -138,7 +138,7 @@ public class FrontPage {
     private void layout(Model model) {
         model.addAttribute(Constant.SYS, Application.sys);
 
-        model.addAttribute("author", userService.getAutor());
+        model.addAttribute("author", userService.getAuthor(false));
         model.addAttribute("hots", noteService.queryHotBlog(10));
         model.addAttribute("tags", tagService.queryTagCount(true));
         model.addAttribute("friendLinks", dataDicService.queryListByType(Constant.DIC_FRIEND_LINK));
@@ -146,7 +146,7 @@ public class FrontPage {
 
     private void blogLayout(Model model) {
         model.addAttribute(Constant.SYS, Application.sys);
-        model.addAttribute("author", userService.getAutor());
+        model.addAttribute("author", userService.getAuthor(false));
         model.addAttribute("tags", tagService.queryTagCount(true));
     }
 }

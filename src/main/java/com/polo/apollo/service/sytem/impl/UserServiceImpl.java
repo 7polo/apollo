@@ -1,6 +1,7 @@
 package com.polo.apollo.service.sytem.impl;
 
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.polo.apollo.Application;
 import com.polo.apollo.common.util.EncryptUtil;
 import com.polo.apollo.dao.system.UserDao;
 import com.polo.apollo.entity.dto.UserDto;
@@ -45,6 +46,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void save(User user) {
         userDao.updateById(user);
+        this.getAuthor(true);
     }
 
     @Override
@@ -53,19 +55,21 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDto getAutor() {
-        User user = userDao.selectOne(null);
-        if (user == null) {
-            return null;
-        }
-        UserDto userDto = new UserDto();
-        BeanUtils.copyProperties(user, userDto, "skills", "password");
-        if (StringUtils.hasLength(user.getSkills())) {
-            String[] skills = user.getSkills().split(",");
-            for (String skill : skills) {
-                userDto.getSkills().add(skill.trim());
+    public synchronized UserDto getAuthor(boolean load) {
+        if (Application.user == null || load) {
+            User user = userDao.selectOne(null);
+            if (user != null) {
+                UserDto userDto = new UserDto();
+                BeanUtils.copyProperties(user, userDto, "skills", "password");
+                if (StringUtils.hasLength(user.getSkills())) {
+                    String[] skills = user.getSkills().split(",");
+                    for (String skill : skills) {
+                        userDto.getSkills().add(skill.trim());
+                    }
+                }
+                Application.user = userDto;
             }
         }
-        return userDto;
+        return Application.user;
     }
 }
