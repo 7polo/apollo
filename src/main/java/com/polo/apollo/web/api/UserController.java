@@ -22,10 +22,16 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @PostMapping("updatePassword")
+    public Result updatePassword(String oldPass, String newPass) {
+        try {
+            String uid = SecurityUtils.getSubject().getPrincipal().toString();
+            userService.updatePassword(uid, oldPass, newPass);
+            return Result.success();
+        }catch (Exception e){
 
-    @RequestMapping("updatePassword")
-    public Result updatePassword(String oldPassword, String newPassword) {
-        return Result.success();
+        }
+        return Result.error();
     }
 
     @ApiOperation(value = "保存 用户信息")

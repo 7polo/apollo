@@ -25,6 +25,36 @@
         </main>
     </div>
 </div>
+<div class="modal fade" id="passwdModal" tabindex="-1" role="dialog" aria-labelledby="passwdModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="passwdModalLabel">更改密码</h5>
+            </div>
+            <div class="modal-body">
+                <form id="passwd-form">
+                    <div class="form-group">
+                        <label for="oldPass" class="col-form-label">旧密码:</label>
+                        <input type="password" class="form-control" id="oldPass" name="oldPass">
+                    </div>
+                    <div class="form-group">
+                        <label for="newPass" class="col-form-label">新密码:</label>
+                        <input type="password" class="form-control" id="newPass" name="newPass">
+                    </div>
+                    <div class="form-group">
+                        <label for="newPass2" class="col-form-label">再次输入新密码:</label>
+                        <input type="password" class="form-control" id="newPass2" name="newPass2">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary passwdSaveBtn">保存</button>
+            </div>
+        </div>
+    </div>
+</div>
 <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
 <!-- popper.min.js 用于弹窗、提示、下拉菜单 -->
 <script src="https://cdn.staticfile.org/popper.js/1.12.5/umd/popper.min.js"></script>
@@ -34,5 +64,31 @@
 <script type="text/javascript" th:src="@{/static/js/lib/bootstrap-notify.min.js}"></script>
 <script type="text/javascript" th:src="@{/static/js/utils.js}"></script>
 <script type="text/javascript" th:src="@{/static/js/admin.min.js}"></script>
+<script>
+    $(function () {
+        $(".change-pwd").click(function () {
+            $('#passwdModal').modal("show");
+        });
+
+        $(".passwdSaveBtn").click(function () {
+            var formData = utils.formData($("#passwd-form"));
+            if (formData.newPass == formData.newPass2) {
+                utils.post({
+                    url: '/user/updatePassword',
+                    data: utils.formData($("#passwd-form")),
+                    success: function (resp) {
+                        $('#passwdModal').modal("hide");
+                        utils.notifySuccess("密码修改成功")
+                    },
+                    error: function () {
+                        utils.notifyError("旧密码不正确")
+                    }
+                })
+            } else {
+                utils.notifyError("两次输入的新密码不一致")
+            }
+        })
+    })
+</script>
 </body>
 </html>

@@ -35,10 +35,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void updatePassword(User user, String oldPass, String newPass) {
-        if (EncryptUtil.isPasswordEqual(user, oldPass)) {
+    public void updatePassword(String uid, String oldPass, String newPass) {
+        User user = queryById(uid);
+        if (user != null && EncryptUtil.isPasswordEqual(user, oldPass)) {
             EncryptUtil.encryptUser(user, newPass);
             userDao.updateById(user);
+            return;
         }
         throw new RuntimeException("旧密码不正确");
     }

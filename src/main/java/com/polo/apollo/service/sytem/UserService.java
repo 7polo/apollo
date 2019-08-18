@@ -18,11 +18,11 @@ public interface UserService {
 
     /**
      * 更新密码
-     * @param user
+     * @param uid
      * @param oldPass
      * @param newPass
      */
-    void updatePassword(User user, String oldPass, String newPass);
+    void updatePassword(String uid, String oldPass, String newPass);
 
     /**
      * 更新

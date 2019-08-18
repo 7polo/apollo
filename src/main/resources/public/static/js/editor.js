@@ -525,7 +525,7 @@ function seoInit() {
 
     $(".seoSaveBtn").click(function () {
         utils.post({
-            url: 'seo/save',
+            url: '/seo/save',
             data: utils.formData($("#seo-form")),
             success: function () {
                 $('#seoModal').modal("hide");
