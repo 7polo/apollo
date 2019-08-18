@@ -1,6 +1,9 @@
 package com.polo.apollo.common.util;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author baoqianyong
@@ -26,5 +29,17 @@ public class WebUtils {
             ip = request.getRemoteAddr();
         }
         return ip;
+    }
+
+    public static Map<String, Object> getParamMap(HttpServletRequest request) {
+        Map<String, Object> map = new HashMap<>(16);
+
+        Enumeration names = request.getParameterNames();
+        while (names.hasMoreElements()) {
+            String name = (String) names.nextElement();
+            Object value = request.getParameter(name);
+            map.put(name, value);
+        }
+        return map;
     }
 }

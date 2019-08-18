@@ -3,6 +3,7 @@ package com.polo.apollo.common.util;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.polo.apollo.common.entity.Tree;
+import org.springframework.util.StringUtils;
 
 import java.io.IOException;
 import java.util.*;
@@ -79,5 +80,17 @@ public class Utils {
      */
     public static <T> T obj2Obj(Object obj, Class<T> clz) {
         return objectMapper.convertValue(obj, clz);
+    }
+
+    /**
+     * 首字母大写
+     * @param str
+     * @return
+     */
+    public static String firstUpper(String str) {
+        if (StringUtils.hasLength(str)) {
+            return str.substring(0, 1).toUpperCase() + str.substring(1);
+        }
+        return str;
     }
 }
