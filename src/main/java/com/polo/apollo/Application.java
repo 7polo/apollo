@@ -1,6 +1,7 @@
 package com.polo.apollo;
 
 import com.polo.apollo.entity.modal.system.SysConfig;
+import com.polo.apollo.entity.modal.system.User;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

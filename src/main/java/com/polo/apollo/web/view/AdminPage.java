@@ -4,6 +4,8 @@ import com.polo.apollo.Application;
 import com.polo.apollo.common.Constant;
 import com.polo.apollo.common.entity.PoloModule;
 import com.polo.apollo.entity.modal.system.User;
+import com.polo.apollo.service.sytem.UserService;
+import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,6 +26,9 @@ public class AdminPage extends ModuleHandler{
 
     @Autowired
     private HttpServletRequest request;
+
+    @Autowired
+    private UserService userService;
 
     @RequestMapping
     public String index(Model model) {
@@ -51,6 +56,7 @@ public class AdminPage extends ModuleHandler{
 
     @PoloModule
     private void systemUser(Model model, Map<String, Object> params) {
-        model.addAttribute("user", new User());
+        User user = userService.queryById(SecurityUtils.getSubject().getPrincipal().toString());
+        model.addAttribute("user", user);
     }
 }

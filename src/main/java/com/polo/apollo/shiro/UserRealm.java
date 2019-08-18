@@ -29,6 +29,6 @@ public class UserRealm extends AuthenticatingRealm {
         }
         //盐值
         ByteSource salt = ByteSource.Util.bytes(user.getSalt());
-        return new SimpleAuthenticationInfo(user.getUsername(), user.getPassword(), salt, getName());
+        return new SimpleAuthenticationInfo(user.getUid(), user.getPassword(), salt, getName());
     }
 }

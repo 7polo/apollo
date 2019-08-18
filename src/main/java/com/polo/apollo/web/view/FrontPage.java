@@ -13,6 +13,7 @@ import com.polo.apollo.service.note.TagService;
 import com.polo.apollo.service.sytem.DataDicService;
 import com.polo.apollo.service.sytem.SeoService;
 import com.polo.apollo.service.sytem.SiteMapService;
+import com.polo.apollo.service.sytem.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -49,6 +50,9 @@ public class FrontPage {
 
     @Autowired
     private SiteMapService siteMapService;
+
+    @Autowired
+    private UserService userService;
 
     @Log("登录页")
     @RequestMapping("/login")
@@ -133,6 +137,8 @@ public class FrontPage {
 
     private void layout(Model model) {
         model.addAttribute(Constant.SYS, Application.sys);
+
+        model.addAttribute("author", userService.getAutor());
         model.addAttribute("hots", noteService.queryHotBlog(10));
         model.addAttribute("tags", tagService.queryTagCount(true));
         model.addAttribute("friendLinks", dataDicService.queryListByType(Constant.DIC_FRIEND_LINK));

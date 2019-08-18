@@ -1,18 +1,20 @@
-package com.polo.apollo.entity.modal.system;
+package com.polo.apollo.entity.dto;
 
-import com.polo.apollo.common.entity.BaseEntity;
 import lombok.Data;
+
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * @author baoqianyong
- * @date 2019/06/02
  */
 @Data
-public class User extends BaseEntity {
+public class UserDto {
+
+    private String uid;
 
     private String username;
-
-    private String password;
 
     private String salt;
 
@@ -26,7 +28,7 @@ public class User extends BaseEntity {
     /**
      * 技能
      */
-    private String skills;
+    private Set<String> skills = new HashSet<>();
 
     /**
      * 格言

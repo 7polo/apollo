@@ -1,5 +1,6 @@
 package com.polo.apollo.web.api;
 
+import com.polo.apollo.Application;
 import com.polo.apollo.common.result.Result;
 import com.polo.apollo.entity.modal.system.User;
 import io.swagger.annotations.ApiOperation;
