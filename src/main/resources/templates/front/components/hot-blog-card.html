@@ -3,15 +3,22 @@
 <body>
 <div th:fragment="index" class="card hot-blog">
     <div class="card-header">热门文章&nbsp;<i class="c-danger fa fa-fire"></i></div>
-    <div class="card-body" th:if="${hots != null}">
-        <a th:each="hot, hotStat : ${hots}" th:href="@{'/blog/'+ ${hot.uid} +'.html'}">
-            <div class="hot-blog-item">
-                <div class="title" th:text="${hot.name}"></div>
-                <div class="meta"
-                     th:text="${#dates.format(hot.publishDt, 'yyyy-MM-dd')} + '  阅读('+${hot.readCount}+')'"></div>
-            </div>
-        </a>
+    <div class="card-body">
+        <th:block th:if="${hots != null and hots.size() > 0}">
+            <a th:each="hot, hotStat : ${hots}" th:href="@{'/blog/'+ ${hot.uid} +'.html'}">
+                <div class="hot-blog-item">
+                    <div class="title" th:text="${hot.name}"></div>
+                    <div class="meta"
+                         th:text="${#dates.format(hot.publishDt, 'yyyy-MM-dd')} + '  阅读('+${hot.readCount}+')'"></div>
+                </div>
+            </a>
+        </th:block>
+
+        <div class="hot-blog-item" th:if="${hots == null or hots.size() == 0}">
+            还没有文章啊Ｏ(≧口≦)Ｏ
+        </div>
     </div>
+
 </div>
 </body>
 </html>

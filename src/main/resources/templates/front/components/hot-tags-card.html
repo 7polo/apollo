@@ -4,17 +4,23 @@
 <div th:fragment="index" class="card hot-tags">
     <div class="card-header">热门标签&nbsp;<i class="c-success fa fa-tags"></i></div>
     <div class="card-body">
-        <div class="tag-panel" th:if="${tags != null}">
-            <th:block th:each="tag, tagStat : ${tags}">
-                <th:block th:unless="${tag.count}">
-                    <a class="item" th:href="@{'/tag/'+${tag.name}+'.html'}" th:text="${tag.name}"></a>
-                </th:block>
-                <th:block th:if="${tag.count}">
-                    <a class="item" th:href="@{'/tag/'+${tag.name}+'.html'}"
-                       th:text="${tag.name} +'('+${tag.count}+')'"></a>
+        <div class="tag-panel">
+            <th:block  th:if="${tags != null and tags.size() > 0}">
+                <th:block th:each="tag, tagStat : ${tags}">
+                    <th:block th:unless="${tag.count}">
+                        <a class="item" th:href="@{'/tag/'+${tag.name}+'.html'}" th:text="${tag.name}"></a>
+                    </th:block>
+                    <th:block th:if="${tag.count}">
+                        <a class="item" th:href="@{'/tag/'+${tag.name}+'.html'}"
+                           th:text="${tag.name} +'('+${tag.count}+')'"></a>
+                    </th:block>
                 </th:block>
             </th:block>
+            <div th:if="${tags == null or tags.size() == 0}" style="font-size: .8rem;padding-left: 8px">
+                没标签Ｏ(≧口≦)Ｏ
+            </div>
         </div>
+
     </div>
 </div>
 </body>

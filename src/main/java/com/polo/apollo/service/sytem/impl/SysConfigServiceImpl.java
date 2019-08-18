@@ -36,6 +36,7 @@ public class SysConfigServiceImpl implements SysConfigService {
         SysConfig sysConfig = sysConfigDao.selectOne(new LambdaQueryWrapper<>());
         if (sysConfig == null) {
             sysConfig = new SysConfig();
+            sysConfig.setTitle("");
             sysConfigDao.insert(sysConfig);
         }
         // 查询 seo
