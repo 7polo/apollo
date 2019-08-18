@@ -7,8 +7,8 @@
             <img class="img-avatar img-avatar-64" th:src="@{/static/images/users/avatar.png}"/>
         </div>
         <div class="card-text">
-            <p style="text-align: center" th:text="${author.saying}">没有什么能够阻挡</p>
-            <p th:if="${author.skills != null}">
+            <p style="text-align: center" th:text="${author != null ?author.saying:''}">没有什么能够阻挡</p>
+            <p th:if="${author != null and author.skills != null}">
                 <th:block th:each="skill, skillStat : ${author.skills}">
                     <a class="blog-tag btn-primary">
                         <i class="fa fa-tag"></i>

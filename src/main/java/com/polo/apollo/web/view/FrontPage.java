@@ -146,6 +146,7 @@ public class FrontPage {
 
     private void blogLayout(Model model) {
         model.addAttribute(Constant.SYS, Application.sys);
+        model.addAttribute("author", userService.getAutor());
         model.addAttribute("tags", tagService.queryTagCount(true));
     }
 }
