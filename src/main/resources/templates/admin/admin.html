@@ -67,11 +67,16 @@
 <script>
     $(function () {
         $(".change-pwd").click(function () {
-            $('#passwdModal').modal("show");
+            $('#passwdModal').modal("show").on("show.bs.modal", function () {
+                utils.fillForm($("#passwd-form"), {});
+            });
         });
 
         $(".passwdSaveBtn").click(function () {
             var formData = utils.formData($("#passwd-form"));
+            if (!formData.oldPass || !formData.newPass){
+                return
+            }
             if (formData.newPass == formData.newPass2) {
                 utils.post({
                     url: '/user/updatePassword',

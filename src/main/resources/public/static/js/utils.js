@@ -113,7 +113,7 @@ var utils = function () {
     };
 
     var fillFormData = function ($form, data) {
-        $form.find('input[type=text],select,textarea,input[type=hidden]').each(function () {
+        $form.find('input[type=text],input[type=password],select,textarea,input[type=hidden]').each(function () {
             $(this).val(null);
         });
         $.each(data, function (index, item) {
@@ -137,7 +137,7 @@ var utils = function () {
             utils.notify(msg, 'success');
         },
         notifyError: function (msg) {
-            utils.notify(msg, 'error');
+            utils.notify(msg, 'danger');
         },
         format: function (dict) {
             return this.replace(/\{(\w+)\}/g, function (s, i) {
