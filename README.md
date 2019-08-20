@@ -11,7 +11,7 @@ Apollo 时采用 SpringBoot 实现的 Markdown 博客系统 [博客](http://blog
 可通过 SpringBoot 的启动方式启动或打包
 
 
-> 使用到以下的开源组件， 鸣谢
+> 使用到以下的开源框架或类库， 鸣谢
 
 + Spring boot
 + Mybtatis-Plus
