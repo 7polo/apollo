@@ -8,6 +8,7 @@ import com.polo.apollo.dao.note.NoteDao;
 import com.polo.apollo.entity.dto.CatalogDto;
 import com.polo.apollo.entity.dto.NoteDto;
 import com.polo.apollo.entity.modal.note.Note;
+import com.polo.apollo.entity.modal.note.Tag;
 import com.polo.apollo.entity.vo.NoteVo;
 import com.polo.apollo.service.note.NoteService;
 import com.polo.apollo.service.note.TagService;
@@ -77,7 +78,7 @@ public class NoteServiceImpl implements NoteService {
 
     @Override
     public IPage<NoteDto> queryPage(NoteVo vo, int start, int limit) {
-        return noteDao.queryPage(new Page<>(start, limit), vo);
+        return handleNoteDto(noteDao.queryPage(new Page<>(start, limit), vo));
     }
 
     @Override
@@ -87,7 +88,23 @@ public class NoteServiceImpl implements NoteService {
         }
         vo.setAbbre(true);
         vo.setPublished(true);
-        return noteDao.queryPage(new Page<>(start, limit), vo);
+        return handleNoteDto(noteDao.queryPage(new Page<>(start, limit), vo));
+    }
+
+    private IPage<NoteDto> handleNoteDto(IPage<NoteDto> page) {
+        List<Tag> tagList = null;
+        for (NoteDto noteDto : page.getRecords()) {
+            if (StringUtils.hasLength(noteDto.getTagNames())) {
+                tagList = new ArrayList<>();
+                String[] tags = noteDto.getTagNames().split(",");
+                for (String tagName : tags) {
+                    tagList.add(new Tag().setName(tagName));
+                }
+                noteDto.setTags(tagList);
+                noteDto.setTagNames(null);
+            }
+        }
+        return page;
     }
 
     @Override

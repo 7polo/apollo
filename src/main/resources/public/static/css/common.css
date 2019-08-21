@@ -305,31 +305,31 @@ hr {
 }
 
 .markdown-body h3, .markdown-body h2, .markdown-body h1 {
-    font-size: 1.8em;
+    font-size: 1.8rem;
     padding-top: 15px;
     margin-bottom: 0;
 }
 
 .markdown-body h2 {
-    font-size: 1.6em;
+    font-size: 1.6rem;
 }
 
 .markdown-body h3 {
-    font-size: 1.4em;
+    font-size: 1.4rem;
 }
 
 .markdown-body h4, .markdown-body h5 {
-    font-size: 1.2em;
+    font-size: 1.2rem;
     padding-top: 12px;
     margin-bottom: 0;
 }
 
 .markdown-body h5 {
-    font-size: 1em;
+    font-size: 1rem;
 }
 
 .markdown-body h6 {
-    font-size: .8em;
+    font-size: .9rem;
     margin-bottom: 0;
 }
 
@@ -356,23 +356,17 @@ hr {
 }
 
 .markdown-body blockquote {
-    border-left: .5em solid #eee;
-    padding: 0 0 0 2em;
+    border-left: .2rem solid #e83e8c;
+    padding: 6px 0 6px 10px;
     margin-left: 0;
-}
-
-.markdown-body blockquote cite {
-    font-size: 14px;
-    line-height: 20px;
-    color: #bfbfbf;
-}
-
-.markdown-body blockquote cite:before {
-    content: '\2014 \00A0';
+    background-color: #f7f7f7;
+    font-weight: bolder;
+    margin-bottom: 6px
 }
 
 .markdown-body blockquote p {
     color: #666;
+    margin-bottom: 0;
 }
 
 .markdown-body ol {

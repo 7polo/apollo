@@ -79,9 +79,13 @@
             <th:block th:if="${blogPage.records != null and blogPage.records.size() > 0}">
                 <article class="blog-abi" th:each="blog, blogStat : ${blogPage.records}">
                     <header>
-                        <a target="_blank" class="cat" th:href="@{'/catalog/' + ${blog.dirId}}"
-                           th:text="${blog.catalogName}"><i></i></a>
-                        <h2><a target="_blank" th:href="@{'/blog/'+ ${blog.uid} +'.html'}" th:text="${blog.name}"></a>
+                        <th:block th:if="${blog.tags != null and blog.tags.size() > 0}">
+                            <th:block th:each="tag, tagStat : ${blog.tags}">
+                                <a th:if="${tagStat.index < 2}" target="_blank" class="cat" th:href="@{'/tag/' + ${tag.name} + '.html'}" th:text="${tag.name}"></a>
+                            </th:block>
+                        </th:block>
+                        <h2>
+                            <a target="_blank" th:href="@{'/blog/'+ ${blog.uid} +'.html'}" th:text="${blog.name}"></a>
                         </h2>
                     </header>
                     <p class="meta">

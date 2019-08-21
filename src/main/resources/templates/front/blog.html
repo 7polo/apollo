@@ -73,7 +73,6 @@
         .pre-scroll pre {
             position: relative;
             margin: 0;
-            padding: 0;
             overflow: auto;
         }
     </style>
@@ -88,7 +87,7 @@
             <h3 class="title" th:text="${blog.name}"></h3>
             <p th:if="${blogTag != null and blogTag.size() > 0}">
                 <th:block th:each="tag, tagStat : ${blogTag}">
-                    <a class="blog-tag bg-success" th:href="@{'/tag/'+${tag.name}}">
+                    <a class="blog-tag bg-success" th:href="@{'/tag/'+${tag.name}+'.html'}">
                         <i class="fa fa-tag"></i>
                         <span th:text="${tag.name}"></span>
                     </a>

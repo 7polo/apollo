@@ -6,7 +6,7 @@
 
     <select id="queryPage" resultType="com.polo.apollo.entity.dto.NoteDto">
         select
-        n.uid, n.create_dt, n.deleted, n.dir_id, n.name,  n.read_count, n.good,n.publish_dt,
+        n.uid, n.create_dt, n.deleted, n.dir_id, n.name, n.read_count, n.good,n.publish_dt,
         <choose>
             <when test="vo.abbre == null">
 
@@ -18,7 +18,7 @@
                 n.content,
             </otherwise>
         </choose>
-         c.name  as catalog_name
+        group_concat(t.name) as tag_names
         from t_note n
         left join t_catalog c on c.uid = n.dir_id
         left join t_tag_note tn on tn.note_id = n.uid
@@ -49,9 +49,9 @@
             </if>
             <if test='vo.search != null and vo.search != ""'>
                 and (
-                    n.content like concat('%', #{vo.search}, '%')
-                    or n.name like concat('%', #{vo.search}, '%')
-                    or t.name like concat('%', #{vo.search}, '%')
+                n.content like concat('%', #{vo.search}, '%')
+                or n.name like concat('%', #{vo.search}, '%')
+                or t.name like concat('%', #{vo.search}, '%')
                 )
             </if>
         </where>
