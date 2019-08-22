@@ -47,12 +47,14 @@ public class LogHandler {
         Method method = ((MethodSignature) point.getSignature()).getMethod();
         Log logAnno = method.getAnnotation(Log.class);
         LogRecord log = getIpInfo(ip);
-        log.setUid(Utils.uuid());
-        log.setCreateDt(new Date());
-        log.setUrl(url);
-        log.setName(logAnno.value());
-        log.setIp(ip);
-        logService.addLog(log);
+        if (log != null) {
+            log.setUid(Utils.uuid());
+            log.setCreateDt(new Date());
+            log.setUrl(url);
+            log.setName(logAnno.value());
+            log.setIp(ip);
+            logService.addLog(log);
+        }
     }
 
     /**
