@@ -1,6 +1,10 @@
 server:
   port: 8081
 spring:
+  cache:
+    type: ehcache
+    ehcache:
+      config: classpath:ehcache.xml
   thymeleaf:
     mode: HTML
     cache: false

@@ -95,8 +95,8 @@ public interface NoteService {
 
     /**
      * 查询热门blog
-     * @param i
+     * @param top
      * @return
      */
-    List<Note> queryHotBlog(int i);
+    List<Note> queryHotBlog(int top);
 }

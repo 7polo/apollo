@@ -12,8 +12,12 @@ import com.polo.apollo.entity.modal.note.Tag;
 import com.polo.apollo.entity.vo.NoteVo;
 import com.polo.apollo.service.note.NoteService;
 import com.polo.apollo.service.note.TagService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -25,6 +29,7 @@ import java.util.*;
  * @date 2019/05/25
  */
 @Service
+@Slf4j
 public class NoteServiceImpl implements NoteService {
 
     @Autowired
@@ -163,8 +168,9 @@ public class NoteServiceImpl implements NoteService {
         return noteDao.queryPublishedPreAndNext(note.getUid(), note.getPublishDt());
     }
 
+    @Cacheable(value = "blog",key = "'hot_top_'+#top")
     @Override
-    public List<Note> queryHotBlog(int i) {
-        return noteDao.queryHotBlog(i);
+    public List<Note> queryHotBlog(int top) {
+        return noteDao.queryHotBlog(top);
     }
 }

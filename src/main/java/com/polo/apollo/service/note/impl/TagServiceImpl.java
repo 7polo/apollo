@@ -8,6 +8,7 @@ import com.polo.apollo.entity.modal.note.Tag;
 import com.polo.apollo.entity.modal.note.TagNote;
 import com.polo.apollo.service.note.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -95,6 +96,7 @@ public class TagServiceImpl implements TagService {
     }
 
     @Override
+    @Cacheable(value = "blog",key = "'tags'")
     public List<TagDto> queryTagCount(Boolean published) {
         return tagDao.queryTagCount(published);
     }
