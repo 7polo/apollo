@@ -47,7 +47,7 @@
 
         h4.md-doc, h5.md-doc, h6.md-doc {
             padding-left: 35px;
-            font-size: .75rem;
+            font-size: .8rem;
         }
 
         h5.md-doc {
@@ -67,9 +67,11 @@
             top: 5px;
             width: 320px;
         }
+
         .pre-scroll {
             margin-bottom: 1rem;
         }
+
         .pre-scroll pre {
             position: relative;
             margin: 0;
@@ -122,24 +124,22 @@
     <script src="https://cdn.bootcss.com/highlight.js/9.14.2/highlight.min.js"></script>
     <script>
         // 首次渲染md-doc
-        function rendererMdDoc() {
+        function rendererMdDoc(htmlWrapper,) {
             var docHtml = "";
             var hasDoc = false;
-            $(":header").each(function () {
+            $(":header").each(function (index) {
                 var clz = 'md-doc';
                 var tag = $(this)[0].tagName;
-                var anchor = $(this).text() + Math.floor(Math.random() * 100 + 1);
-                if ($(this).hasClass('title')) {
-                    clz += " md-title"
-                }else {
+                var anchor = 'head_' + index;
+                if (!$(this).hasClass('title')) {
                     hasDoc = true;
+                    docHtml += '<' + tag + ' class="' + clz + '"><a href="#' + anchor + '">' + $(this).text() + '</a></' + tag + '>';
+                    $(this).html('<a name="' + anchor + '">' + $(this).html() + '</a>')
                 }
-                docHtml += '<' + tag + ' class="' + clz + '"><a href="#' + anchor + '">' + $(this).text() + '</a></' + tag + '>';
-                $(this).html('<a name="' + anchor + '">' + $(this).html() + '</a>')
             });
             if (hasDoc) {
                 $("#md-doc").html(docHtml);
-            }else {
+            } else {
                 $(".md-doc-wrapper").hide();
             }
         }

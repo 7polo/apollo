@@ -1,9 +1,8 @@
 package com.polo.apollo.service.note.impl;
 
-import com.polo.apollo.common.util.Utils;
+import com.polo.apollo.common.entity.Tree;
 import com.polo.apollo.dao.note.CatalogDao;
 import com.polo.apollo.entity.dto.CatalogDto;
-import com.polo.apollo.common.entity.Tree;
 import com.polo.apollo.entity.modal.note.Catalog;
 import com.polo.apollo.service.note.CatalogService;
 import com.polo.apollo.service.note.NoteService;
@@ -11,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -53,7 +53,7 @@ public class CatalogServiceImpl implements CatalogService {
             catList.addAll(noteList);
             return buildCateTree(catList);
         }
-        return null;
+        return Collections.emptyList();
     }
 
     @Override
