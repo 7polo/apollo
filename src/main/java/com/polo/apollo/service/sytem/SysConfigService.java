@@ -16,14 +16,10 @@ public interface SysConfigService {
     SysConfig getSysConfig();
 
     /**
-     * 加载 全局配置
-     */
-    void load();
-
-    /**
      * 保存 系统配置
      *
      * @param vo
+     * @return
      */
-    void updateConfig(SysConfig vo);
+    SysConfig updateConfig(SysConfig vo);
 }

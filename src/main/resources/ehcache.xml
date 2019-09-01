@@ -4,22 +4,31 @@
          xsi:noNamespaceSchemaLocation="http://ehcache.org/ehcache.xsd"
          updateCheck="false">
     <defaultCache
-        eternal="false"
-        maxElementsInMemory="1000"
-        overflowToDisk="false"
-        diskPersistent="false"
-        timeToIdleSeconds="0"
-        timeToLiveSeconds="600"
-        memoryStoreEvictionPolicy="LRU"/>
+            eternal="false"
+            maxElementsInMemory="1000"
+            overflowToDisk="false"
+            diskPersistent="false"
+            timeToIdleSeconds="0"
+            timeToLiveSeconds="600"
+            memoryStoreEvictionPolicy="LRU"/>
 
-    <!-- 这里的 users 缓存空间是为了下面的 demo 做准备 -->
+    <!-- system 缓存空间 -->
     <cache
-        name="blog"
-        eternal="false"
-        maxElementsInMemory="10"
-        overflowToDisk="false"
-        diskPersistent="false"
-        timeToIdleSeconds="0"
-        timeToLiveSeconds="300"
-        memoryStoreEvictionPolicy="LRU"/>
+            name="cache_system"
+            eternal="false"
+            maxElementsInMemory="10"
+            overflowToDisk="false"
+            diskPersistent="false"
+            timeToIdleSeconds="0"
+            timeToLiveSeconds="0"
+            memoryStoreEvictionPolicy="LRU"/>
+
+    <!-- blog 缓存空间 -->
+    <cache
+            name="cache_blog"
+            eternal="true"
+            maxElementsInMemory="10"
+            overflowToDisk="false"
+            diskPersistent="false"
+            memoryStoreEvictionPolicy="LRU"/>
 </ehcache>

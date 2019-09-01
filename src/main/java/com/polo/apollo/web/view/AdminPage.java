@@ -1,9 +1,9 @@
 package com.polo.apollo.web.view;
 
-import com.polo.apollo.Application;
 import com.polo.apollo.common.Constant;
 import com.polo.apollo.common.entity.PoloModule;
 import com.polo.apollo.entity.modal.system.User;
+import com.polo.apollo.service.sytem.SysConfigService;
 import com.polo.apollo.service.sytem.UserService;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,9 +30,12 @@ public class AdminPage extends ModuleHandler{
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private SysConfigService sysConfigService;
+
     @RequestMapping
     public String index(Model model) {
-        model.addAttribute(Constant.SYS, Application.sys);
+        model.addAttribute(Constant.SYS, sysConfigService.getSysConfig());
         return MODULE + "/" + "admin";
     }
 
@@ -44,7 +47,7 @@ public class AdminPage extends ModuleHandler{
     @RequestMapping("/{path}/{name}")
     public String module(@PathVariable String path, @PathVariable String name, Model model) {
         moduleInvoke(path, name, model, request);
-        model.addAttribute(Constant.SYS, Application.sys);
+        model.addAttribute(Constant.SYS, sysConfigService.getSysConfig());
         return this.module(String.format("%s/%s", path, name));
     }
 

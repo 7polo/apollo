@@ -1,5 +1,6 @@
 package com.polo.apollo.service.note.impl;
 
+import com.polo.apollo.common.Constant;
 import com.polo.apollo.common.util.Utils;
 import com.polo.apollo.dao.note.TagDao;
 import com.polo.apollo.dao.note.TagNoteDao;
@@ -96,7 +97,7 @@ public class TagServiceImpl implements TagService {
     }
 
     @Override
-    @Cacheable(value = "blog",key = "'tags'")
+    @Cacheable(value = Constant.CACHE_BLOG, key = "'tags'")
     public List<TagDto> queryTagCount(Boolean published) {
         return tagDao.queryTagCount(published);
     }

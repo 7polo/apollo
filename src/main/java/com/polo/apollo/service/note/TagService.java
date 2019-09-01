@@ -11,6 +11,7 @@ import java.util.Set;
  * @date 2019/06/02
  */
 public interface TagService {
+
     void save(Tag tag);
 
     void deleteByUid(String uid);

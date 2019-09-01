@@ -1,20 +1,18 @@
 package com.polo.apollo.service.sytem.impl;
 
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.polo.apollo.Application;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.polo.apollo.common.Constant;
 import com.polo.apollo.common.util.EncryptUtil;
 import com.polo.apollo.dao.system.UserDao;
 import com.polo.apollo.entity.dto.UserDto;
 import com.polo.apollo.entity.modal.system.User;
 import com.polo.apollo.service.sytem.UserService;
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
-
-import java.util.Arrays;
-import java.util.Collections;
 
 /**
  * @author baoqianyong
@@ -22,6 +20,8 @@ import java.util.Collections;
  */
 @Service
 public class UserServiceImpl implements UserService {
+
+    private static final String CACHE_KEY = "'user'";
 
     @Autowired
     private UserDao userDao;
@@ -35,6 +35,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @CacheEvict(value = Constant.CACHE_SYSTEM, key = CACHE_KEY)
     public void updatePassword(String uid, String oldPass, String newPass) {
         User user = queryById(uid);
         if (user != null && EncryptUtil.isPasswordEqual(user, oldPass)) {
@@ -46,9 +47,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @CacheEvict(value = Constant.CACHE_SYSTEM, key = CACHE_KEY)
     public void save(User user) {
         userDao.updateById(user);
-        this.getAuthor(true);
     }
 
     @Override
@@ -57,21 +58,19 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public synchronized UserDto getAuthor(boolean load) {
-        if (Application.user == null || load) {
-            User user = userDao.selectOne(null);
-            if (user != null) {
-                UserDto userDto = new UserDto();
-                BeanUtils.copyProperties(user, userDto, "skills", "password");
-                if (StringUtils.hasLength(user.getSkills())) {
-                    String[] skills = user.getSkills().split(",");
-                    for (String skill : skills) {
-                        userDto.getSkills().add(skill.trim());
-                    }
+    @Cacheable(value = Constant.CACHE_SYSTEM, key = CACHE_KEY)
+    public UserDto getAuthor() {
+        UserDto userDto = new UserDto();
+        User user = userDao.selectOne(null);
+        if (user != null) {
+            BeanUtils.copyProperties(user, userDto, "skills", "password");
+            if (StringUtils.hasLength(user.getSkills())) {
+                String[] skills = user.getSkills().split(",");
+                for (String skill : skills) {
+                    userDto.getSkills().add(skill.trim());
                 }
-                Application.user = userDto;
             }
         }
-        return Application.user;
+        return userDto;
     }
 }

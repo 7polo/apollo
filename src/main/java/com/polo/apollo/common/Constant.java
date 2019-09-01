@@ -41,4 +41,14 @@ public class Constant {
      * 已赞blog
      */
     public static final String GOOD_BLOG = "goodBlogs";
+
+    /**
+     * 系統缓存
+     */
+    public static final String CACHE_SYSTEM = "cache_system";
+
+    /**
+     * blog 缓存
+     */
+    public static final String CACHE_BLOG = "cache_blog";
 }

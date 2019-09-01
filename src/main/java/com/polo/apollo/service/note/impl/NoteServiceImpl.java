@@ -15,8 +15,6 @@ import com.polo.apollo.service.note.TagService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -168,7 +166,7 @@ public class NoteServiceImpl implements NoteService {
         return noteDao.queryPublishedPreAndNext(note.getUid(), note.getPublishDt());
     }
 
-    @Cacheable(value = "blog",key = "'hot_top_'+#top")
+    @Cacheable(value = Constant.CACHE_BLOG, key = "'hot_top_'+#top")
     @Override
     public List<Note> queryHotBlog(int top) {
         return noteDao.queryHotBlog(top);

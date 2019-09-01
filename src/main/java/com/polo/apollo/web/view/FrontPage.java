@@ -1,7 +1,6 @@
 package com.polo.apollo.web.view;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.polo.apollo.Application;
 import com.polo.apollo.aop.Log;
 import com.polo.apollo.common.Constant;
 import com.polo.apollo.entity.dto.NoteDto;
@@ -10,10 +9,7 @@ import com.polo.apollo.entity.modal.system.SiteMap;
 import com.polo.apollo.entity.vo.NoteVo;
 import com.polo.apollo.service.note.NoteService;
 import com.polo.apollo.service.note.TagService;
-import com.polo.apollo.service.sytem.DataDicService;
-import com.polo.apollo.service.sytem.SeoService;
-import com.polo.apollo.service.sytem.SiteMapService;
-import com.polo.apollo.service.sytem.UserService;
+import com.polo.apollo.service.sytem.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -54,6 +50,9 @@ public class FrontPage {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private SysConfigService sysConfigService;
+
     @Log("登录页")
     @RequestMapping("/login")
     public String login() {
@@ -83,7 +82,7 @@ public class FrontPage {
     @Log("关于")
     @RequestMapping("/about.html")
     public String about(Model model) {
-        model.addAttribute(Constant.SYS, Application.sys);
+        model.addAttribute(Constant.SYS, sysConfigService.getSysConfig());
         return MODULE + "/about";
     }
 
@@ -136,17 +135,17 @@ public class FrontPage {
     }
 
     private void layout(Model model) {
-        model.addAttribute(Constant.SYS, Application.sys);
+        model.addAttribute(Constant.SYS, sysConfigService.getSysConfig());
 
-        model.addAttribute("author", userService.getAuthor(false));
+        model.addAttribute("author", userService.getAuthor());
         model.addAttribute("hots", noteService.queryHotBlog(10));
         model.addAttribute("tags", tagService.queryTagCount(true));
         model.addAttribute("friendLinks", dataDicService.queryListByType(Constant.DIC_FRIEND_LINK));
     }
 
     private void blogLayout(Model model) {
-        model.addAttribute(Constant.SYS, Application.sys);
-        model.addAttribute("author", userService.getAuthor(false));
+        model.addAttribute(Constant.SYS, sysConfigService.getSysConfig());
+        model.addAttribute("author", userService.getAuthor());
         model.addAttribute("tags", tagService.queryTagCount(true));
     }
 }

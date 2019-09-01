@@ -373,3 +373,7 @@ hr {
     padding-inline-start: 20px;
 }
 
+.markdown-body p>code{
+    font-size: 14px;
+}
+
