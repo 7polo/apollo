@@ -2,13 +2,10 @@ package com.polo.apollo.service.sytem.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.polo.apollo.common.Constant;
 import com.polo.apollo.dao.system.DataDicDao;
 import com.polo.apollo.entity.modal.system.DataDic;
 import com.polo.apollo.service.sytem.DataDicService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
