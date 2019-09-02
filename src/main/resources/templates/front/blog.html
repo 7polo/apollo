@@ -30,6 +30,12 @@
             }
         }
 
+        @media (max-width: 1024px) {
+            .md-doc-wrapper{
+                display: none;
+            }
+        }
+
         .md-doc, h1.md-doc, .md-doc.md-title {
             font-size: .9rem;
             padding-left: 10px;
@@ -124,17 +130,17 @@
     <script src="https://cdn.bootcss.com/highlight.js/9.14.2/highlight.min.js"></script>
     <script>
         // 首次渲染md-doc
-        function rendererMdDoc(htmlWrapper,) {
+        function rendererMdDoc(htmlWrapper) {
             var docHtml = "";
             var hasDoc = false;
             $(":header").each(function (index) {
-                var clz = 'md-doc';
+                var clz = 'md-doc anchor_header';
                 var tag = $(this)[0].tagName;
                 var anchor = 'head_' + index;
                 if (!$(this).hasClass('title')) {
                     hasDoc = true;
                     docHtml += '<' + tag + ' class="' + clz + '"><a href="#' + anchor + '">' + $(this).text() + '</a></' + tag + '>';
-                    $(this).html('<a name="' + anchor + '">' + $(this).html() + '</a>')
+                    $(this).html('<a name="' + anchor + '">' + $(this).html() + '</a>');
                 }
             });
             if (hasDoc) {
@@ -151,7 +157,10 @@
             var preScrolls = document.querySelectorAll(".pre-scroll pre");
             if (preScrolls) {
                 preScrolls.forEach(function (ele) {
-                    new PerfectScrollbar(ele)
+                    new PerfectScrollbar(ele, {
+                        swipeEasing: true,
+                        wheelSpeed: 2
+                    })
                 })
             }
         }

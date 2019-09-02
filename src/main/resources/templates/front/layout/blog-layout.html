@@ -54,7 +54,8 @@
         initSearch();
         var scrollCmp = document.querySelector(".polo-contanier");
         new PerfectScrollbar(scrollCmp, {
-            swipeEasing: false,
+            swipeEasing: true,
+            wheelSpeed: 2,
             suppressScrollX: true
         });
 
