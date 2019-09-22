@@ -67,8 +67,17 @@ public class LogServiceImpl implements LogService {
                 query.eq(LogRecord::getName, log.getName());
             }
         }
+        this.syncLog();
         query.orderByDesc(LogRecord::getCreateDt);
         return (Page<LogRecord>) logDao.selectPage(new Page<>(start, limit), query);
     }
 
+    /**
+     * 刷新队列中日志到数据库
+     */
+    private void syncLog() {
+        if (queue.size() > 0) {
+            this.saveLog(getAllLog());
+        }
+    }
 }
