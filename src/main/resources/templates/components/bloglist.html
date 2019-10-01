@@ -73,37 +73,38 @@
     </style>
 </head>
 <body>
-<div th:fragment="content">
+<div th:fragment="blog_list(blogs)">
     <div class="blog-list">
-        <th:block if="${blogPage != null}">
-            <th:block th:if="${blogPage.records != null and blogPage.records.size() > 0}">
-                <article class="blog-abi" th:each="blog, blogStat : ${blogPage.records}">
-                    <header>
-                        <th:block th:if="${blog.tags != null and blog.tags.size() > 0}">
-                            <th:block th:each="tag, tagStat : ${blog.tags}">
-                                <a th:if="${tagStat.index < 2}" target="_blank" class="cat" th:href="@{'/tag/' + ${tag.name} + '.html'}" th:text="${tag.name}"></a>
-                            </th:block>
+        <th:block th:if="${blogs != null and blogs.size() > 0}">
+            <article class="blog-abi" th:each="blog, blogStat : ${blogs}">
+                <header>
+                    <th:block th:if="${blog.tags != null and blog.tags.size() > 0}">
+                        <th:block th:each="tag, tagStat : ${blog.tags}">
+                            <a th:if="${tagStat.index < 2}" target="_blank" class="cat" th:href="@{'/tag/' + ${tag.name} + '.html'}" th:text="${tag.name}"></a>
                         </th:block>
-                        <h2>
-                            <a target="_blank" th:href="@{'/blog/'+ ${blog.uid} +'.html'}" th:text="${blog.name}"></a>
-                        </h2>
-                    </header>
-                    <p class="meta">
-                        <time>
-                            <i class="fa fa-clock-o"></i>
-                            <span th:text="${#dates.format(blog.createDt, 'yyyy-MM-dd')}"></span>
-                        </time>
-                        <span class="author"><i class="fa fa-user"></i>7polo</span>
-                        <span class="pv"><i class="fa fa-eye"></i>(<span th:text="${blog.readCount}"></span>)</span>
-                        <a href="#" etap="like" class="post-like">
-                            <i class="fa fa-thumbs-o-up"></i>(<span th:text="${blog.good}"></span>)</a></p>
-                    <p class="blog-content" th:text="${blog.content}"></pre>
-                    </p>
-                </article>
-            </th:block>
-            <th:block th:if="${blogPage.records.size() == 0}">
-                <div style="margin-top: 25px;text-align: center">没找到啊啊啊Ｏ(≧口≦)Ｏ</div>
-            </th:block>
+                    </th:block>
+                    <h2>
+                        <a target="_blank" th:href="@{'/blog/'+ ${blog.uid} +'.html'}" th:text="${blog.name}"></a>
+                    </h2>
+                </header>
+                <p class="meta">
+                    <time>
+                        <i class="fa fa-clock-o"></i>
+                        <span th:text="${#dates.format(blog.createDt, 'yyyy-MM-dd')}"></span>
+                    </time>
+                    <span class="author"><i class="fa fa-user"></i>7polo</span>
+<!--                        <span class="pv"><i class="fa fa-eye"></i>(<span th:text="${blog.readCount}"></span>)</span>-->
+                    <a href="#" etap="like" class="post-like">
+                        <i class="fa fa-eye"></i>(<span th:text="${blog.readCount}"></span>)</a>
+<!--                        <a href="#" etap="like" class="post-like">-->
+<!--                            <i class="fa fa-thumbs-o-up"></i>(<span th:text="${blog.good}"></span>)</a>-->
+                </p>
+                <p class="blog-content" th:text="${blog.content}"></pre>
+                </p>
+            </article>
+        </th:block>
+        <th:block th:if="${blogs == null or blogs.size() == 0}">
+            <div style="margin-top: 25px;text-align: center">没找到啊啊啊Ｏ(≧口≦)Ｏ</div>
         </th:block>
     </div>
 </div>

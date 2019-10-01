@@ -12,7 +12,7 @@
     <div class="card" style="padding: 10px">
         <div><span>标签: </span><span style="color: #33cabb;" th:text="${tag}"></span></div>
     </div>
-    <bloglist th:replace="~{components/bloglist :: content}"></bloglist>
+    <bloglist th:replace="~{components/bloglist :: blog_list(${blogPage.records})}"></bloglist>
     <page th:replace="~{components/pagination :: page_pager(${blogPage.current}, 0, ${T(Math).ceil(1.0*blogPage.total/blogPage.size).intValue()}, ${'/tag/'+tag+'.html'})}"></page>
 </div>
 
