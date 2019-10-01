@@ -6,14 +6,11 @@ import com.polo.apollo.common.util.WebUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.Enumeration;
 import java.util.HashMap;
-import java.util.Map;
 
 /**
  * @author baoqianyong
@@ -33,7 +30,7 @@ public abstract class ModuleHandler {
     }
 
     void moduleInvoke(String path, String name, Model model, HttpServletRequest request) {
-        if (StringUtils.hasLength(path) && StringUtils.hasLength(name)) {
+        if (StringUtils.hasLength(path) && name != null) {
             path = path.toLowerCase();
             name = name.toLowerCase();
             String methodName = path + Utils.firstUpper(name);

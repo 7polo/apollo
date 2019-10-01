@@ -13,7 +13,6 @@ spring:
     urL:
     username:
     password:
-    type: com.alibaba.druid.pool.DruidDataSource
   profiles:
     active: dev
   jackson:

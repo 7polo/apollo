@@ -81,7 +81,9 @@ public class NoteServiceImpl implements NoteService {
 
     @Override
     public IPage<NoteDto> queryPage(NoteVo vo, int start, int limit) {
-        return handleNoteDto(noteDao.queryPage(new Page<>(start, limit), vo));
+        IPage<NoteDto> notePage = noteDao.queryPage(new Page<>(start, limit), vo);
+        handleNoteDto(notePage.getRecords());
+        return notePage;
     }
 
     @Override
@@ -91,12 +93,20 @@ public class NoteServiceImpl implements NoteService {
         }
         vo.setAbbre(true);
         vo.setPublished(true);
-        return handleNoteDto(noteDao.queryPage(new Page<>(start, limit), vo));
+
+        IPage<NoteDto> notePage = noteDao.queryPage(new Page<>(start, limit), vo);
+        handleNoteDto(notePage.getRecords());
+        return notePage;
     }
 
-    private IPage<NoteDto> handleNoteDto(IPage<NoteDto> page) {
+    public List<NoteDto> queryRecentNote(int top) {
+
+        return null;
+    }
+
+    private void handleNoteDto(List<NoteDto> notes) {
         List<Tag> tagList = null;
-        for (NoteDto noteDto : page.getRecords()) {
+        for (NoteDto noteDto : notes) {
             if (StringUtils.hasLength(noteDto.getTagNames())) {
                 tagList = new ArrayList<>();
                 String[] tags = noteDto.getTagNames().split(",");
@@ -107,7 +117,6 @@ public class NoteServiceImpl implements NoteService {
                 noteDto.setTagNames(null);
             }
         }
-        return page;
     }
 
     @Override

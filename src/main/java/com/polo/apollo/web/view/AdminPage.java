@@ -3,6 +3,7 @@ package com.polo.apollo.web.view;
 import com.polo.apollo.common.Constant;
 import com.polo.apollo.common.entity.PoloModule;
 import com.polo.apollo.entity.modal.system.User;
+import com.polo.apollo.service.note.NoteService;
 import com.polo.apollo.service.sytem.SysConfigService;
 import com.polo.apollo.service.sytem.UserService;
 import org.apache.shiro.SecurityUtils;
@@ -33,6 +34,9 @@ public class AdminPage extends ModuleHandler{
     @Autowired
     private SysConfigService sysConfigService;
 
+    @Autowired
+    private NoteService noteService;
+
     @RequestMapping
     public String index(Model model) {
         model.addAttribute(Constant.SYS, sysConfigService.getSysConfig());
@@ -40,15 +44,25 @@ public class AdminPage extends ModuleHandler{
     }
 
     @RequestMapping("/{path}")
-    public String module(@PathVariable String path) {
-        return String.format("%s/module/%s", MODULE, path);
+    public String module(@PathVariable String path,  Model model) {
+        moduleInvoke(path, "", model, request);
+        return this.urlHandler(path);
     }
 
     @RequestMapping("/{path}/{name}")
     public String module(@PathVariable String path, @PathVariable String name, Model model) {
         moduleInvoke(path, name, model, request);
         model.addAttribute(Constant.SYS, sysConfigService.getSysConfig());
-        return this.module(String.format("%s/%s", path, name));
+        return this.urlHandler(String.format("%s/%s", path, name));
+    }
+
+    private String urlHandler(String path) {
+        return String.format("%s/module/%s", MODULE, path);
+    }
+
+    @PoloModule
+    private void index(Model model, Map<String, Object> params) {
+        model.addAttribute("recentBlogs", noteService.queryHotBlog(10));
     }
 
     @PoloModule

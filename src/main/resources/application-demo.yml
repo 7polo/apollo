@@ -4,4 +4,3 @@ spring:
     url: xxxx
     username: xxx
     password: xxx
-    type: com.alibaba.druid.pool.DruidDataSource
