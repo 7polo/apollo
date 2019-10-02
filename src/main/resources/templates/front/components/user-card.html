@@ -4,7 +4,7 @@
 <div th:fragment="index" class="card blog-user">
     <div class="card-body">
         <div style="text-align: center;margin-bottom: 5px">
-            <img class="img-avatar img-avatar-64" th:src="@{/static/images/users/avatar.png}"/>
+            <img alt="apollo" class="img-avatar img-avatar-64" th:src="@{/static/images/users/avatar.png}"/>
         </div>
         <div class="card-text">
             <p style="text-align: center" th:text="${author != null ?author.saying:''}">没有什么能够阻挡</p>
