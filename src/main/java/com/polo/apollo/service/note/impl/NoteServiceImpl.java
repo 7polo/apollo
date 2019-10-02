@@ -99,9 +99,9 @@ public class NoteServiceImpl implements NoteService {
         return notePage;
     }
 
-    public List<NoteDto> queryRecentNote(int top) {
-
-        return null;
+    @Override
+    public List<Note> queryRecentNote(int top) {
+        return noteDao.queryRecentNote(top);
     }
 
     private void handleNoteDto(List<NoteDto> notes) {

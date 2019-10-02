@@ -76,4 +76,6 @@ public interface NoteDao extends BaseMapper<Note> {
      * @return
      */
     List<Note> queryHotBlog(int limit);
+
+    List<Note> queryRecentNote(int limit);
 }

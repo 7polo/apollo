@@ -62,7 +62,7 @@ public class AdminPage extends ModuleHandler{
 
     @PoloModule
     private void index(Model model, Map<String, Object> params) {
-        model.addAttribute("recentBlogs", noteService.queryHotBlog(10));
+        model.addAttribute("recentBlogs", noteService.queryRecentNote(8));
     }
 
     @PoloModule

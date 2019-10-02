@@ -4,18 +4,77 @@
 <head>
     <title>首页</title>
     <link rel="icon" th:href="@{/static/favicon.ico}" type="image/ico">
+    <style>
+        .row {
+            margin-bottom: 10px;
+        }
+        .col-md-6.left {
+            padding-right: 5px;
+        }
+        .col-md-6.right {
+            padding-left: 5px;
+        }
+
+        .rec-blog-item {
+            padding: .5rem 1rem 0;
+        }
+
+        .rec-blog-item:last-child {
+            padding-bottom: .5rem;
+            border-bottom: none;
+        }
+
+        .rec-blog-item > a {
+            color: #555;
+        }
+
+        .rec-blog-item .blog-dt {
+            padding-right: 5px;
+            color: #999;
+        }
+
+        .rec-blog-item .edit {
+           cursor: pointer;
+            color: #48b0f7;
+        }
+
+        .rec-blog-item:before {
+            content: '';
+            display: inline-block;
+            width: 4px;
+            height: 4px;
+            background-color: #666;
+            vertical-align: middle;
+            margin-right: 5px;
+            border-radius: 4px;
+        }
+    </style>
 </head>
 <body>
 <th:block layout:fragment="content">
-
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-6 left">
             <div class="card">
-                <div class="card-body">
+                <div class="card-header">最近的博文</div>
+                <div class="card-body" style="padding: 0">
+                    <th:block th:if="${recentBlogs != null and recentBlogs.size() > 0}">
+                        <div class="rec-blog-item" th:each="rec, recStat : ${recentBlogs}">
+                            <a th:href="@{'/blog/'+ ${rec.uid} +'.html'}" target="_blank">
+                                <span th:text="${rec.name}"></span>
+                            </a>
+                            <div style="display: inline-block; float: right">
+                                <span class="blog-dt" th:text="${#dates.format(rec.publishDt, 'yyyy-MM-dd')}"></span>
+                                <span class="edit fa fa-external-link" th:data_id="${rec.uid}"></span>
+                            </div>
+                        </div>
+                    </th:block>
+                    <div class="rec-blog-item" th:if="${recentBlogs == null or recentBlogs.size() == 0}">
+                        还没有文章啊Ｏ(≧口≦)Ｏ
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-6 right">
             <div class="card">
                 <div class="card-body">
                 </div>
@@ -23,7 +82,7 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-6 left">
             <div class="card">
                 <div class="card-header">
                     <h5>交易历史记录</h5>
@@ -33,7 +92,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-6 right">
             <div class="card">
                 <div class="card-header">
                     <h5>每周用户</h5>
@@ -93,6 +152,17 @@
                 data: $dashChartLinesData,
             });
         });
+
+        $(function () {
+            $(".edit").click(function () {
+                var noteId = $(this).attr("data_id");
+                parent.$(parent.document).data('multitabs').create({
+                    iframe: false,
+                    title: '编辑博客',
+                    url: './admin/note/index?noteId=' + noteId
+                }, true);
+            })
+        })
     </script>
 </th:block>
 </body>

@@ -46,6 +46,8 @@ public interface NoteService {
 
     IPage<NoteDto> queryBlogPage(NoteVo vo, int start, int limit);
 
+    List<Note> queryRecentNote(int top);
+
     /**
      * 查询 目录下的 note
      *

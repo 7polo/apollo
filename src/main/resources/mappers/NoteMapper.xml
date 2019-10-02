@@ -90,6 +90,13 @@
         select n.uid, n.name, n.read_count, n.publish_dt from t_note n where n.publish_dt is not null order by n.read_count desc limit #{limit}
     </select>
 
+    <select id="queryRecentNote" resultType="com.polo.apollo.entity.modal.note.Note">
+        select n.uid, n.name, n.publish_dt
+        from t_note n
+        where n.publish_dt is not null
+        order by n.publish_dt desc limit #{limit}
+    </select>
+
     <update id="addRead">
         update t_note set read_count = read_count + 1 where uid = #{uid}
     </update>
