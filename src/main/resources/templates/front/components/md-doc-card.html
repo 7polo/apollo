@@ -2,6 +2,103 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/html">
 <body>
 <div th:fragment="index" class="card md-doc-wrapper">
+    <style>
+        .anchor_header:before {
+            content: '';
+            display: inline-block;
+            width: 4px;
+            height: 4px;
+            background-color: #666;
+            vertical-align: middle;
+            margin-right: 5px;
+            border-radius: 4px;
+        }
+
+        .md-doc-wrapper .card-body {
+            padding: 10px 10px 10px 0;
+        }
+
+        @media (max-width: 1024px) {
+            .md-doc-wrapper {
+                display: none;
+            }
+        }
+        #md-doc{
+            background: initial;
+        }
+        .md-doc, h1.md-doc, .md-doc.md-title {
+            font-size: .9rem;
+            padding-left: 10px;
+            color: #007bff;
+            cursor: pointer
+        }
+
+        .header_2 {
+            margin-left: -2px;
+        }
+
+        .header_3 {
+            margin-left: -7px;
+        }
+
+        .header_4 {
+            margin-left: -22px;
+        }
+
+        h2.md-doc {
+            padding-left: 15px;
+        }
+
+        h3.md-doc {
+            padding-left: 20px;
+        }
+
+        h4.md-doc, h5.md-doc, h6.md-doc {
+            padding-left: 35px;
+            font-size: .8rem;
+        }
+
+        h5.md-doc {
+            padding-left: 55px;
+        }
+
+        h6.md-doc {
+            padding-left: 65px;
+        }
+
+        .md-doc-wrapper.fixed {
+            position: fixed;
+            top: 5px;
+            width: 320px;
+        }
+    </style>
+    <script>
+        // 首次渲染md-doc
+        function rendererMdDoc($parent) {
+            var docHtml = "";
+            var hasDoc = false;
+            var headerNum = 6;
+            $(":header").each(function (index) {
+                var clz = 'md-doc anchor_header';
+                var tag = $(this)[0].tagName;
+                var anchor = 'head_' + index;
+                if (!$(this).hasClass('title')) {
+                    hasDoc = true;
+                    var tagNum = tag.replace(/[Hh]/g, "");
+                    if (tagNum != "" && !isNaN(tagNum)) {
+                        headerNum = tagNum < headerNum?tagNum:headerNum;
+                    }
+                    docHtml += '<' + tag + ' class="' + clz + '"><a href="#' + anchor + '">' + $(this).text() + '</a></' + tag + '>';
+                    $(this).html('<a name="' + anchor + '">' + $(this).html() + '</a>');
+                }
+            });
+            if (hasDoc) {
+                $("#md-doc").html(docHtml).addClass("header_"+headerNum);
+            } else {
+                $(".md-doc-wrapper").hide();
+            }
+        }
+    </script>
     <div class="card-body smooth-scroll" id="md-doc"></div>
 </div>
 </body>

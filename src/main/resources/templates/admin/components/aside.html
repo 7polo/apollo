@@ -10,11 +10,11 @@
 
         <nav class="sidebar-main">
             <ul class="nav nav-drawer">
-                <li class="nav-item active"><a class="multitabs" th:href="@{/admin/index}"><i
+                <li class="nav-item"><a class="multitabs" th:href="@{/admin/index}"><i
                         class="fa fa-home fa-fw"></i> 后台首页</a></li>
-                <li class="nav-item nav-item-has-subnav">
+                <li class="nav-item nav-item-has-subnav active">
                     <a href="javascript:void(0)"><i class="fa fa-book"></i> 笔记管理</a>
-                    <ul class="nav nav-subnav">
+                    <ul class="nav nav-subnav" style="display: block">
                         <li><a class="multitabs" th:href="@{./admin/note/index}">笔记</a></li>
                         <li><a class="multitabs" th:href="@{./admin/note/blog}">博客</a></li>
                         <li><a class="multitabs" th:href="@{./admin/note/tag}">标签管理</a></li>
