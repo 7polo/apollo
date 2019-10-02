@@ -2,8 +2,10 @@ package com.polo.apollo.web.view;
 
 import com.polo.apollo.common.Constant;
 import com.polo.apollo.common.entity.PoloModule;
+import com.polo.apollo.common.util.Utils;
 import com.polo.apollo.entity.modal.system.User;
 import com.polo.apollo.service.note.NoteService;
+import com.polo.apollo.service.sytem.LogService;
 import com.polo.apollo.service.sytem.SysConfigService;
 import com.polo.apollo.service.sytem.UserService;
 import org.apache.shiro.SecurityUtils;
@@ -37,6 +39,9 @@ public class AdminPage extends ModuleHandler{
     @Autowired
     private NoteService noteService;
 
+    @Autowired
+    private LogService logService;
+
     @RequestMapping
     public String index(Model model) {
         model.addAttribute(Constant.SYS, sysConfigService.getSysConfig());
@@ -62,7 +67,10 @@ public class AdminPage extends ModuleHandler{
 
     @PoloModule
     private void index(Model model, Map<String, Object> params) {
-        model.addAttribute("recentBlogs", noteService.queryRecentNote(8));
+        model.addAttribute("recentBlogs", noteService.queryRecentNote(10));
+        model.addAttribute("publishCount", noteService.publishCount());
+        model.addAttribute("weekCount", noteService.queryWeekCount());
+        model.addAttribute("visteCount", Utils.obj2Json(logService.queryMonthCount()));
     }
 
     @PoloModule

@@ -1,6 +1,7 @@
 package com.polo.apollo.service.sytem;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.polo.apollo.entity.count.CountDatas;
 import com.polo.apollo.entity.modal.system.LogRecord;
 
 import java.util.List;
@@ -35,4 +36,10 @@ public interface LogService {
     Page<LogRecord> queryPage(LogRecord log, int start, int limit);
 
     List<LogRecord> getAllLog();
+
+    /**
+     * 月统计
+     * @return
+     */
+    CountDatas queryMonthCount();
 }

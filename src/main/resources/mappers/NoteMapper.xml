@@ -97,6 +97,19 @@
         order by n.publish_dt desc limit #{limit}
     </select>
 
+    <select id="publishCount" resultType="com.polo.apollo.entity.dto.PublishCount">
+        select count(uid) as total, count(publish_dt) publish from t_note where deleted = 0
+    </select>
+
+    <select id="queryDayCount" resultType="com.polo.apollo.entity.count.CountData">
+        SELECT DATE_FORMAT(create_dt,'%Y-%m-%d') as type, count(0) num FROM
+        t_note where deleted = 0 and DATE_FORMAT(create_dt,'%Y-%m-%d') in
+        <foreach collection="days" item="day" index="index" open="(" close=")" separator=",">
+            #{day}
+        </foreach>
+        GROUP BY type
+    </select>
+
     <update id="addRead">
         update t_note set read_count = read_count + 1 where uid = #{uid}
     </update>
@@ -104,5 +117,4 @@
     <update id="addGood">
         update t_note set good = good + 1 where uid = #{uid}
     </update>
-
 </mapper>

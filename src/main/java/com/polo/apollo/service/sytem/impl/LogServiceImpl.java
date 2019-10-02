@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.polo.apollo.common.util.Utils;
 import com.polo.apollo.dao.system.LogDao;
+import com.polo.apollo.entity.count.CountDatas;
 import com.polo.apollo.entity.modal.system.LogRecord;
 import com.polo.apollo.service.sytem.LogService;
 import lombok.extern.java.Log;
@@ -11,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ArrayBlockingQueue;
@@ -50,6 +53,13 @@ public class LogServiceImpl implements LogService {
         List<LogRecord> logRecordList = new ArrayList<>();
         queue.drainTo(logRecordList);
         return logRecordList;
+    }
+
+    @Override
+    public CountDatas queryMonthCount() {
+        // 设置日期
+        List<String> days = Utils.getDateRange(LocalDate.now(), -30, ChronoUnit.DAYS);
+        return CountDatas.getCountData(days, logDao.queryMonthCount(days));
     }
 
     @Override

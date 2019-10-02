@@ -4,9 +4,12 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.polo.apollo.common.Constant;
+import com.polo.apollo.common.util.Utils;
 import com.polo.apollo.dao.note.NoteDao;
 import com.polo.apollo.entity.dto.CatalogDto;
+import com.polo.apollo.entity.count.CountDatas;
 import com.polo.apollo.entity.dto.NoteDto;
+import com.polo.apollo.entity.dto.PublishCount;
 import com.polo.apollo.entity.modal.note.Note;
 import com.polo.apollo.entity.modal.note.Tag;
 import com.polo.apollo.entity.vo.NoteVo;
@@ -20,6 +23,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import javax.servlet.http.HttpSession;
+import java.time.LocalDate;
 import java.util.*;
 
 /**
@@ -104,6 +108,13 @@ public class NoteServiceImpl implements NoteService {
         return noteDao.queryRecentNote(top);
     }
 
+    @Override
+    public PublishCount publishCount() {
+        PublishCount count = noteDao.publishCount();
+        count.setUnPublish(count.getTotal() - count.getPublish());
+        return count;
+    }
+
     private void handleNoteDto(List<NoteDto> notes) {
         List<Tag> tagList = null;
         for (NoteDto noteDto : notes) {
@@ -179,5 +190,12 @@ public class NoteServiceImpl implements NoteService {
     @Override
     public List<Note> queryHotBlog(int top) {
         return noteDao.queryHotBlog(top);
+    }
+
+    @Override
+    public CountDatas queryWeekCount() {
+        // 设置日期
+        List<String> days = Utils.getWeekDays(LocalDate.now());
+        return CountDatas.getCountData(days, noteDao.queryDayCount(days));
     }
 }

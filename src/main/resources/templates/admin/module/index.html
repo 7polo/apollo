@@ -8,9 +8,11 @@
         .row {
             margin-bottom: 10px;
         }
+
         .col-md-6.left {
             padding-right: 5px;
         }
+
         .col-md-6.right {
             padding-left: 5px;
         }
@@ -34,7 +36,7 @@
         }
 
         .rec-blog-item .edit {
-           cursor: pointer;
+            cursor: pointer;
             color: #48b0f7;
         }
 
@@ -64,7 +66,7 @@
                             </a>
                             <div style="display: inline-block; float: right">
                                 <span class="blog-dt" th:text="${#dates.format(rec.publishDt, 'yyyy-MM-dd')}"></span>
-                                <span class="edit fa fa-external-link" th:data_id="${rec.uid}"></span>
+                                <span class="edit fa fa-edit" th:data_id="${rec.uid}"></span>
                             </div>
                         </div>
                     </th:block>
@@ -76,7 +78,9 @@
         </div>
         <div class="col-md-6 right">
             <div class="card">
+                <div class="card-header">博客发布情况</div>
                 <div class="card-body">
+                    <canvas class="js-chartjs-pie" height="143x"></canvas>
                 </div>
             </div>
         </div>
@@ -84,9 +88,6 @@
     <div class="row">
         <div class="col-md-6 left">
             <div class="card">
-                <div class="card-header">
-                    <h5>交易历史记录</h5>
-                </div>
                 <div class="card-body">
                     <canvas class="js-chartjs-lines"></canvas>
                 </div>
@@ -94,9 +95,6 @@
         </div>
         <div class="col-md-6 right">
             <div class="card">
-                <div class="card-header">
-                    <h5>每周用户</h5>
-                </div>
                 <div class="card-body">
                     <canvas class="js-chartjs-bars"></canvas>
                 </div>
@@ -109,59 +107,113 @@
     <!--图表插件-->
     <script type="text/javascript" th:src="@{/static/js/lib/Chart.js}"></script>
     <script type="text/javascript">
-        $(function (e) {
-            var $dashChartBarsCnt = jQuery('.js-chartjs-bars')[0].getContext('2d'),
-                $dashChartLinesCnt = jQuery('.js-chartjs-lines')[0].getContext('2d');
 
-            var $dashChartBarsData = {
-                labels: ['周一', '周二', '周三', '周四', '周五', '周六', '周日'],
-                datasets: [
-                    {
-                        label: '注册用户',
-                        borderWidth: 1,
-                        borderColor: 'rgba(0,0,0,0)',
-                        backgroundColor: 'rgba(51,202,185,0.5)',
-                        hoverBackgroundColor: "rgba(51,202,185,0.7)",
-                        hoverBorderColor: "rgba(0,0,0,0)",
-                        data: [2500, 1500, 1200, 3200, 4800, 3500, 1500]
-                    }
-                ]
-            };
-            var $dashChartLinesData = {
-                labels: ['2003', '2004', '2005', '2006', '2007', '2008', '2009', '2010', '2011', '2012', '2013', '2014'],
-                datasets: [
-                    {
-                        label: '交易资金',
-                        data: [20, 25, 40, 30, 45, 40, 55, 40, 48, 40, 42, 50],
-                        borderColor: '#358ed7',
-                        backgroundColor: 'rgba(53, 142, 215, 0.175)',
-                        borderWidth: 1,
-                        fill: false,
-                        lineTension: 0.5
-                    }
-                ]
-            };
+        function edit(noteId) {
+            parent.$(parent.document).data('multitabs').create({
+                iframe: false,
+                title: '编辑博客',
+                url: './admin/note/index?noteId=' + noteId
+            }, true);
+        }
 
-            new Chart($dashChartBarsCnt, {
-                type: 'bar',
-                data: $dashChartBarsData
+        function pieChart(publishData) {
+            var chartContext = $('.js-chartjs-pie')[0].getContext('2d');
+            new Chart(chartContext, {
+                type: 'pie',
+                data: {
+                    datasets: [{
+                        backgroundColor: ['#F7464A', '#46BFBD'],
+                        data: publishData
+                    }],
+                    labels: ['未发布', '已发布']
+                }
             });
+        }
 
-            var myLineChart = new Chart($dashChartLinesCnt, {
+        // 折线图
+        function lineChart(days, datas) {
+            var chartContext = $('.js-chartjs-lines')[0].getContext('2d');
+            new Chart(chartContext, {
                 type: 'line',
-                data: $dashChartLinesData,
+                data: {
+                    options: {
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    precision: 0,
+                                    beginAtZero: true,
+                                    suggestedMin: 5,
+                                    suggestedMax: 20
+                                }
+                            }]
+                        }
+                    },
+                    labels: days,
+                    datasets: [
+                        {
+                            label: '访问量',
+                            data: datas,
+                            borderColor: '#358ed7',
+                            backgroundColor: 'rgba(53, 142, 215, 0.175)',
+                            borderWidth: 1,
+                            lineTension: 0.5
+                        }
+                    ]
+                }
             });
-        });
+        }
+
+        function barChart(weekDatas) {
+            var chartContext = $('.js-chartjs-bars')[0].getContext('2d');
+            new Chart(chartContext, {
+                type: 'bar',
+                options: {
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                precision: 0,
+                                beginAtZero: true,
+                                suggestedMin: 5,
+                                suggestedMax: 20
+                            }
+                        }]
+                    }
+                },
+                data: {
+                    labels: ['周一', '周二', '周三', '周四', '周五', '周六', '周日'],
+                    datasets: [
+                        {
+                            label: '博客新增',
+                            borderWidth: 1,
+                            borderColor: 'rgba(0,0,0,0)',
+                            backgroundColor: 'rgba(51,202,185,0.5)',
+                            hoverBackgroundColor: "rgba(51,202,185,0.7)",
+                            hoverBorderColor: "rgba(0,0,0,0)",
+                            data: weekDatas
+                        }
+                    ]
+                }
+            });
+        }
 
         $(function () {
+            // 编辑事件
             $(".edit").click(function () {
                 var noteId = $(this).attr("data_id");
-                parent.$(parent.document).data('multitabs').create({
-                    iframe: false,
-                    title: '编辑博客',
-                    url: './admin/note/index?noteId=' + noteId
-                }, true);
-            })
+                edit(noteId)
+            });
+
+            // 饼状图
+            var publishData = ["[[${publishCount.unPublish}]]", "[[${publishCount.publish}]]"];
+            pieChart(publishData);
+
+            // 折线图
+            var visiteData = JSON.parse('[[${visteCount}]]'.replace(/&quot;/g, '"'))
+            lineChart(visiteData.types, visiteData.counts);
+
+            // 柱状图
+            var weekDatas = [[${weekCount.counts}]];
+            barChart(weekDatas)
         })
     </script>
 </th:block>

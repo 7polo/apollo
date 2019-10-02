@@ -11,4 +11,13 @@
             (#{item.uid}, #{item.name}, false, #{item.createDt}, #{item.ip}, #{item.url}, #{item.country}, #{item.region}, #{item.city}, #{item.isp})
         </foreach>
     </insert>
+
+    <select id="queryMonthCount" resultType="com.polo.apollo.entity.count.CountData">
+        SELECT DATE_FORMAT(create_dt,'%Y-%m-%d') as type, count(0) num FROM
+        t_log_record where deleted = 0 and DATE_FORMAT(create_dt,'%Y-%m-%d') in
+        <foreach collection="days" item="day" index="index" open="(" close=")" separator=",">
+            #{day}
+        </foreach>
+        GROUP BY type
+    </select>
 </mapper>

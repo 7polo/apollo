@@ -1,9 +1,10 @@
 package com.polo.apollo.service.note;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.polo.apollo.common.entity.Tree;
+import com.polo.apollo.entity.count.CountDatas;
 import com.polo.apollo.entity.dto.CatalogDto;
 import com.polo.apollo.entity.dto.NoteDto;
+import com.polo.apollo.entity.dto.PublishCount;
 import com.polo.apollo.entity.modal.note.Note;
 import com.polo.apollo.entity.vo.NoteVo;
 
@@ -47,6 +48,8 @@ public interface NoteService {
     IPage<NoteDto> queryBlogPage(NoteVo vo, int start, int limit);
 
     List<Note> queryRecentNote(int top);
+
+    PublishCount publishCount();
 
     /**
      * 查询 目录下的 note
@@ -101,4 +104,10 @@ public interface NoteService {
      * @return
      */
     List<Note> queryHotBlog(int top);
+
+    /**
+     * 周统计
+     * @return
+     */
+    CountDatas queryWeekCount();
 }

@@ -4,7 +4,9 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.polo.apollo.entity.dto.CatalogDto;
+import com.polo.apollo.entity.count.CountData;
 import com.polo.apollo.entity.dto.NoteDto;
+import com.polo.apollo.entity.dto.PublishCount;
 import com.polo.apollo.entity.modal.note.Note;
 import com.polo.apollo.entity.vo.NoteVo;
 import org.apache.ibatis.annotations.Param;
@@ -77,5 +79,23 @@ public interface NoteDao extends BaseMapper<Note> {
      */
     List<Note> queryHotBlog(int limit);
 
+    /**
+     * 查询最近的博客
+     * @param limit
+     * @return
+     */
     List<Note> queryRecentNote(int limit);
+
+    /**
+     * 统计发布数
+     * @return
+     */
+    PublishCount publishCount();
+
+    /**
+     * 按天查询
+     * @param days
+     * @return
+     */
+    List<CountData> queryDayCount(@Param("days") List<String> days);
 }

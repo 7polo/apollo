@@ -2,13 +2,13 @@ package com.polo.apollo.common.util;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.polo.apollo.common.entity.Tree;
 import org.springframework.util.StringUtils;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.*;
-import java.util.function.BiPredicate;
-import java.util.stream.Collectors;
 
 /**
  * @author baoqianyong
@@ -84,6 +84,7 @@ public class Utils {
 
     /**
      * 首字母大写
+     *
      * @param str
      * @return
      */
@@ -92,5 +93,39 @@ public class Utils {
             return str.substring(0, 1).toUpperCase() + str.substring(1);
         }
         return str;
+    }
+
+    public static List<String> getDateRange(LocalDate date, long size, ChronoUnit unit) {
+        String pattern = "YYYY-MM-dd";
+        switch (unit) {
+            case MONTHS:
+                pattern = "YYYY-MM";
+                break;
+            case YEARS:
+                pattern = "YYYY";
+                break;
+            default:
+                break;
+        }
+        DateTimeFormatter fmt = DateTimeFormatter.ofPattern(pattern);
+        int step = size < 0 ? -1 : 1;
+        size = Math.abs(size);
+        List<String> list = new ArrayList<>();
+        list.add(date.format(fmt));
+        for (int i = 0; i < size; i++) {
+            date = date.plus(step, unit);
+            list.add(date.format(fmt));
+        }
+        if (step < 0) {
+            Collections.reverse(list);
+        }
+        return list;
+    }
+
+    public static List<String> getWeekDays(LocalDate date) {
+//        date = date.plus(-7, ChronoUnit.DAYS);
+        int days = 7 - date.getDayOfWeek().getValue();
+        date = date.plus(days, ChronoUnit.DAYS);
+        return Utils.getDateRange(date, -7, ChronoUnit.DAYS);
     }
 }
