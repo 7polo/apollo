@@ -1,3 +1,6 @@
-# robots.txt generated at http://tool.chinaz.com/robots/ 
-Disallow: /admin
+User-agent: *
+Disallow:
+Crawl-delay: 120
+Disallow: /admin/
 Disallow: /login
+Sitemap: http://blog.apologizebao.cn/sitemap.xml
