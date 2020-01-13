@@ -1,5 +1,5 @@
 ### Apollo
-Apollo 时采用 SpringBoot 实现的 Markdown 博客系统 [博客](http://blog.apologizebao.cn)
+Apollo 时采用 SpringBoot 实现的 Markdown 博客系统 [博客链接](http://blog.apologizebao.cn)，支持SEO设置
 
 + 首页
 
