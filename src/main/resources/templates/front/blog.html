@@ -39,6 +39,16 @@
             margin: 0;
             overflow: auto;
         }
+
+        /*#feedAv {*/
+        /*    position: absolute ! important;*/
+        /*    height: 0px;*/
+        /*    transform: scale(0) !important;*/
+        /*}*/
+
+        /*#pop_ad {*/
+        /*    transform: scale(0) !important;*/
+        /*}*/
     </style>
 </head>
 <body>
@@ -79,6 +89,9 @@
                     </div>
                 </th:block>
             </div>
+            <div class="row">
+                <div id="SOHUCS" th:sid="${blog.uid}"></div>
+            </div>
         </th:block>
     </didv>
 </th:block>
@@ -104,6 +117,14 @@
             rendererMdDoc();
             initPreScroll();
         })
+    </script>
+    <!--高速版-->
+    <script charset="utf-8" type="text/javascript" src="http://changyan.sohu.com/upload/changyan.js" ></script>
+    <script type="text/javascript">
+        window.changyan.api.config({
+            appid: 'cyuwsXeg4',
+            conf: 'prod_ad73057fac2ed3f28ba38d7a912a9842'
+        });
     </script>
 </th:block>
 
