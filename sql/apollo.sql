@@ -174,6 +174,7 @@ CREATE TABLE `t_user` (
   UNIQUE KEY `name` (`username`,`deleted`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+
 -- ----------------------------
 -- Records of t_user
 -- ----------------------------
